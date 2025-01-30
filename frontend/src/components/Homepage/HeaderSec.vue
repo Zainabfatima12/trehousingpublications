@@ -2,7 +2,8 @@
   <div>
     <nav>
       <div class="logo">
-        <img :src="logo" alt="Logo" />
+        
+         <h1>LOGO</h1>
       </div>
       <div class="menu-icon" @click="toggleMenu">
         <div></div>

@@ -4,7 +4,8 @@
       <!-- Logo and Contact Section -->
       <div class="logowithcontect">
         <div class="logo">
-          <img src="@/assets/Homepage/logo-nobg.png" alt="logo" />
+          
+           <h1>Logo</h1>
         </div>
         <div class="contact-info">
           <p>Address: Noida, Ayodhya, Gonda</p>
