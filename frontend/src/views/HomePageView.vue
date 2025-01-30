@@ -1,17 +1,23 @@
 <template>
-  <Homepage />
+  <HeroSec />
+  <AboutUs />
+  <RefBook />
+  <NewsLetter />
 </template>
 
 <script>
-import Homepage from "@/components/Homepage/Homepage.vue";
-import Homepage from "@/components/Homepage/Homepage.vue";
-
-Homepage;
+import HeroSec from "./components/Homepage/HeroSec.vue";
+import RefBook from "./components/Homepage/RefBook.vue";
+import AboutUs from "./components/Homepage/AboutUs.vue";
+import NewsLetter from "@/components/Homepage/NewsLetter.vue";
 
 export default {
   name: "HomePageView",
   components: {
-    Homepage,
+    AboutUs,
+    HeroSec,
+    RefBook,
+    NewsLetter,
   },
 };
 </script>
