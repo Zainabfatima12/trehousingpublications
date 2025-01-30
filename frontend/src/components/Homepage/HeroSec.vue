@@ -1,7 +1,6 @@
 <template>
   <div class="hero-section">
     <div class="carousel" @mouseenter="pauseAutoSlide" @mouseleave="startAutoSlide">
-      <button class="nav left" @click="prevSlide">&#10094;</button>
       <div class="slide" v-for="(slide, index) in slides" :key="index" v-show="currentSlide === index">
         <div class="content">
           <p class="subtitle">Examinations: The Key to Unlocking Your Future</p>
@@ -9,7 +8,7 @@
           <p class="description">{{ slide.description }}</p>
           <button class="cta">Start Preparation</button>
         </div>
-        <div class="image-container">
+        <div class="image-container" @click="nextSlide">
           <img :src="slide.image" class="main-image" alt="Student studying" />
           <div class="teacher-icons">
             <div v-for="teacher in slide.teachers" :key="teacher.name" class="teacher">
@@ -19,7 +18,6 @@
           </div>
         </div>
       </div>
-      <button class="nav right" @click="nextSlide">&#10095;</button>
     </div>
   </div>
 </template>
@@ -67,6 +65,7 @@ export default {
   background: #fdf1f1;
   padding: 50px 0;
   width: 100%;
+  overflow: hidden;
 }
 
 .carousel {
@@ -76,6 +75,7 @@ export default {
   width: 90%;
   max-width: 1200px;
   flex-wrap: wrap;
+  overflow: hidden;
 }
 
 .slide {
@@ -83,6 +83,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .content {
@@ -121,6 +122,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .main-image {
@@ -152,44 +154,7 @@ export default {
 }
 
 .nav {
-  position: absolute;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.left {
-  left: -40px;
-}
-
-.right {
-  right: -40px;
-}
-
-/* Responsive Styles */
-@media (max-width: 1024px) {
-  .slide {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .content {
-    max-width: 100%;
-    text-align: center;
-  }
-
-  .image-container {
-    max-width: 100%;
-  }
-
-  .teacher-icons {
-    top: 20%;
-    left: 0;
-    right: 0;
-    justify-content: center;
-    flex-direction: row;
-  }
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -203,7 +168,16 @@ export default {
   }
 
   .teacher {
-    display: none; /* Hide teacher icons on small screens */
+    display: none;
+  }
+
+  .carousel {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .image-container {
+    max-width: 100%;
   }
 }
 
@@ -214,6 +188,11 @@ export default {
 
   .cta {
     font-size: 0.8rem;
+  }
+
+  .carousel {
+    width: 100%;
+    padding: 0 5px;
   }
 }
 </style>
