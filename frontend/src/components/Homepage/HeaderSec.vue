@@ -2,7 +2,7 @@
   <div>
     <nav>
       <div class="logo">
-        
+         
          <h1>LOGO</h1>
       </div>
       <div class="menu-icon" @click="toggleMenu">
@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import logoPath from "@/assets/Homepage/logo-nobg.png";
+// import logoPath from "@/assets/Homepage/logo-nobg.png";
 
 export default {
   data() {
     return {
-      logo: logoPath,
+      // logo: logoPath,
       isMenuActive: false,
     };
   },
