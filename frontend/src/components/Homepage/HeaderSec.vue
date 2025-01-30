@@ -46,7 +46,7 @@ nav {
   justify-content: space-between; 
   align-items: center;
   padding: 20px 40px;
-  background-color: #f9f2f2;
+  background-color: white;
   width: 100%;
   /* padding: 40px; */
 }
