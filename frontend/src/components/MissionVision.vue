@@ -1,84 +1,92 @@
 <template>
-    <section class="min-h-screen flex items-center justify-center bg-gray-100">
-      <div class="box-container bg-white shadow-lg border border-gray-300 rounded-lg p-8 w-full max-w-3xl text-center">
-        
-        <!-- Title and Image -->
-        <div class="text-center mb-6">
-          <h2 class="text-xl font-bold heading mb-4 underline">Mission & Vision</h2>
-          <img src="@/assets/Group 42.jpg" alt="Mission & Vision" class="mission-image" />
-        </div>
-  
-        <!-- Table for Mission, Vision, and Values -->
-        <div class="overflow-x-auto">
-          <table class="w-3/4 mx-auto border border-gray-400 text-center">
-            <thead>
-              <tr class="bg-gray-200">
-                <th class="p-3 border border-gray-300 text-lg font-bold text-black">
-                  <span class="p3">OUR</span> <span class="p4">MISSION</span></th>
-                <th class="p-3 border border-gray-300 text-lg font-bold text-black">
-                 <span class="p3">OUR</span> <span class="p5">VISION</span></th>
-                <th class="p-3 border border-gray-300 text-lg font-bold text-black">
-                  <span class="p3">OUR</span> <span class="p6">VALUES</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="p-4 border border-gray-300 text-gray-700 text-sm">
-                  Empower learners worldwide with accessible, high-quality digital education.
-                </td>
-                <td class="p-4 border border-gray-300 text-gray-700 text-sm">
-                  To be the leading platform for innovative, engaging, and personalized e-learning experiences.
-                </td>
-                <td class="p-4 border border-gray-300 text-gray-700 text-sm">
-                  Accessibility, innovation, lifelong learning, and student success. 🚀
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <section class="min-h-screen flex items-center justify-center bg-gray-100 px-4 md:px-8">
+    <div class="box-container bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl text-center">
+      
+      <!-- Title -->
+      <div class="text-center mb-10"> <!-- Increased margin-bottom for more space -->
+        <h2 class="text-xl font-bold heading mb-4 underline">Mission & Vision</h2>
       </div>
-    </section>
-  </template>
-  
-  <script>
-  export default {
-    name: "MissionVision",
-  };
-  </script>
-  
-  <style scoped>
-  .heading {
-    color: rgb(31, 31, 185);
-    text-decoration: underline;
-    font-weight: bold;
-  }
-  .mission-image {
-    width: 100%;
-    max-width: 600px;
-    height: auto;
-    margin: auto;
-  }
-  table {
-    width: 90%;
-    max-width: 600px;
-    margin: auto;
-    border-collapse: collapse;
-  }
-  th, td {
-    padding: 10px;
-    border: 1px solid rgba(128, 128, 128, 0);
-  }
-  .p3{
-    color: black;
-  }
-  .p4{
-    color: red;
-  }
-  .p5{
-    color: rgb(31, 31, 185);
-  }
-  .p6{
-    color: yellow;
-  }
-  </style>
-  
+     
+      <!-- Table for Mission, Vision, and Values -->
+      <div class="overflow-x-auto">
+        <table class="w-3/4 mx-auto text-center">
+          <thead>
+            <tr>
+              <td class="image-cell"><img src="@/assets/mission.png" alt="Mission Image" class="img-fluid" /></td>
+              <td class="image-cell"><img src="@/assets/vision.jpg" alt="Vision Image" class="img-fluid" /></td>
+              <td><img src="@/assets/values.png" alt="Image 3" class="img-fluid" /></td>
+            </tr>
+            <tr>
+              <td class="p-3 fw-bold text-dark">
+                <span class="our">OUR</span> <span class="mission">MISSION</span>
+              </td>
+              <td class="p-3 fw-bold text-dark">
+                <span class="our">OUR</span> <span class="vision">VISION</span>
+              </td>
+              <td class="p-3 fw-bold text-dark">
+                <span class="our">OUR</span> <span class="values">VALUES</span>
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="p-4 text-gray-700 text-sm">
+                Empower learners worldwide with accessible, high-quality digital education.
+              </td>
+              <td class="p-4 text-gray-700 text-sm">
+                To be the leading platform for innovative, engaging, and personalized e-learning experiences.
+              </td>
+              <td class="p-4 text-gray-700 text-sm">
+                Accessibility, innovation, lifelong learning, and student success. 🚀
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  name: "MissionVision",
+};
+</script>
+
+<style scoped>
+.heading {
+  color: rgb(31, 31, 185);
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.our {
+  color: black;
+  font-weight: bold;
+  font-size: x-large;
+}
+.mission {
+  color: red;
+  font-weight: bold;
+  font-size: x-large;
+}
+.vision {
+  color: rgb(31, 31, 185);
+  font-weight: bold;
+  font-size: x-large;
+}
+.values {
+  color: yellow;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+/* Add borders only between images */
+.image-cell {
+  border-right: 2px solid gray;
+}
+
+.image-cell:last-child {
+  border-right: none;
+}
+</style>
