@@ -3,6 +3,7 @@
   <HeroSec />
   <AboutUs />
   <MissionVision/>
+  <JobOpportunities />
   <RefBook />
   <DownloadApp />
   <NewsLetter />
@@ -18,6 +19,8 @@ import Header from "@/components/Homepage/HeaderSec.vue";
 import Footer from "@/components/Homepage/FooterSec.vue";
 import MissionVision from "./components/MissionVision.vue";
 import DownloadApp from "./components/Homepage/DownloadApp.vue";
+=======
+import JobOpportunities from "@/components/Homepage/JobOpportunitiesPage.vue";
 
 
 export default {
@@ -31,6 +34,7 @@ export default {
     Footer,
     MissionVision,
     DownloadApp,
+    JobOpportunities,
   },
 };
 </script>
