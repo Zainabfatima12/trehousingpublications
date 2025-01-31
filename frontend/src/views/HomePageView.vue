@@ -5,6 +5,7 @@
   <MissionVision/>
   <JobOpportunities />
   <RefBook />
+  <DownloadApp />
   <NewsLetter />
   <Footer/>
 </template>
@@ -17,6 +18,7 @@ import NewsLetter from "@/components/Homepage/NewsLetter.vue";
 import Header from "@/components/Homepage/HeaderSec.vue";
 import Footer from "@/components/Homepage/FooterSec.vue";
 import MissionVision from "@/components/MissionVision.vue";
+import DownloadApp from "@/components/Homepage/DownloadApp.vue";
 import JobOpportunities from "@/components/Homepage/JobOpportunitiesPage.vue";
 
 export default {
@@ -29,6 +31,7 @@ export default {
     RefBook,
     NewsLetter,
     Footer,
+    DownloadApp,
     JobOpportunities,
    
   },
