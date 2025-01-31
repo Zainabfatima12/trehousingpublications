@@ -1,45 +1,42 @@
 <template>
-  <section class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="box-container bg-white shadow-lg border border-gray-300 rounded-lg p-8 w-full max-w-3xl text-center">
+  <section class="min-h-screen flex items-center justify-center bg-gray-100 px-4 md:px-8">
+    <div class="box-container bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl text-center">
       
-      <!-- Title and Image -->
-      <div class="text-center mb-6">
+      <!-- Title -->
+      <div class="text-center mb-10"> <!-- Increased margin-bottom for more space -->
         <h2 class="text-xl font-bold heading mb-4 underline">Mission & Vision</h2>
-        
       </div>
      
       <!-- Table for Mission, Vision, and Values -->
       <div class="overflow-x-auto">
-        <table class="w-3/4 mx-auto border  text-center">
-          <thead class="table-light">
-          
-          <tr>
-            <td><img src="@/assets/mission.png" alt="Mission Image" class="img-fluid" /></td>
-            <td><img src="@/assets/vision.jpg" alt="Vision Image" class="img-fluid" /></td>
-            <td><img src="@/assets/values.png" alt="Image 3" class="img-fluid" /></td>
-          </tr>
-        
-          <tr>
-            <td class="p-3 fw-bold text-dark">
-              <span class="our">OUR</span> <span class="mission">MISSION</span>
-            </td>
-            <td class="p-3 fw-bold text-dark">
-              <span class="our">OUR</span> <span class="vision">VISION</span>
-            </td>
-            <td class="p-3 fw-bold text-dark">
-              <span class="our">OUR</span> <span class="values">VALUES</span>
-            </td>
-          </tr>
-        </thead>
+        <table class="w-3/4 mx-auto text-center">
+          <thead>
+            <tr>
+              <td class="image-cell"><img src="@/assets/mission.png" alt="Mission Image" class="img-fluid" /></td>
+              <td class="image-cell"><img src="@/assets/vision.jpg" alt="Vision Image" class="img-fluid" /></td>
+              <td><img src="@/assets/values.png" alt="Image 3" class="img-fluid" /></td>
+            </tr>
+            <tr>
+              <td class="p-3 fw-bold text-dark">
+                <span class="our">OUR</span> <span class="mission">MISSION</span>
+              </td>
+              <td class="p-3 fw-bold text-dark">
+                <span class="our">OUR</span> <span class="vision">VISION</span>
+              </td>
+              <td class="p-3 fw-bold text-dark">
+                <span class="our">OUR</span> <span class="values">VALUES</span>
+              </td>
+            </tr>
+          </thead>
           <tbody>
             <tr>
-              <td class="p-4 border border-gray-300 text-gray-700 text-sm">
+              <td class="p-4 text-gray-700 text-sm">
                 Empower learners worldwide with accessible, high-quality digital education.
               </td>
-              <td class="p-4 border border-gray-300 text-gray-700 text-sm">
+              <td class="p-4 text-gray-700 text-sm">
                 To be the leading platform for innovative, engaging, and personalized e-learning experiences.
               </td>
-              <td class="p-4 border border-gray-300 text-gray-700 text-sm">
+              <td class="p-4 text-gray-700 text-sm">
                 Accessibility, innovation, lifelong learning, and student success. 🚀
               </td>
             </tr>
@@ -62,32 +59,34 @@ export default {
   text-decoration: underline;
   font-weight: bold;
 }
-.mission-image {
-width: 100%;
-max-width: 600px; 
-height: auto;
-}
 
-
-
-.our{
+.our {
   color: black;
+  font-weight: bold;
+  font-size: x-large;
 }
-.mission{
+.mission {
   color: red;
+  font-weight: bold;
+  font-size: x-large;
 }
-.vision{
+.vision {
   color: rgb(31, 31, 185);
+  font-weight: bold;
+  font-size: x-large;
 }
-.values{
+.values {
   color: yellow;
-}
-.table {
-border-collapse: collapse;
+  font-size: x-large;
+  font-weight: bold;
 }
 
-table td,
-table tr {
-border: none;
+/* Add borders only between images */
+.image-cell {
+  border-right: 2px solid gray;
+}
+
+.image-cell:last-child {
+  border-right: none;
 }
 </style>
