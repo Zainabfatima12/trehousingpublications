@@ -5,7 +5,7 @@
         <!-- Title and Image -->
         <div class="text-center mb-6">
           <h2 class="text-xl font-bold heading mb-4 underline">Mission & Vision</h2>
-          <img src="@/assets/Group 42.jpg" alt="Mission & Vision" class="mission-image" />
+          <!-- <img src="@/assets/Group 42.jpg" alt="Mission & Vision" class="mission-image" /> -->
         </div>
   
         <!-- Table for Mission, Vision, and Values -->
