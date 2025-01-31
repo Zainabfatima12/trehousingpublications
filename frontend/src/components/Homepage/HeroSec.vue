@@ -15,16 +15,6 @@
         </div>
         <div class="image-container">
           <img :src="slide.image" class="main-image" alt="Student studying" />
-          <div class="teacher-icons">
-            <div
-              v-for="teacher in slide.teachers"
-              :key="teacher.name"
-              class="teacher"
-            >
-              <img :src="teacher.image" :alt="teacher.name" />
-              <span class="teacher-name">{{ teacher.name }}</span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -41,11 +31,24 @@ export default {
     return {
       slides: [
         {
-          title:
-            "Get ready for 100+ government exams, covering both central and state opportunities.",
-          description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-          image: require('@/assets/Trehousingpublications_UI/heross.png'),
+          title: "Get ready for 100+ government exams, covering both central and state opportunities.",
+          description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+          image: require('@/assets/Trehousingpublications_UI/hero.png')
+        },
+        {
+          title: "Ace your exams with expert guidance from top teachers.",
+          description: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          image: require('@/assets/Trehousingpublications_UI/hero2.png')
+        },
+        {
+          title: "Comprehensive study materials for your success.",
+          description: "Lorem Ipsum is simply dummy text used in the printing industry.",
+          image: require('@/assets/Trehousingpublications_UI/hero3.jpg')
+        },
+        {
+          title: "Join the best preparation platform for a brighter future.",
+          description: "Lorem Ipsum has been the industry's standard dummy text for centuries.",
+          image: require('@/assets/Trehousingpublications_UI/hero4.png')
         }
       ],
       currentSlide: 0,
@@ -143,30 +146,9 @@ export default {
 
 .main-image {
   width: 100%;
-  height: auto;
-}
-
-.teacher-icons {
-  position: absolute;
-  top: 10%;
-  left: -20%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.teacher {
-  display: flex;
-  align-items: center;
-  background: white;
-  padding: 5px;
-  border-radius: 10px;
-}
-
-.teacher img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  height: 300px; /* Fixed height for all images */
+  object-fit: cover; /* Ensures consistent image aspect ratio */
+  margin-right: 40px;
 }
 
 .nav {
@@ -201,10 +183,6 @@ export default {
     font-size: 0.9rem;
   }
 
-  .teacher {
-    display: none;
-  }
-
   .content {
     max-width: 100%;
     text-align: center;
@@ -213,6 +191,15 @@ export default {
   .image-container {
     max-width: 100%;
     margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+  }
+
+  .main-image {
+    width: 100%;
+    height: 300px; /* Fixed height for consistency */
+    object-fit: cover;
+    margin-right: 0; /* Ensure there's no right margin on mobile */
   }
 
   .carousel {
@@ -234,5 +221,18 @@ export default {
     width: 100%;
     padding: 0 5px;
   }
+
+  .image-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Ensures image is centered */
+  }
+
+  .main-image {
+    width: 100%;
+    height: 250px; /* Adjust height for smaller screens */
+    object-fit: cover;
+  }
 }
+
 </style>
