@@ -1,23 +1,36 @@
 <template>
   <div class="hero-section">
     <div class="carousel" @mouseenter="pauseAutoSlide" @mouseleave="startAutoSlide">
-      <div class="slide" v-for="(slide, index) in slides" :key="index" v-show="currentSlide === index">
+      <div
+        class="slide"
+        v-for="(slide, index) in slides"
+        :key="index"
+        v-show="currentSlide === index"
+      >
         <div class="content">
           <p class="subtitle">Examinations: The Key to Unlocking Your Future</p>
           <h1 class="title">{{ slide.title }}</h1>
           <p class="description">{{ slide.description }}</p>
           <button class="cta">Start Preparation</button>
         </div>
-        <div class="image-container" @click="nextSlide">
+        <div class="image-container">
           <img :src="slide.image" class="main-image" alt="Student studying" />
           <div class="teacher-icons">
-            <div v-for="teacher in slide.teachers" :key="teacher.name" class="teacher">
+            <div
+              v-for="teacher in slide.teachers"
+              :key="teacher.name"
+              class="teacher"
+            >
               <img :src="teacher.image" :alt="teacher.name" />
               <span class="teacher-name">{{ teacher.name }}</span>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- Navigation Arrows -->
+      <button class="nav left" @click="prevSlide">&#8249;</button>
+      <button class="nav right" @click="nextSlide">&#8250;</button>
     </div>
   </div>
 </template>
@@ -28,13 +41,15 @@ export default {
     return {
       slides: [
         {
-          title: "Get ready for 100+ government exams, covering both central and state opportunities.",
-          description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+          title:
+            "Get ready for 100+ government exams, covering both central and state opportunities.",
+          description:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
           image: require('@/assets/Trehousingpublications_UI/heross.png'),
         }
       ],
       currentSlide: 0,
-      autoSlideInterval: null,
+      autoSlideInterval: null
     };
   },
   methods: {
@@ -42,10 +57,11 @@ export default {
       this.currentSlide = (this.currentSlide + 1) % this.slides.length;
     },
     prevSlide() {
-      this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+      this.currentSlide =
+        (this.currentSlide - 1 + this.slides.length) % this.slides.length;
     },
     startAutoSlide() {
-      this.autoSlideInterval = setInterval(this.nextSlide, 5000);
+      this.autoSlideInterval = setInterval(this.nextSlide, 2000);
     },
     pauseAutoSlide() {
       clearInterval(this.autoSlideInterval);
@@ -74,8 +90,9 @@ export default {
   position: relative;
   width: 90%;
   max-width: 1200px;
-  flex-wrap: wrap;
   overflow: hidden;
+  padding-left: 20px; /* Reduced padding */
+  padding-right: 20px; /* Reduced padding */
 }
 
 .slide {
@@ -122,7 +139,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
 
 .main-image {
@@ -154,7 +170,25 @@ export default {
 }
 
 .nav {
-  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  color: black;
+  border: none;
+  font-size: 3rem;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav.left {
+  left: 0px; /* Makes the left arrow more visible */
+}
+
+.nav.right {
+  right: 0px; /* Makes the right arrow more visible */
 }
 
 @media (max-width: 768px) {
@@ -171,13 +205,19 @@ export default {
     display: none;
   }
 
-  .carousel {
-    width: 100%;
-    padding: 0 10px;
+  .content {
+    max-width: 100%;
+    text-align: center;
   }
 
   .image-container {
     max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .carousel {
+    width: 100%;
+    padding: 0 10px;
   }
 }
 
