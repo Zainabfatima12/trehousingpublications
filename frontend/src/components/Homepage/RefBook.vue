@@ -1,175 +1,194 @@
 <template>
-    <div class="reference-books-section">
-      <h2 class="section-title">Reference Books</h2>
-      <div class="books-grid">
-        <div v-for="book in books" :key="book.id" class="book-card">
-          <img :src="require(`@/assets/Trehousingpublications_UI/${book.cover}`)" :alt="book.title" class="book-cover" />
-          <div class="book-rating">
-            <div class="stars">
-              <span v-for="star in Math.floor(book.rating)" :key="star">⭐</span>
-              <span v-if="book.rating % 1 !== 0" class="half-star">⭐</span>
-              <span v-for="star in 5 - Math.ceil(book.rating)" :key="star" class="empty-star">⭐</span>
-            </div>
-            <div class="rating" :style="{ backgroundColor: '#388e3c', color: 'white' }">{{ book.rating }}</div>
+  <div class="reference-books">
+    <h2 class="title">Reference books</h2>
+    <div class="books-container">
+      <div v-for="book in books" :key="book.id" class="book-card">
+        <img :src="require(`@/assets/Trehousingpublications_UI/${book.image}`)" :alt="book.title" class="book-image" />
+        
+        <div class="rating">
+          <div class="stars">
+            <span v-for="star in 5" :key="star" class="star">
+              <span v-if="star <= Math.floor(book.rating)">★</span>
+              <span v-else-if="star - 0.5 < book.rating && star > Math.floor(book.rating)">⯪</span>
+              <span v-else>☆</span>
+            </span>
           </div>
-          <div class="book-price">
-            <span class="current-price">₹{{ book.price }}</span>
-            <span class="original-price">₹{{ book.originalPrice }}</span>
-          </div>
+          <span class="rating-value">{{ book.rating }}</span>
+        </div>
+
+        <div class="price-section">
+          <span class="price">₹ {{ book.price }}</span>
+          <span class="original-price">₹ {{ book.originalPrice }}</span>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      books: [
+        {
+          id: 1,
+          title: "Surface Engineering",
+          image: "book1.png",
+          rating: 4.8,
+          price: 399,
+          originalPrice: 415,
+        },
+        {
+          id: 2,
+          title: "Higher Engineering Mathematics",
+          image: "book2.png",
+          rating: 4.3,
+          price: 399,
+          originalPrice: 415,
+        },
+        {
+          id: 3,
+          title: "BPSC Economy",
+          image: "book3.png",
+          rating: 4.6,
+          price: 399,
+          originalPrice: 415,
+        },
+        {
+          id: 4,
+          title: "To Engineer is Human",
+          image: "book4.png",
+          rating: 4.9,
+          price: 399,
+          originalPrice: 415,
+        },
+        {
+          id: 5,
+          title: "General Studies",
+          image: "book5.png",
+          rating: 4.2,
+          price: 399,
+          originalPrice: 415,
+        },
+      ],
+    };
+  },
+};
+</script>
+
+<style>
+.reference-books {
+  text-align: left;
+  padding: 20px;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: bold;
+  color: blue;
+  text-decoration: underline;
+  margin-bottom: 15px;
+  margin-bottom: 30px;
   
-  <script>
-  export default {
-    data() {
-      return {
-        books: [
-          {
-            id: 1,
-            cover: "book1.png",
-            rating: 4.8,
-            price: 399,
-            originalPrice: 415
-          },
-          {
-            id: 2,
-            cover: "book2.png",
-            rating: 4.8,
-            price: 399,
-            originalPrice: 415
-          },
-          {
-            id: 3,
-            cover: "book3.png",
-            rating: 4.8,
-            price: 399,
-            originalPrice: 415
-          },
-          {
-            id: 4,
-            cover: "book4.png",
-            rating: 4.8,
-            price: 399,
-            originalPrice: 415
-          },
-          {
-            id: 5,
-            cover: "book5.png",
-            rating: 4.8,
-            price: 399,
-            originalPrice: 415
-          }
-        ]
-      };
-    }
-  };
-  </script>
-  
-  <style>
-  .reference-books-section {
-    padding: 20px;
-    font-family: Arial, sans-serif;
+}
+
+.books-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+  width: 100%;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.book-card {
+  flex: 1 1 auto;
+  max-width: 200px;
+  min-width: 180px;
+  text-align: center;
+}
+
+.book-image {
+  width: 100%;
+  height: 250px; /* Fixed height for uniformity */
+  object-fit: cover; /* Ensures images are cropped evenly */
+  border-radius: 5px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Stars on the left, rating value on the right */
+  width: 100%;
+  color: orange;
+  font-size: 23px;
+  margin-top: 8px; /* Slightly more margin for spacing */
+}
+
+.stars {
+  display: flex;
+  gap: 4px; /* Increased gap between stars for better spacing */
+}
+
+.rating-value {
+  font-size: 16px; /* Increased font size for better readability */
+  background-color: green;
+  color: white;
+  padding: 0px 10px; /* Slightly larger padding for better emphasis */
+  border-radius: 6px;
+}
+
+.price-section {
+  display: flex;
+  justify-content: space-between; /* Selling price on the left, original price on the right */
+  width: 100%;
+  margin-top: 8px; /* Slightly more margin for spacing */
+}
+
+.price {
+  font-size: 18px; /* Slightly larger font size for emphasis */
+  font-weight: bold;
+  color: red;
+}
+
+.original-price {
+  font-size: 16px; /* Increased font size */
+  text-decoration: line-through;
+  color: gray;
+}
+
+
+
+@media (max-width: 1024px) {
+  .books-container {
+    flex-wrap: wrap; /* Allow books to wrap to the next row */
+    justify-content: flex-start; /* Align items to the left, leaving blank space on the right */
+    gap: 20px; /* Add spacing between books */
   }
-  
-  .section-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: left;
-    text-decoration: underline;
-    margin-bottom: 20px;
-    color: #5331fe;
-  }
-  
-  .books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-  }
-  
+
   .book-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 0px;
-    width: 260px;
-    text-align: center;
-    transition: box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 430px;
-  }
-  
-  .book-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .book-cover {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-    margin-bottom: 5px;
-    border-radius: 4px;
-  }
-  
-  .book-rating {
-    display: flex;
-    align-items: center;
-    gap: 80px;
-    margin-top: 5px;
-    justify-content: center;
-  }
-  
-  .stars {
-    color: #ffa000;
-    display: flex;
-    gap: 2px;
-  }
-  
-  .half-star {
-    background: linear-gradient(90deg, #ffa000 50%, #ddd 50%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .empty-star {
-    color: #ddd;
-  }
-  
-  .rating {
-    padding: 0px 10px;
-    font-size: 18px;
-    border-radius: 4px;
-    display: inline-block; /* Adjusts the height to content */
-  }
-  
-  .book-price {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 140px;
-    font-size: 18px;
-    margin-top: -10px;
-  }
-  
-  .current-price {
-    color: #d32f2f;
-    font-weight: bold;
-  }
-  
-  .original-price {
-    text-decoration: line-through;
-    color: #888;
-  }
-  @media (max-width: 768px) {
-  .books-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center; /* Centers books on smaller screens */
+    flex: 0 0 calc(33.33% - 20px); /* 3 books per row with spacing */
+    max-width: calc(33.33% - 20px); /* Prevent cards from exceeding this size */
   }
 }
 
-  </style>
-  
+@media (max-width: 768px) {
+  .books-container {
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden; /* Disable horizontal scroll */
+  }
+
+  .book-card {
+    width: 100%; /* Full width to take up the entire row */
+    max-width: 200px; /* Optional: Restrict max size */
+  }
+}
+
+
+</style>
