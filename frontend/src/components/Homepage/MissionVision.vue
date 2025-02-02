@@ -1,9 +1,9 @@
 <template>
-  <section class="min-h-screen flex items-center justify-center bg-gray-100 px-4 md:px-8">
-    <div class="box-container bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl text-center">
+  <section class="min-h-screen flex flex-col flex-row items-center justify-center  px-4 md:px-8">
+    <div class="box-container bg-white shadow-lg rounded-lg p-8 md:p-8 w-full max-w-3xl text-center">
       
       <!-- Title -->
-      <div class="text-center mb-10"> <!-- Increased margin-bottom for more space -->
+      <div class="text-center mb-6 md:mb-10"> 
         <h2 class="text-xl font-bold heading mb-4 underline">Mission & Vision</h2>
       </div>
      
@@ -81,7 +81,6 @@ export default {
   font-weight: bold;
 }
 
-/* Add borders only between images */
 .image-cell {
   border-right: 2px solid gray;
 }
