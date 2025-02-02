@@ -4,7 +4,11 @@
 
     <div class="relative w-full">
       <!-- Left Arrow Button (Hidden on Mobile) -->
-      <button @click="scrollLeft" class="arrow-btn left-arrow hidden md:flex"> <i class="arrow left"></i></button>
+      
+      <!-- <button @click="scrollLeft" class="left-click hidden md:flex" style="color: aliceblue; background-color: aquamarine;"> </button>
+       -->
+       <button @click="scrollLeft" class="bottom"><span>&#10216;</span></button>
+
 
       <!-- Job Cards Wrapper -->
       <div 
@@ -31,9 +35,10 @@
           </button>
         </div>
       </div>
+      <button @click="scrollRight" class="button"><span>&#10217;</span></button>
 
       <!-- Right Arrow Button (Hidden on Mobile) -->
-      <button @click="scrollRight" class="arrow-btn right-arrow hidden md:flex"><i class="arrow right"></i></button>
+      <!-- <button @click="scrollRight" class="right-click" hidden md:flex></button> -->
 
     </div>
   </div>
@@ -62,6 +67,7 @@ export default {
       return this.jobs.slice(this.currentIndex, this.currentIndex + 3);
     }
   },
+  
   methods: {
     scrollLeft() {
       if (this.currentIndex > 0) {
@@ -75,9 +81,10 @@ export default {
     },
     viewPreviousYearPaper(job) {
   const formattedTitle = job.title.replace(/\s+/g, '-').toLowerCase();
-  const url = `https://example.com/previous-year-paper/${formattedTitle}`;  // Corrected line
+  const url = `https://example.com/previous-year-paper/${formattedTitle}`; // Enclose the URL in backticks (` `) for template literals
   window.open(url, '_blank');
 },
+
 
 
     startTouch(e) {
@@ -98,25 +105,53 @@ export default {
   background-color:#052A63;
 }
 .text-center{
-  color: purple;
+  color: #0152CC;
   font-size: medium;
+  padding: 10px;
+  background-color: #fff;
 }
 .underline{
-  color: purple;
+  color: #0152CC;
 }
-.arrow {
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
+
+.button {
+  position: absolute;
+  top: 310%;
+  right:-9px; /* Move it to the right side */
+  transform: translateY(-50%);
+  padding: 8px 12px;
+  font-size: 40px;
+  border: none;
+  background-color: #052A63;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:221px;
+  color: gray;
 }
-.right {
-  transform: rotate(-45deg);
-  -webkit-transform: rotate(-45deg);
+
+/* Move button after the third job card */
+.job-card:nth-child(3) ~ .button {
+  position: absolute;
+  right: -40px; /* Position after the third card */
 }
-.left {
-  transform: rotate(135deg);
-  -webkit-transform: rotate(135deg);
+
+
+.bottom{
+    padding: 8px 12px;  /* Smaller padding */
+  font-size: 40px;  /* Reduced font size */
+  border: none;  /* Removes default button border */
+  background-color: #052A63;  /* Makes the button background transparent */
+  cursor: pointer;  /* Adds pointer cursor on hover */
+  align-items: start;
+  justify-content: space-around;
+  position: absolute;
+  display: flex;
+  top:1950px;
+  width:200px;
+  transform: translateY(-50%);
+  color: gray;
 }
 
 .button-text {
@@ -136,6 +171,7 @@ export default {
   text-align: center; /* Ensures it's centered */
 }
 
+
 .job-card .button-text {
   margin-top: auto; /* Ensures button is at the bottom */
 }
@@ -154,11 +190,13 @@ export default {
   justify-content: center;
   margin: 0 auto;
   max-width: fit-content;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 /* Buttons for navigation */
-.arrow-btn {
-  background-color: black;
+
+/* .left-click{
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
@@ -171,14 +209,22 @@ export default {
   transform: translateY(-50%);
   z-index: 10;
 }
+.right-click{
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+} */
 
-.left-arrow {
-  left: 10px;
-}
 
-.right-arrow {
-  right: 10px;
-}
+
 
 /* Job Card Styles */
 .job-card {
