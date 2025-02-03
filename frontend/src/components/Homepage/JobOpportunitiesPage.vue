@@ -7,7 +7,7 @@
       
       <!-- <button @click="scrollLeft" class="left-click hidden md:flex" style="color: aliceblue; background-color: aquamarine;"> </button>
        -->
-       <button @click="scrollLeft" class="bottom"><span>&#10216;</span></button>
+       <!-- <button @click="scrollLeft" class="bottom"><span>&#10216;</span></button> -->
 
 
       <!-- Job Cards Wrapper -->
@@ -35,7 +35,9 @@
           </button>
         </div>
       </div>
-      <button @click="scrollRight" class="button"><span>&#10217;</span></button>
+      <button data-v-0e116434 class="tab right">›</button>
+      
+      <!-- <button @click="scrollRight" class="button"><span>&#10217;</span></button> -->
 
       <!-- Right Arrow Button (Hidden on Mobile) -->
       <!-- <button @click="scrollRight" class="right-click" hidden md:flex></button> -->
@@ -81,7 +83,7 @@ export default {
     },
     viewPreviousYearPaper(job) {
   const formattedTitle = job.title.replace(/\s+/g, '-').toLowerCase();
-  const url = `https://example.com/previous-year-paper/${formattedTitle}`; // Enclose the URL in backticks (` `) for template literals
+  const url = `https://example.com/previous-year-paper/${formattedTitle}`; // Corrected backticks
   window.open(url, '_blank');
 },
 
@@ -114,10 +116,10 @@ export default {
   color: #0152CC;
 }
 
-.button {
+/* .button {
   position: absolute;
-  top: 310%;
-  right:-9px; /* Move it to the right side */
+  top: 310%; */
+  /* right:-9px; 
   transform: translateY(-50%);
   padding: 8px 12px;
   font-size: 40px;
@@ -129,30 +131,13 @@ export default {
   align-items: center;
   width:221px;
   color: gray;
-}
+} */
 
 /* Move button after the third job card */
-.job-card:nth-child(3) ~ .button {
+/* .job-card:nth-child(3) ~ .button {
   position: absolute;
   right: -40px; /* Position after the third card */
-}
 
-
-.bottom{
-    padding: 8px 12px;  /* Smaller padding */
-  font-size: 40px;  /* Reduced font size */
-  border: none;  /* Removes default button border */
-  background-color: #052A63;  /* Makes the button background transparent */
-  cursor: pointer;  /* Adds pointer cursor on hover */
-  align-items: start;
-  justify-content: space-around;
-  position: absolute;
-  display: flex;
-  top:1950px;
-  width:200px;
-  transform: translateY(-50%);
-  color: gray;
-}
 
 .button-text {
   background-color: #0152CC;
@@ -170,6 +155,22 @@ export default {
   transition: 0.3s ease-in-out;
   text-align: center; /* Ensures it's centered */
 }
+.tab.right[data-v-0e116434]{
+    right: 0px;
+}
+.tab[data-v-0e116434]{
+    position: absolute;
+    top: 310%;
+    transform: translateY(-50%);
+    background-color: #052A63;
+    color: black;
+    border: none;
+    font-size: 3rem;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1000;
+    transition: all 0.3s ease-in-out;
+}
 
 
 .job-card .button-text {
@@ -183,15 +184,17 @@ export default {
 /* Container for the job cards */
 .job-cards-container {
   display: flex;
-  gap: 10px; 
+  gap: 15px; 
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 8px; 
+  padding: 10px; 
   justify-content: center;
   margin: 0 auto;
   max-width: fit-content;
-  margin-top: 50px;
+  margin-top: 70px;
   margin-bottom: 50px;
+  flex-wrap: nowrap;
+  scroll-snap-type: x mandatory;
 }
 
 /* Buttons for navigation */
@@ -285,21 +288,21 @@ export default {
   background: linear-gradient(90deg, #463CD7 0%, #FF1702 100%);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .job-card {
-    width: 200px;
-    height: 230px; /* Adjusted height */
-  }
 
+
+@media only screen and (max-width: 400px) {
   .job-cards-container {
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
+    flex-direction: column;  /* Stack items vertically */
+    overflow-x: hidden;  /* Remove horizontal scroll */
+    gap: 20px; /* Space between job cards */
+    align-items: center; /* Center align job cards */
   }
 
   .job-card {
-    scroll-snap-align: start;
+    width: 90%; /* Full width */
+    max-width: 350px; /* Prevent too wide cards */
+    height: auto; /* Adjust height dynamically */
   }
 }
+
 </style>
