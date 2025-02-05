@@ -27,7 +27,6 @@ export default {
 }
 </script>
 <style scoped>
-/* Default styles */
 .box {
     padding: 6vh 5vw;
 } 
@@ -50,8 +49,6 @@ export default {
     font-size: 1.5rem;
     font-weight: bolder;
     color: #ef5446;
-    /* background: #FF1702; */
-
     text-align: center;
 }
 
@@ -158,5 +155,4 @@ table tr th:last-child {
         padding: 10px;
     }
 }
-
 </style>
