@@ -164,13 +164,14 @@
   .dropdown a {
     display: flex;
     align-items: center;
-    color: black;
     transition: color 0.3s ease;
     text-decoration: none;
+    color: black !important;
   }
   
+  
   .dropdown a:hover {
-    color: orange;
+    color: orange !important;
   }
   
   .dropdown-menu a {

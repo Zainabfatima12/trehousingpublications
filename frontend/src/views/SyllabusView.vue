@@ -3,7 +3,6 @@
   <SyllabusTable />
   <SyllabusPdf />
   <SyllabusHigherSecondary/>
-  <syllabusPdf />
   <Footer />
 </template>
 
@@ -12,7 +11,6 @@ import Header from "@/components/Homepage/HeaderSec.vue";
 import Footer from "@/components/Homepage/FooterSec.vue";
 import SyllabusPdf from "@/components/syllabus/syllabusPdf.vue"; 
 import SyllabusTable from "@/components/syllabus/SyllabusTable.vue"; // ✅ Fixed import path
-import syllabusPdf from "@/components/syllabus/syllabusPdf.vue";
 import SyllabusHigherSecondary from "@/components/syllabus/SyllabusHigherSecondary.vue";
 
 export default {
@@ -22,7 +20,6 @@ export default {
     SyllabusTable, // ✅ Fixed case
     SyllabusPdf, // ✅ Fixed case
     SyllabusHigherSecondary,
-    syllabusPdf,
     Footer,
   },
 };
