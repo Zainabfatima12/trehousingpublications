@@ -1,55 +1,41 @@
 <template>
-    <h2 class="text-center"><u class="underline">JobOpportunities</u></h2>
+    <h2 class="text-center">
+      <u class="underline">Job Opportunities</u>
+    </h2>
     <div class="overflow-hidden px-4">
-
-    <div class="relative w-full">
-      <!-- Left Arrow Button (Hidden on Mobile) -->
-      
-      <!-- <button @click="scrollLeft" class="left-click hidden md:flex" style="color: aliceblue; background-color: aquamarine;"> </button>
-       -->
-       <!-- <button @click="scrollLeft" class="bottom"><span>&#10216;</span></button> -->
-
-
-      <!-- Job Cards Wrapper -->
-      <div 
-        class="job-cards-container flex gap-4 overflow-x-auto md:overflow-hidden" 
-        ref="jobCardsWrapper"
-        @touchstart="startTouch"
-        @touchmove="moveTouch"
-      >
-        <div v-for="(job, index) in visibleJobs" :key="index" class="job-card">
-          <h3 class="text-lg font-bold">{{ job.title }}</h3>
-          
-          <div class="job-details">
-            <p class="text-gray-600 flex items-center"><span>📍</span>{{ job.location }}</p>
-            <p class="date-text flex items-center"><span>📅</span>{{ job.date }}</p>
-            <p class="salary-text flex items-center"><span>💰</span>{{ job.salary }}</p>
+      <div class="job-cards-container-wrapper"> <!-- Added wrapper for proper positioning -->
+        <!-- Carousel Navigation Buttons -->
+        <button @click="scrollLeft" class="left-click">‹</button>
+  
+        <!-- Job Cards Wrapper -->
+        <div
+          class="job-cards-container flex gap-4 overflow-x-auto md:overflow-hidden"
+          ref="jobCardsWrapper"
+          @touchstart="startTouch"
+          @touchmove="moveTouch"
+        >
+          <div v-for="(job, index) in visibleJobs" :key="index" class="job-card">
+            <h3 class="text-lg font-bold">{{ job.title }}</h3>
+            <div class="job-details">
+              <p class="text-gray-600 flex items-center"><span>📍</span>{{ job.location }}</p>
+              <p class="date-text flex items-center"><span>📅</span>{{ job.date }}</p>
+              <p class="salary-text flex items-center"><span>💰</span>{{ job.salary }}</p>
+            </div>
+            <button @click="viewPreviousYearPaper(job)" class="button-text">
+              👁 View Previous Year Paper
+            </button>
           </div>
-
-          <!-- Clickable Button for Previous Year Papers -->
-          <button 
-            @click="viewPreviousYearPaper(job)" 
-            class="button-text"
-          >
-            👁 View Previous Year Paper
-          </button>
         </div>
+  
+        <!-- Right Arrow Button -->
+        <button @click="scrollRight" class="right-click">›</button>
       </div>
-      <button data-v-0e116434 class="tab right">›</button>
-      
-      <!-- <button @click="scrollRight" class="button"><span>&#10217;</span></button> -->
-
-      <!-- Right Arrow Button (Hidden on Mobile) -->
-      <!-- <button @click="scrollRight" class="right-click" hidden md:flex></button> -->
-
     </div>
-  </div>
-</template>
-
-<script>
-export default {
-    name: 'JobOpportunities',
-    
+  </template>
+  
+  <script>
+  export default {
+  name: 'JobOpportunities',
   data() {
     return {
       jobs: [
@@ -62,33 +48,50 @@ export default {
       ],
       currentIndex: 0,
       startX: 0,
+      isMobile: false,  // Track whether the user is on mobile
     };
+  },
+  created() {
+    this.checkDeviceWidth();  // Check initial device width on page load
+    window.addEventListener('resize', this.checkDeviceWidth);  // Listen for window resize
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.checkDeviceWidth);  // Clean up event listener
   },
   computed: {
     visibleJobs() {
-      return this.jobs.slice(this.currentIndex, this.currentIndex + 3);
+      // Show only 1 job card on mobile and 3 on larger screens
+      if (this.isMobile) {
+        return this.jobs.slice(this.currentIndex, this.currentIndex + 1); // Show only 1 job card
+      } else {
+        return this.jobs.slice(this.currentIndex, this.currentIndex + 3); // Show 3 job cards on desktop
+      }
     }
   },
-  
   methods: {
+    checkDeviceWidth() {
+      // Update the isMobile flag based on window width
+      this.isMobile = window.innerWidth <= 400;
+    },
     scrollLeft() {
       if (this.currentIndex > 0) {
-        this.currentIndex--;
+        this.currentIndex -= 1; // Move one job card back
+      } else {
+        this.currentIndex = this.jobs.length - 1; // Wrap around to the last job card
       }
     },
     scrollRight() {
-      if (this.currentIndex < this.jobs.length - 3) {
-        this.currentIndex++;
+      if (this.currentIndex < this.jobs.length - 1) {
+        this.currentIndex += 1; // Move one job card forward
+      } else {
+        this.currentIndex = 0; // Wrap around to the first job card
       }
     },
     viewPreviousYearPaper(job) {
-  const formattedTitle = job.title.replace(/\s+/g, '-').toLowerCase();
-  const url = `https://example.com/previous-year-paper/${formattedTitle}`; // Corrected backticks
-  window.open(url, '_blank');
-},
-
-
-
+      const formattedTitle = job.title.replace(/\s+/g, '-').toLowerCase();
+      const url = `https://example.com/previous-year-paper/${formattedTitle}`;
+      window.open(url, '_blank');
+    },
     startTouch(e) {
       this.startX = e.touches[0].clientX;
       this.scrollLeft = this.$refs.jobCardsWrapper.scrollLeft;
@@ -100,197 +103,154 @@ export default {
     }
   }
 };
-</script>
 
-<style scoped>
-.overflow-hidden {
-  background-color:#052A63;
-}
-.text-center{
-  color: #0152CC;
-  font-size: medium;
-  padding: 10px;
-  background-color: #fff;
-}
-.underline{
-  color: #0152CC;
-}
-
-/* .button {
-  position: absolute;
-  top: 310%; */
-  /* right:-9px; 
-  transform: translateY(-50%);
-  padding: 8px 12px;
-  font-size: 40px;
-  border: none;
-  background-color: #052A63;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width:221px;
-  color: gray;
-} */
-
-/* Move button after the third job card */
-/* .job-card:nth-child(3) ~ .button {
-  position: absolute;
-  right: -40px; /* Position after the third card */
-
-
-.button-text {
-  background-color: #0152CC;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  padding: 8px 0; /* Adjusted padding */
-  margin-top: auto; /* Pushes button to the bottom */
-  font-size: 0.9rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-  text-align: center; /* Ensures it's centered */
-}
-.tab.right[data-v-0e116434]{
-    right: 0px;
-}
-.tab[data-v-0e116434]{
-    position: absolute;
-    top: 310%;
-    transform: translateY(-50%);
+  </script>
+  
+  <style scoped>
+  .overflow-hidden {
     background-color: #052A63;
-    color: black;
-    border: none;
-    font-size: 3rem;
+  }
+  
+  .text-center {
+    color: #0152CC;
+    font-size: medium;
+    padding: 10px;
+    background-color: #fff;
+  }
+  
+  .underline {
+    color: #0152CC;
+  }
+  
+  /* Job Cards Container Wrapper */
+  .job-cards-container-wrapper {
+    position: relative; /* Ensures buttons are positioned relative to this container */
+    width: 100%;
+    overflow: hidden; /* Ensures nothing goes outside */
+  }
+  
+  /* Carousel Buttons */
+  .left-click,
+  .right-click {
+    position: absolute;
+    top: 50%;  /* Center the buttons vertically */
+    transform: translateY(-50%);  /* Correct vertical alignment */
+    background-color: transparent; /* Transparent background */
+    color: black;  /* Black color for arrows */
+    font-size: 5rem;  /* Increased font size for better visibility */
+    padding: 15px;  /* Padding for better click area */
+    z-index: 1000;  /* Ensure they are on top of other elements */
     cursor: pointer;
-    padding: 0;
-    z-index: 1000;
-    transition: all 0.3s ease-in-out;
-}
-
-
-.job-card .button-text {
-  margin-top: auto; /* Ensures button is at the bottom */
-}
-
-.button-text:hover {
-  background-color: darkblue;
-}
-
-/* Container for the job cards */
-.job-cards-container {
-  display: flex;
-  gap: 15px; 
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 10px; 
-  justify-content: center;
-  margin: 0 auto;
-  max-width: fit-content;
-  margin-top: 70px;
-  margin-bottom: 50px;
-  flex-wrap: nowrap;
-  scroll-snap-type: x mandatory;
-}
-
-/* Buttons for navigation */
-
-/* .left-click{
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-}
-.right-click{
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-} */
-
-
-
-
-/* Job Card Styles */
-.job-card {
-  width: 290px; /* Increased width */
-  height: 250px; /* Keep the height as is or adjust if necessary */
-  background: white;
-  padding: 8px;
-  border-radius: 0;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
-  overflow: hidden;
-  position: relative;
-}
-
-
-.job-card .job-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Space the paragraphs evenly */
-  text-align: left;
-  margin-top: 5px;
-}
-
-.job-card .job-details p {
-  margin: 8px 0; /* Adds space between each <p> tag */
-  flex-grow: 1; /* Ensures equal space distribution */
-}
-.date-text, .salary-text {
-  margin: 0; /* Remove margin if necessary */
-}
-
-.date-text{
-  text-align: left;
-  margin: 4px 0;
-  color: orange;
-}
-.salary-text {
-  color: blue;
-  text-align: left;
-  margin: 4px 0;
-}
-.job-card h3 {
-  font-size: 1.1rem; /* Decrease the font size */
-  font-weight: bold; /* Make the text bold */
-}
-
-
-.job-card::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #463CD7 0%, #FF1702 100%);
-}
-
-
-
-@media only screen and (max-width: 400px) {
+    display: flex;
+    align-items: center;
+    border: none;
+    justify-content: center;
+  }
+  
+  /* Left Arrow */
+  /* .left-click {
+    left: 100px;  
+  }
+   */
+  /* Right Arrow */
+  /* .right-click {
+    right: 100px;  
+  } */
+  
+  /* Job Cards Container */
+  .job-cards-container {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: fit-content;
+    margin-top: 70px;
+    margin-bottom: 50px;
+    flex-wrap: nowrap;
+    scroll-snap-type: x mandatory;
+  }
+  
+  /* Job Card Styles */
+  .job-card {
+    width: 290px;
+    height: 250px;
+    background: white;
+    padding: 8px;
+    border-radius: 0;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .job-card .job-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: left;
+    margin-top: 5px;
+  }
+  
+  .job-card .job-details p {
+    margin: 8px 0;
+  }
+  
+  .date-text, .salary-text {
+    margin: 0;
+  }
+  
+  .date-text {
+    color: orange;
+  }
+  
+  .salary-text {
+    color: blue;
+  }
+  
+  .job-card h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  
+  .job-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #463CD7 0%, #FF1702 100%);
+  }
+  
+  /* Button Styles */
+  .button-text {
+    background-color: #0152CC;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding: 8px 0;
+    margin-top: auto;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .button-text:hover {
+    background-color: darkblue;
+  }
+  
+  /* Responsive Styles */
+  @media only screen and (max-width: 400px) {
   .job-cards-container {
     flex-direction: column;  /* Stack items vertically */
     overflow-x: hidden;  /* Remove horizontal scroll */
@@ -302,7 +262,8 @@ export default {
     width: 90%; /* Full width */
     max-width: 350px; /* Prevent too wide cards */
     height: auto; /* Adjust height dynamically */
-  }
+}
 }
 
 </style>
+  
