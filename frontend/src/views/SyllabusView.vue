@@ -8,6 +8,7 @@
 
   <SyllabusHigherSecondary/>
   <LatestEvent />
+  <BctsExam/>
   <SyllabusHigherSecondary />
   <syllabusPdf />
   <Footer />
@@ -20,6 +21,7 @@ import SyllabusTable from "@/components/syllabus/SyllabusTable.vue";
 import SyllabusHigherSecondary from "@/components/syllabus/SyllabusHigherSecondary.vue";
 import LatestEvent from "@/components/syllabus/LatestEvent.vue";
 import syllabusPdf from "@/components/syllabus/syllabusPdf.vue";
+import BctsExam from "@/components/syllabus/BctsExam.vue";
 
 
 export default {
@@ -31,6 +33,7 @@ export default {
     syllabusPdf, // ✅ Fixed case
 
     LatestEvent,
+    BctsExam,
 
     SyllabusHigherSecondary,
     Footer,
