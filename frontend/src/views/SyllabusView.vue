@@ -7,6 +7,9 @@
   <LatestEvent/>
 
   <SyllabusHigherSecondary/>
+  <LatestEvent />
+  <SyllabusHigherSecondary />
+  <syllabusPdf />
   <Footer />
 </template>
 
@@ -17,6 +20,10 @@ import SyllabusPdf from "@/components/syllabus/syllabusPdf.vue";
 import SyllabusTable from "@/components/syllabus/SyllabusTable.vue"; // ✅ Fixed import path
 import SyllabusHigherSecondary from "@/components/syllabus/SyllabusHigherSecondary.vue";
 import LatestEvent from "@/components/syllabus/LatestEvent.vue";
+import syllabusPdf from "@/components/Syllabus/syllabusPdf.vue";
+import SyllabusHigherSecondary from "@/components/Syllabus/SyllabusHigherSecondary.vue";
+import LatestEvent from "@/components/Syllabus/LatestEvent.vue";
+
 
 export default {
   name: "SyllabusView",
