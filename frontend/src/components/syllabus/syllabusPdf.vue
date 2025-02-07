@@ -1,6 +1,8 @@
 <template>
     <div class="box">
-        <h1 class="head-pdf">Bihar Computer Science Teacher Syllabus PDF.</h1>
+        <div class="heading-pdf">
+            <h4>Bihar Computer Science Teacher Syllabus PDF.</h4>
+        </div>
         <p class="paragraph-pdf">The direct link to download Bihar Computer Science Teacher Syllabus Pdf has been given
             below. Candidate can download through the below link Bihar CS Teacher Syllabus PDF section wise.</p>
         <h3 class="table-head">Download Bihar Teacher PGT Computer Science PDF</h3>
@@ -28,20 +30,30 @@ export default {
 </script>
 <style scoped>
 .box {
-    padding: 6vh 5vw;
-} 
+    padding: 3vh 3vw;
+    font-family: 'Inter', sans-serif;
 
-.head-pdf {
+}
+
+.heading-pdf {
     background-color: #94D9FF;
-    color: rgb(39, 39, 209);
-    padding: 8px 3vw;
-    font-weight: 750;
-    font-size: 2.2vw;
+    padding: 15px;
+    color: #1717F8;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.heading-pdf h4 {
+    margin: 0;
+    padding: 0 10px;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
 }
 
 .paragraph-pdf {
-    font-size: 1.2rem;
-    font-weight: 490;
+    font-size: 18px;
+    color: #000;
+    margin-top: 14px;
 }
 
 .table-head {
@@ -68,14 +80,14 @@ export default {
     background-color: #d6574b;
     font-weight: 700;
     padding: 5px;
-    font-size: 1.3rem;
+    font-size: 1rem;
 }
 
 .table-data .rowData td {
     background: #E1F8FF;
     font-size: 1.2rem;
     font-weight: 550;
-    padding: 1.3vw; 
+    padding: 1.3vw;
     color: #ef5446;
 }
 
@@ -105,15 +117,27 @@ table tr th:last-child {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .head-pdf {
-        font-size: 2rem;
+    .heading-pdf {
+        font-size: 16px;
+        padding: 12px;
     }
+
+    .heading-pdf h4 {
+        font-size: 16px;
+    }
+
     .paragraph-pdf {
-        font-size: 1.1rem;
+        font-size: 17px;
     }
+
+    .table-head {
+        font-size: 1.3rem;
+    }
+
     .table-data .imp-link td {
         font-size: 1.2rem;
     }
+
     .table-data .rowData td {
         font-size: 1.1rem;
     }
@@ -121,17 +145,32 @@ table tr th:last-child {
 
 @media (max-width: 768px) {
     .box {
-        padding: 3vh 4vw;
-    } 
-    .head-pdf {
-        font-size: 1.8rem;
+        padding: 1vh 4vw;
     }
+
+    .heading-pdf {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .heading-pdf h4 {
+        font-size: 15px;
+        padding: 0 8px;
+    }
+
     .paragraph-pdf {
-        font-size: 1rem;
+        font-size: 16px;
     }
+
+    .table-head {
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
     .table-data .imp-link td {
         font-size: 1.1rem;
     }
+
     .table-data .rowData td {
         font-size: 1rem;
         padding: 15px;
@@ -139,17 +178,26 @@ table tr th:last-child {
 }
 
 @media (max-width: 480px) {
-    .head-pdf {
-        font-size: 1.5rem;
-        padding: 5px 15px;
+    .heading-pdf {
+        width: 100%;
+        text-align: center;
+        font-size: 20px;
+        margin: 0;
     }
+
+    .heading-pdf h4 {
+        font-size: 14px;
+    }
+
     .paragraph-pdf {
-        font-size: 0.9rem;
+        font-size: 14px;
     }
+
     .table-data .imp-link td {
         font-size: 1rem;
         padding: 5px;
     }
+
     .table-data .rowData td {
         font-size: 0.9rem;
         padding: 10px;
