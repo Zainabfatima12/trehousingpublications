@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="header">
-      <h4>Bihar Computer Science Teacher Syllabus for Higher Secondary Teacher.</h4>
+      <h4>
+        Bihar Computer Science Teacher Syllabus for Higher Secondary Teacher.
+      </h4>
     </div>
     <div class="content">
       <ul>
@@ -9,33 +11,48 @@
         <li>Paper 1 Language section is qualifying in nature.</li>
         <li>Paper 2 consists of two parts, Part-I and Part-II.</li>
         <li>
-          Part-I is a Subject paper. Candidate has to opt for Any One of the papers i.e. Hindi, Urdu, English, Sanskrit, Bengali, Maithili,
-          Magahi, Arabic, Persian, Bhojpuri, Pali, Prakrit, Mathematics, Physics, Chemistry, Botany, Zoology, History, Political Science,
-          Geography, Economics, Sociology, Psychology, Philosophy, Home Science, Computer Science, Commerce Accountancy, Music & Entrepreneurship.
+          Part-I is a Subject paper. Candidate has to opt for Any One of the
+          papers i.e. Hindi, Urdu, English, Sanskrit, Bengali, Maithili, Magahi,
+          Arabic, Persian, Bhojpuri, Pali, Prakrit, Mathematics, Physics,
+          Chemistry, Botany, Zoology, History, Political Science, Geography,
+          Economics, Sociology, Psychology, Philosophy, Home Science, Computer
+          Science, Commerce Accountancy, Music & Entrepreneurship.
         </li>
-        <li>The questions of the subject paper will be related to the syllabus of the Higher Secondary School but it's standard according to the prescribed minimum qualification of the candidate.</li>
         <li>
-          Part-ll is General Studies. It consists of Elementary Mathematics, General Awareness, General Science, Indian National Movements and Geography.
+          The questions of the subject paper will be related to the syllabus of
+          the Higher Secondary School but it's standard according to the
+          prescribed minimum qualification of the candidate.
         </li>
-        <li>The Questions of General Studies will be related to the syllabus of the Higher Secondary School but it's standard according to the prescribed minimum qualification of the candidate</li>
+        <li>
+          Part-ll is General Studies. It consists of Elementary Mathematics,
+          General Awareness, General Science, Indian National Movements and
+          Geography.
+        </li>
+        <li>
+          The Questions of General Studies will be related to the syllabus of
+          the Higher Secondary School but it's standard according to the
+          prescribed minimum qualification of the candidate
+        </li>
         <li>There is no negative marking for Language Section.</li>
-        <li>For General Studies, there is a provision for Negative Marking for a wrong answer... Read more at: <a href="https://www.adda247.com/teaching-jobs-exam/bihar-computer-science-teacher-syllabus/Bihar_Computer_Science_Teacher_Syllabus_Overview" target="_blank">
-  Read more at: https://www.adda247.com/teaching-jobs-exam/bihar-computer-science-teacher-syllabus/Bihar_Computer_Science_Teacher_Syllabus_Overview
-</a>
-
-</li>
-
+        <li>
+          For General Studies, there is a provision for Negative Marking for a
+          wrong answer... Read more at:
+          <a
+            href="https://www.adda247.com/teaching-jobs-exam/bihar-computer-science-teacher-syllabus/Bihar_Computer_Science_Teacher_Syllabus_Overview"
+            target="_blank"
+          >
+            Read more at:
+            https://www.adda247.com/teaching-jobs-exam/bihar-computer-science-teacher-syllabus/Bihar_Computer_Science_Teacher_Syllabus_Overview
+          </a>
+        </li>
       </ul>
     </div>
-
-
-
   </div>
 </template>
 
 <script>
 export default {
-  name: "SyllabusPage",
+  name: "SyllabusHigherSecondary",
 };
 </script>
 
@@ -63,7 +80,7 @@ export default {
 .header h4 {
   margin: 0;
   padding: 0 10px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-weight: bold;
 }
 
@@ -147,17 +164,15 @@ export default {
 @media (max-width: 480px) {
   .container {
     /* padding: 10px; */
-  
-    
   }
 
   .header {
     width: 100%;
-   
+
     /* padding: 12px;    */
     /* margin: 8px;      */
-    text-align: center;  
-    font-size: 20px;    
+    text-align: center;
+    font-size: 20px;
     margin: 0;
     /* padding: 0; */
   }
@@ -188,8 +203,4 @@ export default {
     text-align: center;
   }
 }
-
-
-
-
 </style>

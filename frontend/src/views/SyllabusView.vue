@@ -1,7 +1,7 @@
 <template>
   <Header />
-  <LatestEvent/>
-  <SyllabusHigherSecondary/>
+  <LatestEvent />
+  <SyllabusHigherSecondary />
   <syllabusPdf />
   <Footer />
 </template>
@@ -9,9 +9,9 @@
 <script>
 import Header from "@/components/Homepage/HeaderSec.vue";
 import Footer from "@/components/Homepage/FooterSec.vue";
-import syllabusPdf from "@/components/syllabus/syllabusPdf.vue";
-import SyllabusHigherSecondary from "@/components/syllabus/SyllabusHigherSecondary.vue";
-import LatestEvent from "@/components/syllabus/LatestEvent.vue";
+import syllabusPdf from "@/components/Syllabus/syllabusPdf.vue";
+import SyllabusHigherSecondary from "@/components/Syllabus/SyllabusHigherSecondary.vue";
+import LatestEvent from "@/components/Syllabus/LatestEvent.vue";
 
 export default {
   name: "SyllabusView",
