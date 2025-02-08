@@ -1,11 +1,6 @@
 <template>
   <Header />
-  <Notification/>
-
-  
-
-
- 
+  <Notification />
   <Footer />
 </template>
 
@@ -14,16 +9,12 @@ import Header from "@/components/Homepage/HeaderSec.vue";
 import Footer from "@/components/Homepage/FooterSec.vue";
 import Notification from "@/components/PYQs/NotificationPanel.vue";
 
-
-
-
 export default {
   name: "SyllabusView",
   components: {
     Header,
     Notification,
 
-  
     Footer,
   },
 };
