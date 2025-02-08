@@ -1,40 +1,33 @@
 <template>
   <Header />
-
+  <BctsExam />
   <SyllabusTable />
-
-
-  <LatestEvent/>
-
-  <SyllabusHigherSecondary/>
+  <Exampattern />
   <LatestEvent />
-  <BctsExam/>
   <SyllabusHigherSecondary />
-  <syllabusPdf />
+  <SyllabusPdf />
   <Footer />
 </template>
 
 <script>
 import Header from "@/components/Homepage/HeaderSec.vue";
 import Footer from "@/components/Homepage/FooterSec.vue";
-import SyllabusTable from "@/components/syllabus/SyllabusTable.vue"; 
-import SyllabusHigherSecondary from "@/components/syllabus/SyllabusHigherSecondary.vue";
-import LatestEvent from "@/components/syllabus/LatestEvent.vue";
-import syllabusPdf from "@/components/syllabus/syllabusPdf.vue";
-import BctsExam from "@/components/syllabus/BctsExam.vue";
-
+import SyllabusTable from "@/components/Syllabus/SyllabusTable.vue";
+import SyllabusHigherSecondary from "@/components/Syllabus/SyllabusHigherSecondary.vue";
+import LatestEvent from "@/components/Syllabus/LatestEvent.vue";
+import SyllabusPdf from "@/components/Syllabus/syllabusPdf.vue";
+import BctsExam from "@/components/Syllabus/BctsExam.vue";
+import Exampattern from "@/components/Syllabus/Exampattern.vue";
 
 export default {
   name: "SyllabusView",
   components: {
     Header,
-
-    SyllabusTable, // ✅ Fixed case
-    syllabusPdf, // ✅ Fixed case
-
+    SyllabusTable,
+    SyllabusPdf,
     LatestEvent,
     BctsExam,
-
+    Exampattern,
     SyllabusHigherSecondary,
     Footer,
   },
