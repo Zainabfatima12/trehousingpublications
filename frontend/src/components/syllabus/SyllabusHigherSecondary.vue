@@ -68,7 +68,7 @@ export default {
 }
 
 .header {
-  background-color: hsl(176, 73%, 60%);
+  background-color: hsl(193, 63%, 72%);
   padding: 15px;
   margin: 15px;
   color: rgb(39, 39, 209);
