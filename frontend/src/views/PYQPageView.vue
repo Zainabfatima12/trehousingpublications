@@ -1,25 +1,26 @@
 <template>
   <Header />
-  <Notification />
+  <TreFourZero />
+  <PyqOverview />
   <TextTable/>
-  <PyqSyPdf />
+  
   <Footer />
 </template>
 
 <script>
 import Header from "@/components/Homepage/HeaderSec.vue";
 import Footer from "@/components/Homepage/FooterSec.vue";
-import Notification from "@/components/PYQs/NotificationPanel.vue";
-import PyqSyPdf from "@/components/PYQs/PyqSyPdf.vue";
 import TextTable from "@/components/PYQ/TextTable.vue";
+import TreFourZero from "@/components/PYQ/TreFourZero.vue";
+import PyqOverview from '@/components/PYQ/PyqOverview.vue';
 
 export default {
   name: "SyllabusView",
   components: {
     Header,
-    Notification,
-    PyqSyPdf,
+    TreFourZero,
     TextTable,
+    PyqOverview,
 
     Footer,
   },
