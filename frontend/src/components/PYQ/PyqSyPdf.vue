@@ -25,38 +25,38 @@
 
 <script>
 export default {
-    name: 'syllbusPdf',
+    name: 'PyqSyPdf',
 }
 </script>
 <style scoped>
 .box {
     padding: 3vh 3vw;
     font-family: 'Inter', sans-serif;
+
 }
 
 .heading-pdf {
-    background-color: #94D9FF;
-    padding: 15px;
-    color: #1717F8;
-    font-size: 18px;
+    padding: 0px;
     border-radius: 5px;
+
 }
 
 .heading-pdf h4 {
+    font-size: 24px;
     margin: 0;
-    padding: 0 10px;
+    padding: 0 0px;
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
 }
 
 .paragraph-pdf {
-    font-size: 18px;
+    font-size: 17px;
     color: #000;
-    margin-top: 14px;
+    margin: 14px 0;
 }
 
 .table-head {
-    margin-bottom: -4px;
+    margin-bottom: -10px;
     font-size: 1.5rem;
     font-weight: bolder;
     color: #ef5446;
@@ -64,7 +64,7 @@ export default {
 }
 
 .horiz-line {
-    width: 60vw;
+    width: 50vw;
     border-color: #ef5446;
     margin-bottom: 15px;
 }
@@ -72,6 +72,7 @@ export default {
 .table-data {
     width: 100%;
     border-collapse: collapse;
+    margin: 25px 0px;
 }
 
 .table-data .imp-link td {
@@ -82,63 +83,35 @@ export default {
     font-size: 1rem;
 }
 
+.table-data .rowData {
+    border: 1.5px solid #000;
+}
+
 .table-data .rowData td {
-    background: #E1F8FF;
+    text-decoration: underline;
+    border: 1px solid #000;
     font-size: 1.2rem;
     font-weight: 550;
     padding: 1.3vw;
     color: #ef5446;
 }
 
-/* Remove outer table border */
-td,
-th {
-    border: 1px solid black;
-}
-
-table tr:first-child th {
-    border-top: none;
-}
-
-table tr:last-child td {
-    border-bottom: none;
-}
-
-table tr td:first-child,
-table tr th:first-child {
-    border-left: none;
-}
-
-table tr td:last-child,
-table tr th:last-child {
-    border-right: none;
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .heading-pdf {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    .heading-pdf h4 {
-        font-size: 16px;
-    }
-
     .paragraph-pdf {
         font-size: 17px;
     }
 
     .table-head {
-        font-size: 1.3rem;
+        font-size: 16px;
     }
 
     .table-data .imp-link td {
-        font-size: 1.2rem;
+        font-size: 1rem;
     }
 
     .table-data .rowData td {
-        font-size: 1.1rem;
+        font-size: 15px;
     }
 }
 
@@ -147,18 +120,12 @@ table tr th:last-child {
         padding: 1vh 4vw;
     }
 
-    .heading-pdf {
-        font-size: 16px;
-        padding: 10px;
-    }
-
     .heading-pdf h4 {
-        font-size: 15px;
-        padding: 0 8px;
+        font-size: 20px;
     }
 
     .paragraph-pdf {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .table-head {
@@ -167,11 +134,11 @@ table tr th:last-child {
     }
 
     .table-data .imp-link td {
-        font-size: 1.1rem;
+        font-size: 14px;
     }
 
     .table-data .rowData td {
-        font-size: 1rem;
+        font-size: 14px;
         padding: 15px;
     }
 }
@@ -179,27 +146,42 @@ table tr th:last-child {
 @media (max-width: 480px) {
     .heading-pdf {
         width: 100%;
-        text-align: center;
-        font-size: 20px;
-        margin: 0;
     }
 
     .heading-pdf h4 {
-        font-size: 14px;
+        font-size: 16px;
     }
 
     .paragraph-pdf {
+        font-size: 13px;
+        line-height: 1.3;
+    }
+
+    .table-head {
         font-size: 14px;
     }
 
+    .horiz-line {
+        width: 80vw;
+        margin-bottom: 15px;
+    }
+
     .table-data .imp-link td {
-        font-size: 1rem;
+        font-size: 12px;
         padding: 5px;
     }
 
     .table-data .rowData td {
-        font-size: 0.9rem;
+        font-size: 11px;
         padding: 10px;
+    }
+
+    .table-data .rowData {
+        border: 1px solid #000;
+    }
+
+    .table-data .rowData td {
+        border: 0.7px solid #000;
     }
 }
 </style>

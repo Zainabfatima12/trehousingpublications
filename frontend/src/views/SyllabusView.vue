@@ -1,9 +1,7 @@
 <template>
   <Header />
   <BctsExam />
-  <SyllabusTable />
-  <Exampattern />
-  <LatestEvent />
+  <RedTable/>
   <SyllabusHigherSecondary />
   <SyllabusPdf />
   <Footer />
@@ -12,22 +10,22 @@
 <script>
 import Header from "@/components/Homepage/HeaderSec.vue";
 import Footer from "@/components/Homepage/FooterSec.vue";
-import SyllabusTable from "@/components/Syllabus/SyllabusTable.vue";
-import SyllabusHigherSecondary from "@/components/Syllabus/SyllabusHigherSecondary.vue";
-import LatestEvent from "@/components/Syllabus/LatestEvent.vue";
-import SyllabusPdf from "@/components/Syllabus/syllabusPdf.vue";
-import BctsExam from "@/components/Syllabus/BctsExam.vue";
-import Exampattern from "@/components/Syllabus/Exampattern.vue";
+
+import SyllabusHigherSecondary from "@/components/syllabus/SyllabusHigherSecondary.vue";
+
+import SyllabusPdf from "@/components/syllabus/syllabusPdf.vue";
+import BctsExam from "@/components/syllabus/BctsExam.vue";
+import RedTable from "@/components/syllabus/RedTable.vue";
 
 export default {
   name: "SyllabusView",
   components: {
     Header,
-    SyllabusTable,
+
     SyllabusPdf,
-    LatestEvent,
+    RedTable,
     BctsExam,
-    Exampattern,
+    
     SyllabusHigherSecondary,
     Footer,
   },
