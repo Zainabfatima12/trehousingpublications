@@ -1,22 +1,21 @@
 <template>
     <div class="box">
         <div class="heading-pdf">
-            <h4>Bihar Computer Science Teacher Syllabus PDF.</h4>
+            <h4>Bihar Computer Science Teacher Syllabus PDF</h4>
         </div>
         <p class="paragraph-pdf">The direct link to download Bihar Computer Science Teacher Syllabus Pdf has been given
-            below. Candidate can download through the below link Bihar CS Teacher Syllabus PDF section wise.</p>
-        <h3 class="table-head">Download Bihar Teacher PGT Computer Science PDF</h3>
-        <hr class="horiz-line" />
+            below. Candidate can download through the below link Bihar CS Teacher Syllabus PDF section wise.</p><br>
+        <h3 class="table-head"><u class="underline">Download Bihar Teacher PGT Computer Science</u></h3><br>
         <table class="table-data">
             <tr class="imp-link">
                 <td colspan="2">Important Links</td>
             </tr>
             <tr class="rowData">
-                <td>BPSC Bihar Teacher Syllabus 2025</td>
+                <td>BPSC Bihar Teacher Syllabus 2023</td>
                 <td>Bihar Teacher in Salary Hand</td>
             </tr>
             <tr class="rowData">
-                <td>Bihar Teacher Vacancy 2025 </td>
+                <td>Bihar Teacher Vacancy 2023 </td>
                 <td>Bihar 7th Phase Selection Process</td>
             </tr>
         </table>
@@ -38,7 +37,11 @@ export default {
 .heading-pdf {
     padding: 0px;
     border-radius: 5px;
+    font-weight: bolder;
 
+}
+.underline{
+    color: lightpink;
 }
 
 .heading-pdf h4 {
@@ -50,27 +53,27 @@ export default {
 }
 
 .paragraph-pdf {
-    font-size: 17px;
+    font-size: medium;
     color: #000;
     margin: 14px 0;
 }
 
 .table-head {
     margin-bottom: -10px;
-    font-size: 1.5rem;
-    font-weight: bolder;
-    color: #ef5446;
+    font-size: medium;
+    font-weight: bold;
+    color: lightpink;
     text-align: center;
 }
 
-.horiz-line {
+/* .horiz-line {
     width: 50vw;
     border-color: #ef5446;
     margin-bottom: 15px;
-}
+} */
 
 .table-data {
-    width: 100%;
+    width:100%;
     border-collapse: collapse;
     margin: 25px 0px;
 }
@@ -79,8 +82,8 @@ export default {
     color: #fff;
     background-color: #d6574b;
     font-weight: 700;
-    padding: 5px;
-    font-size: 1rem;
+    padding: 15px;
+    font-size: medium;
 }
 
 .table-data .rowData {
@@ -90,10 +93,11 @@ export default {
 .table-data .rowData td {
     text-decoration: underline;
     border: 1px solid #000;
-    font-size: 1.2rem;
+    font-size: medium;
     font-weight: 550;
     padding: 1.3vw;
-    color: #ef5446;
+    color: lightpink;
+    text-align: center;
 }
 
 /* Responsive Design */
