@@ -111,7 +111,7 @@ line-height: 36.31px;
   background-color: #FFFFFF;
   display: flex;
   align-items: center;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   box-sizing: border-box;
 margin-bottom: 20px;
   
