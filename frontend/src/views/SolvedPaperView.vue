@@ -1,5 +1,7 @@
 <template>
   <Header />
+
+ <TestSeriesHeroSection/>
   <HeaderDropdown />
   <downloadAttempt />
   <faq/>
@@ -14,6 +16,8 @@ import faq from'@/components/SolvedPaper/FAQ.vue';
 import R_M from '@/components/SolvedPaper/Recomm_mock.vue'
 import downloadAttempt from '@/components/SolvedPaper/DownloadAttempt.vue';
 import HeaderDropdown from '@/components/SolvedPaper/HeaderDropdown.vue';
+
+import TestSeriesHeroSection from '@/components/SolvedPaper/TestSeriesHeroSection.vue';
 export default {
   name: "SolvedPaperView",
   components: {
@@ -22,6 +26,7 @@ export default {
     R_M,
     downloadAttempt,
     HeaderDropdown,
+    TestSeriesHeroSection,
 
     Footer,
   },

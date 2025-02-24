@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style scoped>
-@import 'bootstrap-icons/font/bootstrap-icons.css';
+/* @import 'bootstrap-icons/font/bootstrap-icons.css'; */
 
 .attemptpaper {
     padding: 3vh 5vw 0;
