@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style scoped>
-@import 'bootstrap-icons/font/bootstrap-icons.css';
+/* @import 'bootstrap-icons/font/bootstrap-icons.css'; */
 
 .header {
   background-color: #fff;
