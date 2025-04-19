@@ -1,33 +1,63 @@
 <template>
-    <div class="box">
-        <div class="heading-pdf">
-            <h4>Bihar Computer Science Teacher Syllabus PDF.</h4>
-        </div>
-        <p class="paragraph-pdf">The direct link to download Bihar Computer Science Teacher Syllabus Pdf has been given
-            below. Candidate can download through the below link Bihar CS Teacher Syllabus PDF section wise.</p>
-        <h3 class="table-head">Download Bihar Teacher PGT Computer Science PDF</h3>
-        <hr class="horiz-line" />
-        <table class="table-data">
-            <tr class="imp-link">
-                <td colspan="2">Important Links</td>
-            </tr>
-            <tr class="rowData">
-                <td>BPSC Bihar Teacher Syllabus 2025</td>
-                <td>Bihar Teacher in Salary Hand</td>
-            </tr>
-            <tr class="rowData">
-                <td>Bihar Teacher Vacancy 2025 </td>
-                <td>Bihar 7th Phase Selection Process</td>
-            </tr>
-        </table>
+    <div class="box" v-if="pdfContent">
+      <div class="heading-pdf">
+        <h4>{{ pdfContent.title }}</h4>
+      </div>
+      <p class="paragraph-pdf">{{ pdfContent.description }}</p>
+  
+      <h3 class="table-head">Download Bihar Teacher PGT Computer Science PDF</h3>
+      <hr class="horiz-line" />
+  
+      <table class="table-data">
+        <tr class="imp-link">
+          <td colspan="2">Important Links</td>
+        </tr>
+        <tr class="rowData">
+          <td colspan="2">
+            <a
+              :href="pdfContent.reference_links"
+              target="_blank"
+              class="pdf-link"
+            >
+              {{ pdfContent.reference_links }}
+            </a>
+          </td>
+        </tr>
+      </table>
     </div>
-</template>
-
-<script>
-export default {
-    name: 'syllbusPdf',
-}
-</script>
+    <div v-else>
+      <p>Loading syllabus PDF details...</p>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    name: 'SyllabusPdf',
+    data() {
+      return {
+        pdfContent: null,
+      };
+    },
+    mounted() {
+      this.fetchPdfContent();
+    },
+    methods: {
+      async fetchPdfContent() {
+        try {
+          const res = await fetch("https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1");
+          const data = await res.json();
+  
+          const contents = data.course.subjects[0].subject_contents;
+          this.pdfContent = contents.find(content =>
+            content.title.includes("PDF")
+          );
+        } catch (error) {
+          console.error("Failed to load PDF syllabus data:", error);
+        }
+      }
+    }
+  };
+  </script>
 <style scoped>
 .box {
     padding: 3vh 3vw;

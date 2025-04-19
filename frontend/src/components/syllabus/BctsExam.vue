@@ -28,6 +28,7 @@
           </ul>
         </nav>
       </aside>
+      
       <div class="container">
         <div class="news-sidebar">
           <h3 class="news-title">Latest Event</h3>
@@ -48,59 +49,37 @@
         </div>
       </div>
     </div>
+    
+<!-- cgnhghilkjhgfhfgdffghjkl; -->
+    <div v-if="course && subject" class="content">
+    <!-- 1. Course Title -->
+    <h1 class="course-title">{{ course.title }}</h1>
 
-    <div class="content">
-      <div class="header">
-        <h1>
-          <img
-            src="@/assets/bsct.png"
-            alt="icon"
-            class="heading-icon"
-          />
-          Bihar Computer Teacher Syllabus and Exam Pattern 2023, Check Marking Scheme!
-        </h1>
-        <p>
-          BPSC Bihar Computer Science Teacher Syllabus 2023 is released by Education
-          Department of Bihar. Candidates must access the BPSC Bihar Computer Science
-          Teacher Syllabus from the article below.
-        </p>
-      </div>
-      <div class="image-section">
-        <img
-          src="@/assets/bcts.png"
-          alt="BPSC Bihar Computer Science Teacher Syllabus"
-        />
-      </div>
-      <div class="download-section">
-        <h2>BPSC TRE(11–12) Computer Science Syllabus.</h2>
-        <button class="download-btn" @click="downloadPDF">Download</button>
-      </div>
-      <div class="syllabus-overview">
-        <h3 class="section-heading">Bihar Computer Science Teacher Syllabus Overview</h3>
-        <p>
-          The Bihar Computer Science Teacher Recruitment 2023 is conducted by the
-          Education Department of Bihar. The candidates must refer to the following
-          table for more information on the Bihar Computer Science Teacher Syllabus....
-          <a
-            href="https://www.adda247.com/teaching-jobs-exam/bihar-computer-science-teacher-syllabus"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read more
-          </a>
-        </p>
-      </div>
-      <div class="exam-pattern">
-        <h3 class="section-heading"> Bihar Computer Science Teacher Exam Pattern</h3>
-        <p>
-          BPSC Higher Secondary Teacher Examination for Computer Science Subject will be
-          held for 220 marks for 220 questions. There will be 2 papers held for Bihar
-          Computer Science Higher Secondary Teacher Recruitment Exam 2023. Bihar Computer
-          Science Teacher Paper 1 will be held for Language and Paper 2 will have General
-          Studies.
-        </p>
-      </div>
+    <!-- 2. Course Description -->
+    <p class="course-description">{{ course.description }}</p>
+
+    <!-- 3. Course Banner -->
+     
+    <div class="image-section">
+      <img :src="getFullUrl(course.banner)" alt="Course Banner" class="course-banner" />
     </div>
+
+    <!-- 4. Subject Section -->
+    <div class="download-section">
+      <h2>{{ subject.title }} </h2>
+
+      <p>{{ subject.description }}</p>
+
+      <a :href="getFullUrl(subject.pdf_link)" target="_blank" rel="noopener noreferrer">
+        <button class="download-btn">Download PDF</button>
+      </a>
+
+    </div>
+
+    
+  </div>
+  <div v-else class="loading">Loading...</div>
+
   </div>
 </template>
 
@@ -109,6 +88,10 @@ export default {
   name: 'SyllabusAndNews',
   data() {
     return {
+      course: null,
+      subject: null,
+ 
+
       menuItems: [
         { text: "All subject Syllabus", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
         { text: "Bihar Computer Teacher", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
@@ -118,7 +101,9 @@ export default {
         { text: "SSC CGL", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
         { text: "Bank SO", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] }
       ],
+
       openDropdown: null,
+
       newsLinks: [
         {
           id: 1,
@@ -164,38 +149,63 @@ export default {
     };
   },
   methods: {
-    // Toggle the syllabus dropdown and close others
-    toggleSyllabusDropdown(index) {
-      // Toggle the isOpen state of the clicked item
-      this.menuItems[index].isOpen = !this.menuItems[index].isOpen;
+    getFullUrl(path) {
+      if (!path) return '';
+      return path.startsWith('http') ? path : `https://cms.trehousingpublication.com${path}`;
+    },
 
-      // Close other dropdowns
-      this.menuItems.forEach((item, idx) => {
-        if (idx !== index) {
-          item.isOpen = false;
+    async fetchSyllabus() {
+      try {
+        const res = await fetch("https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1");
+        const data = await res.json();
+
+        //  Make sure response has expected structure
+        if (data && data.course && data.course.subjects && data.course.subjects.length > 0) {
+          this.course = data.course;
+          this.subject = data.course.subjects[0];
+        } else {
+          console.error("Invalid API structure:", data);
         }
-      });
-    },
-
-    // Toggle the news dropdown for a specific id
-    toggleNewsDropdown(id) {
-      // Toggle the news dropdown state
-      this.openDropdown = this.openDropdown === id ? null : id;
-    },
-
-    // Function to open a PDF in a new tab
-    downloadPDF() {
-      window.open('https://example.com/path-to-your-pdf.pdf', '_blank');
+      } catch (err) {
+        console.error("Failed to fetch syllabus:", err);
+      }
     }
+  },
+  mounted() {
+    this.fetchSyllabus();
   }
 };
 </script>
 
 
 
-
 <style scoped>
 /* Custom styles for dropdowns and rotation */
+
+
+.heading-icon {
+  width: 40px;
+  margin-right: 10px;
+}
+.download-btn {
+  background: #1976d2;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.section-heading {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
 .dropdown-arrow {
   transition: transform 0.3s ease;
 }

@@ -1,48 +1,17 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="syllabusData">
     <div class="header">
-      <h4>
-        Bihar Computer Science Teacher Syllabus for Higher Secondary Teacher.
-      </h4>
+      <h4>{{ syllabusData.title }}</h4>
     </div>
     <div class="content">
       <ul>
-        <li>Question Pattern - MCQ</li>
-        <li>Paper 1 Language section is qualifying in nature.</li>
-        <li>Paper 2 consists of two parts, Part-I and Part-II.</li>
-        <li>
-          Part-I is a Subject paper. Candidate has to opt for Any One of the
-          papers i.e. Hindi, Urdu, English, Sanskrit, Bengali, Maithili, Magahi,
-          Arabic, Persian, Bhojpuri, Pali, Prakrit, Mathematics, Physics,
-          Chemistry, Botany, Zoology, History, Political Science, Geography,
-          Economics, Sociology, Psychology, Philosophy, Home Science, Computer
-          Science, Commerce Accountancy, Music & Entrepreneurship.
+        <li v-for="(point, index) in parsedDescription" :key="index">
+          {{ point }}
         </li>
         <li>
-          The questions of the subject paper will be related to the syllabus of
-          the Higher Secondary School but it's standard according to the
-          prescribed minimum qualification of the candidate.
-        </li>
-        <li>
-          Part-ll is General Studies. It consists of Elementary Mathematics,
-          General Awareness, General Science, Indian National Movements and
-          Geography.
-        </li>
-        <li>
-          The Questions of General Studies will be related to the syllabus of
-          the Higher Secondary School but it's standard according to the
-          prescribed minimum qualification of the candidate
-        </li>
-        <li>There is no negative marking for Language Section.</li>
-        <li>
-          For General Studies, there is a provision for Negative Marking for a
-          wrong answer... Read more at:
-          <a
-            href="https://www.adda247.com/teaching-jobs-exam/bihar-computer-science-teacher-syllabus/Bihar_Computer_Science_Teacher_Syllabus_Overview"
-            target="_blank"
-          >
-            Read more at:
-            https://www.adda247.com/teaching-jobs-exam/bihar-computer-science-teacher-syllabus/Bihar_Computer_Science_Teacher_Syllabus_Overview
+          Read more at:
+          <a :href="syllabusData.reference_links" target="_blank">
+            {{ syllabusData.reference_links }}
           </a>
         </li>
       </ul>
@@ -51,8 +20,40 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "SyllabusHigherSecondary",
+  data() {
+    return {
+      syllabusData: null,
+    };
+  },
+  computed: {
+    parsedDescription() {
+      if (!this.syllabusData?.description) return [];
+      // Split the description by newline or \r\n
+      return this.syllabusData.description.split(/\r?\n/).filter(Boolean);
+    },
+  },
+  mounted() {
+    this.fetchSyllabus();
+  },
+  methods: {
+    async fetchSyllabus() {
+      try {
+        const res = await axios.get("https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1");
+        const subjectContents = res.data.course.subjects[0].subject_contents;
+
+        // Load the first syllabus content item (or use a specific one by title if needed)
+        this.syllabusData = subjectContents.find(content =>
+          content.title.includes("Higher Secondary Teacher")
+        );
+      } catch (error) {
+        console.error("Error fetching syllabus data:", error);
+      }
+    },
+  },
 };
 </script>
 
