@@ -1,4 +1,3 @@
-
 <template>
   <div>
     <nav ref="navMenu">
@@ -7,7 +6,7 @@
         <h1>LOGO</h1>
       </div>
 
-      <!-- Mobile Menu Icon -->
+      <!-- Mobile Menu Icon (hamburger) -->
       <div class="menu-icon" @click="toggleMenu" ref="menuIcon">
         <div></div>
         <div></div>
@@ -16,22 +15,37 @@
 
       <!-- Navigation Links -->
       <ul :class="['nav-links', { active: isMenuActive }]">
+        <!-- Loop through top-level menu items -->
         <li v-for="(item, index) in menuItems" :key="index" class="dropdown">
+          <!-- Main menu item -->
           <a href="#" @click.prevent="toggleDropdown(index)">
-            {{ item.name }} <span v-if="item.submenu" class="dropdown-icon">&and;</span>
+            {{ item.name }}
+
+            <!-- Show arrow if submenu exists -->
+            <span v-if="item.submenu" class="dropdown-icon" :class="{ rotated: activeDropdown === index }">
+              &and;
+            </span>
           </a>
 
           <!-- Dropdown Menu -->
           <ul v-if="item.submenu" :class="['dropdown-menu', { show: activeDropdown === index }]">
             <li v-for="(subItem, subIndex) in item.submenu" :key="subIndex" class="sub-dropdown">
               <a href="#" @click.prevent="toggleSubDropdown(index, subIndex)">
-                {{ subItem.name }} <span v-if="subItem.submenu" class="sub-dropdown-icon">+</span>
+                {{ subItem.name }}
+                <span v-if="subItem.submenu" :class="['sub-dropdown-icon', { rotated: isSubmenuOpen }]">
+                  &gt;
+                </span>
+
+
               </a>
 
               <!-- Sub-dropdown Menu -->
-              <ul v-if="subItem.submenu" :class="['sub-dropdown-menu', { show: activeSubDropdown[index] === subIndex }]">
+              <ul v-if="subItem.submenu" :class="[
+                'sub-dropdown-menu',
+                { show: activeSubDropdown[`${index}-${subIndex}`] },
+              ]">
                 <li v-for="(subSubItem, subSubIndex) in subItem.submenu" :key="subSubIndex">
-                  <a href="#">{{ subSubItem }}</a>
+                  <a href="#">{{ subSubItem.title || subSubItem }}</a>
                 </li>
               </ul>
             </li>
@@ -46,9 +60,10 @@
 export default {
   data() {
     return {
-      isMenuActive: false,
-      activeDropdown: null,
-      activeSubDropdown: {},
+      isMenuActive: false,  // Controls mobile menu visibility
+      activeDropdown: null, // Tracks which top-level dropdown is open
+      activeSubDropdown: {}, // Tracks which sub-dropdowns are open
+      hasFetchedSyllabus: false, // Prevents refetching "Syllabus"
       menuItems: [
         {
           name: "Home",
@@ -62,60 +77,7 @@ export default {
         },
         {
           name: "Syllabus",
-          submenu: [
-            {
-              name: "BPSC TRE",
-              submenu: [
-                "PGT(11-12)",
-                "TGT(9-10)",
-                "UPPER PRT(6-8)",
-                "PRT(1-5)",
-              ],
-            },
-            {
-              name: "BIHAR STET",
-              submenu: ["STET 1 TGT (9-10)", "STET 2 PGT(11-12)"],
-            },
-            { name: "KVS", submenu: ["PGT", "TGT", "PRT"] },
-            { name: "NVS", submenu: ["PGT", "TGT", "PRT"] },
-            { name: "DSSB", submenu: ["PGT", "TGT", "PRT"] },
-            {
-              name: "TET(1-8)",
-              submenu: [
-                "CTET",
-                "BIHAR",
-                "JHARKHAND",
-                "UTTAR PRADESH",
-                "UTTARAKHAND",
-                "MADHYA PRADESH",
-                "RAJASTHAN",
-                "HARYANA",
-                "HIMACHAL PRADESH",
-                "ASSAM",
-                "GUJARAT",
-                "CHHATTISGARH",
-                "MAHARASHTRA",
-                "ANDHRA PRADESH",
-                "ARUNACHAL PRADESH",
-                "GOA",
-                "KARNATAKA",
-                "KERALA",
-                "MANIPUR",
-                "MEGHALAYA",
-                "MIZORAM",
-                "NAGALAND",
-                "ODISHA",
-                "PUNJAB",
-                "SIKKIM",
-                "TAMIL NADU",
-                "TELANGANA",
-                "TRIPURA",
-                "WEST BENGAL",
-              ],
-            },
-            { name: "HARYANA(HPSP)" },
-            { name: "UP LT GRADE GIC" },
-          ],
+          submenu: [], // Will be fetched dynamically
         },
         {
           name: "PYQP & Answer Key",
@@ -123,18 +85,51 @@ export default {
             {
               name: "BPSC",
               submenu: [
-                "PGT (11-12)",
-                "TGT (9-12)",
-                "UPPER PRT(6-8)",
-                "PRT(1-5)",
+                { title: "PGT (11-12)" },
+                { title: "TGT (9-10)" },
+                { title: "UPPER PRT (6-8)" },
+                { title: "PRT (1-5)" },
               ],
             },
-            { name: "BIHAR STET", submenu: ["STET 1 TGT (9-10)", "STET 2 PGT(11-12)"] },
-            { name: "KVS", submenu: ["PGT", "TGT", "PRT"] },
-            { name: "NVS", submenu: ["PGT", "TGT", "PRT"] },
-            { name: "DSSB", submenu: ["PGT", "TGT", "PRT"] },
-            { name: "HARYANA(HPSP)", submenu: ["PGT"] },
-            { name: "UP LT GRADE GIC", submenu: ["PGT"] },
+            {
+              name: "BIHAR STET",
+              submenu: [
+                { title: "STET 1 TGT (9-10)" },
+                { title: "STET 2 PGT (11-12)" },
+              ],
+            },
+            {
+              name: "KVS",
+              submenu: [
+                { title: "PGT" },
+                { title: "TGT" },
+                { title: "PRT" },
+              ],
+            },
+            {
+              name: "NVS",
+              submenu: [
+                { title: "Shivam" },
+                { title: "TGT" },
+                { title: "PRT" },
+              ],
+            },
+            {
+              name: "DSSB",
+              submenu: [
+                { title: "PGT" },
+                { title: "TGT" },
+                { title: "PRT" },
+              ],
+            },
+            {
+              name: "HARYANA(HPSP)",
+              submenu: [{ title: "PGT" }],
+            },
+            {
+              name: "UP LT GRADE GIC",
+              submenu: [{ title: "PGT" }],
+            },
           ],
         },
         {
@@ -143,49 +138,89 @@ export default {
             {
               name: "BPSC TRE",
               submenu: [
-                "BPSC TRE 1.0 (11-12) Computer Science",
-                "BPSC TRE 2.0 (11-12) Computer Science",
-                "BPSC TRE 2.0 (9-10) Computer Science",
-                "BPSC TRE 3.0 (11-12) Computer Science",
-                "BPSC TRE 3.0 (6-10) Computer Science",
+                { title: "BPSC TRE 1.0 (11-12) Computer Science" },
+                { title: "BPSC TRE 2.0 (11-12) Computer Science" },
+                { title: "BPSC TRE 2.0 (9-10) Computer Science" },
+                { title: "BPSC TRE 3.0 (11-12) Computer Science" },
+                { title: "BPSC TRE 3.0 (6-10) Computer Science" },
               ],
             },
           ],
         },
         {
           name: "Mock Test",
-          
         },
       ],
     };
   },
   methods: {
+    //  Toggle mobile menu open/close (hamburger icon)
     toggleMenu() {
       this.isMenuActive = !this.isMenuActive;
     },
-    toggleDropdown(index) {
-      this.activeDropdown = this.activeDropdown === index ? null : index;
-      this.activeSubDropdown = {}; // Reset sub-dropdowns
-    },
-    toggleSubDropdown(parentIndex, subIndex) {
-      this.activeSubDropdown[parentIndex] =
-        this.activeSubDropdown[parentIndex] === subIndex ? null : subIndex;
-    },
-    closeDropdowns(event) {
-      if (!this.$refs.navMenu.contains(event.target)) {
+
+    //  Toggle top-level dropdown (e.g., Home, Syllabus, PYQP, etc.)
+    async toggleDropdown(index) {
+      const clickedItem = this.menuItems[index];
+
+      //  Fetch syllabus data only if it's clicked and not already loaded
+      if (clickedItem.name === "Syllabus" && clickedItem.submenu.length === 0) {
+        try {
+          const response = await fetch("https://cms.trehousingpublication.com/api/v1/");
+          const apiData = await response.json();
+
+          // Format the fetched data for submenu compatibility
+          const formattedData = apiData.map((item) => ({
+            name: item.title,
+            submenu: item.subjects, // expects subjects array
+          }));
+
+          //  Assign the formatted submenu to the "Syllabus" menu
+          this.menuItems[index].submenu = formattedData;
+        } catch (error) {
+          console.error("Error fetching syllabus:", error);
+        }
+      }
+
+      //  If already active, close it
+      if (this.activeDropdown === index) {
         this.activeDropdown = null;
+        this.activeSubDropdown = {}; // Close all submenus
+      } else {
+        //  Close any open dropdowns first, then open the selected one
+        this.activeDropdown = index;
         this.activeSubDropdown = {};
       }
     },
-  },
-  mounted() {
-    document.addEventListener("click", this.closeDropdowns);
-  },
-  beforeUnmount() {
-    document.removeEventListener("click", this.closeDropdowns);
-  },
+
+    //  Toggle nested sub-dropdown (e.g., inside PYQP or Syllabus)
+    toggleSubDropdown(parentIndex, subIndex) {
+      const key = `${parentIndex}-${subIndex}`;
+
+      //  Only allow one sub-dropdown to be open at a time
+      if (this.activeSubDropdown[key]) {
+        this.activeSubDropdown = {}; // close if already active
+      } else {
+        this.activeSubDropdown = {
+          [key]: true, // open only the clicked one
+        };
+      }
+    },
+
+    //  Close dropdowns when clicking outside
+    closeDropdowns(event) {
+      const dropdown = this.$el.querySelector(".dropdown-container");
+      if (dropdown && !dropdown.contains(event.target)) {
+        this.activeDropdown = null;
+        this.activeSubDropdown = {};
+      }
+
+    },
+  }
+
 };
 </script>
+
 
 <style scoped>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css");
@@ -223,7 +258,7 @@ nav {
   align-items: center;
 }
 
-.nav-links a:hover{
+.nav-links a:hover {
   text-decoration: underline;
   font-weight: bold !important;
 }
@@ -239,18 +274,40 @@ nav {
   width: auto;
   z-index: 1001;
   border: none;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 
 .dropdown-menu.show {
   display: block;
 }
+
 /* Styling for dropdown icons */
 .dropdown-icon {
-  padding-left: 5px;
+  padding-left: 7px;
   font-size: 20px;
   font-weight: bold;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  transform: rotate(0deg);
+
+  cursor: pointer;
 }
+
+.dropdown-icon.rotated {
+  transform: rotate(180deg);
+  margin-top: 10px;
+  text-decoration: none ;
+  /* remove underline when rotated */
+  margin-left: 10px;
+}
+
+.dropdown-icon:hover {
+  text-decoration: none ;
+}
+
+
+
+
 
 /* Sub-dropdown menu */
 
@@ -274,8 +331,8 @@ nav {
   font-size: 20px;
   width: 30vh;
   /* background-color: yellow; */
-  
-  
+
+
 }
 
 .sub-dropdown-menu {
@@ -288,7 +345,7 @@ nav {
   list-style: none;
   padding: 10px 0;
   width: 40vh;
-  height: 40vh;
+  height: auto;
   overflow-y: auto;
   z-index: 1000;
   scroll-behavior: smooth;
@@ -300,13 +357,30 @@ nav {
   /* margin-top: 20px; */
 }
 
-.sub-dropdown-menu a{
+.sub-dropdown-menu a {
   padding: 10px 0;
 }
 
 .sub-dropdown-menu.show {
   display: block;
 }
+
+.sub-dropdown-icon {
+  padding-left: 7px;
+  font-size: 20px;
+  font-weight: bold;
+  display: inline-block; /* Needed for transform to work */
+  transition: transform 0.3s ease;
+  transform: rotate(0deg);
+  cursor: pointer;
+}
+
+.sub-dropdown-icon.rotated {
+  transform: rotate(90deg); /* Remove ! or use !important if truly needed */
+}
+
+
+
 
 
 
@@ -328,7 +402,9 @@ nav {
 
 
 @media (max-width: 1024px) {
-  .dropdown-menu, .sub-dropdown-menu {
+
+  .dropdown-menu,
+  .sub-dropdown-menu {
     width: 100%;
   }
 }
@@ -339,7 +415,7 @@ nav {
   nav {
     padding: 25px 20px;
   }
-  
+
   .menu-icon {
     display: flex;
   }
@@ -353,7 +429,7 @@ nav {
     top: 100%;
     left: 0;
     background-color: white;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 0px 20px;
     z-index: 1002;
   }
@@ -369,23 +445,27 @@ nav {
     /* padding: 0; */
     margin: 0;
     font-size: 18px;
+    justify-content: space-between;
   }
-  .dropdown-icon{
+
+  .dropdown-icon {
     font-size: 15px;
+    /* text-align: center; */
+    margin-left: auto;
+
   }
 
   .dropdown-menu {
     position: static;
     width: 100%;
-    
-    padding: 0px 50px;
-    
-  }
- 
 
-  .dropdown-menu li a
-  {
-    
+    padding: 0px 50px;
+
+  }
+
+
+  .dropdown-menu li a {
+
     width: 100%;
     padding: 5px 10px;
   }
@@ -393,22 +473,23 @@ nav {
   .sub-dropdown-menu {
     position: static;
     width: 100%;
-    
+
     padding: 0px 100px;
     /* background-color: aqua; */
     bottom: 0%;
     height: inherit;
-    
-    
-    
+
+
+
   }
 
-  .dropdown-menu li{
+  .dropdown-menu li {
     padding: 0;
     margin: 0;
 
   }
-  .sub-dropdown-menu li{
+
+  .sub-dropdown-menu li {
     text-align: center;
     display: block;
     padding: 0;
@@ -419,7 +500,7 @@ nav {
   .dropdown-menu {
     /* max-height: 250px; */
     overflow-y: auto;
-    
+
   }
 }
 

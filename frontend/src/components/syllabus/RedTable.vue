@@ -1,61 +1,67 @@
 <template>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th class="category-col"></th>
-            <th class="subject-col">Subject</th>
-            <th class="questions-col">Total Questions</th>
-            <th class="marks-col">Total Marks</th>
-            <th class="duration-col">Duration</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td rowspan="2">Language (Qualifying)</td>
-            <td>Part - 1 English</td>
-            <td>25</td>
-            <td>25</td>
-            <td rowspan="2">2hr</td>
-          </tr>
-          <tr>
-            <td>Part - 2 Hindi / Urdu / Bengali</td>
-            <td>75</td>
-            <td>75</td>
-          </tr>
-          <tr>
-            <td rowspan="2">Subject And General Studies</td>
-            <td>Part - 1 Concerned Subject</td>
-            <td>80</td>
-            <td>80</td>
-            <td rowspan="2">2hr</td>
-          </tr>
-          <tr>
-            <td>Part - 2 General Studies</td>
-            <td>40</td>
-            <td>40</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="2"><strong>Total</strong></td>
-            <td><strong>220</strong></td>
-            <td><strong>220</strong></td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {};
-    }
-  };
-  </script>
-  
+  <div class="table-container" v-if="examPatterns.length">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Subject</th>
+          <th>Total Questions</th>
+          <th>Total Marks</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template v-for="(pattern, index) in examPatterns" :key="index">
+          <template v-for="(item, i) in parsePattern(pattern)" :key="i">
+            <tr>
+              <td v-if="i === 0" :rowspan="parsePattern(pattern).length">{{ pattern.topics }}</td>
+              <td>{{ item.sub_topic }}</td>
+              <td>{{ item.questions }}</td>
+              <td>{{ item.marks }}</td>
+              <td v-if="i === 0" :rowspan="parsePattern(pattern).length">{{ pattern.duration }}hr</td>
+            </tr>
+          </template>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      examPatterns: [],
+    };
+  },
+  methods: {
+    async fetchExamPatterns() {
+      try {
+        const res = await axios.get("https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1");
+        this.examPatterns = res.data.course.subjects[0].exam_patterns;
+      } catch (error) {
+        console.error("Failed to fetch exam patterns:", error);
+      }
+    },
+    parsePattern(pattern) {
+      const subTopics = pattern.sub_topics.split(",");
+      const questions = pattern.total_questions.split(",");
+      const marks = pattern.total_marks.split(",");
+      return subTopics.map((sub, index) => ({
+        sub_topic: sub.trim(),
+        questions: questions[index]?.trim() || "-",
+        marks: marks[index]?.trim() || "-",
+      }));
+    },
+  },
+  mounted() {
+    this.fetchExamPatterns();
+  },
+};
+</script>
+
   <style scoped>
   /* Table container with adjusted height and overflow */
   .table-container {
