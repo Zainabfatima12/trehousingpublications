@@ -1,27 +1,112 @@
 <template>
-    <div class="content-box">
+    <div v-if="isLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Loading content, please wait...</p>
+    </div>
+    
+    <div v-else-if="!isDataAvailable || error" class="not-available-container">
+        <h2>Will be available soon</h2>
+    </div>
+    
+    <div v-else class="content-box">
         <div class="bpscBook">
-            <img :src="bpscbook" alt="BPSC Book Dowanload">
+            <img :src="overviewData.bookImage" alt="BPSC Book Download">
         </div>
         <div class="text-content">
-            <h2>Bihar Computer Teacher Syllabus Overview</h2>
-            <p>The Bihar Computer Science Teacher Recruitment 2023 is conducted by the Education Department of Bihar. The candidates must refer to the following table for more information on the Bihar Computer Science Teacher Syllabus.</p>
+            <h2>{{ overviewData.title }}</h2>
+            <p>{{ overviewData.description }}</p>
         </div>
     </div>
 </template>
+
 <script>
-import bpscbook from '@/assets/PYQ-Image/BPSC-book.png';
+import axios from 'axios';
+
 export default {
     name: 'PyqOverview',
     data() {
         return {
-            bpscbook,
+            overviewData: {},
+            isLoading: true,
+            error: null
+        }
+    },
+    computed: {
+        // Check if required data is available including the image
+        isDataAvailable() {
+            return this.overviewData && 
+                   this.overviewData.title && 
+                   this.overviewData.description &&
+                   this.overviewData.bookImage;
+        }
+    },
+    created() {
+        this.fetchData();
+    },
+    methods: {
+        async fetchData() {
+            try {
+                this.isLoading = true;
+                this.error = null;
+                
+                // Fetch overview data from API
+                const response = await axios.get('https://cms.trehousingpublication.com/api/v2');
+                this.overviewData = response.data || {};
+                
+            } catch (error) {
+                console.error('Error fetching overview data:', error);
+                this.error = true; // Just set error to true, no message needed
+            } finally {
+                this.isLoading = false;
+            }
         }
     }
 }
-
 </script>
-<style>
+<style scoped>
+
+/* Loading styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Not available message styles */
+.not-available-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+  text-align: center;
+}
+
+.not-available-container h2 {
+  font-size: 24px;
+  color: #6c757d;
+}
+
+/* Your existing styles can remain here */
+
 .content-box{
     padding: 3vh 5vw 0;
 }

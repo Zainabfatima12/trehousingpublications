@@ -10,7 +10,7 @@
 
   <!-- <Notification /> -->
   <!-- <PyqRightSection/> -->
-  <TextTable/>
+   
   <BiharSyllabusComponent/>
 
   <PyqSyPdf />
