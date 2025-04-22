@@ -23,7 +23,7 @@
 
             <!-- Show arrow if submenu exists -->
             <span v-if="item.submenu" class="dropdown-icon" :class="{ rotated: activeDropdown === index }">
-              &and;
+              &or;
             </span>
           </a>
 
@@ -32,9 +32,10 @@
             <li v-for="(subItem, subIndex) in item.submenu" :key="subIndex" class="sub-dropdown">
               <a href="#" @click.prevent="toggleSubDropdown(index, subIndex)">
                 {{ subItem.name }}
-                <span v-if="subItem.submenu" :class="['sub-dropdown-icon', { rotated: isSubmenuOpen }]">
-                  &gt;
-                </span>
+                <span v-if="subItem.submenu" :class="['sub-dropdown-icon', { rotated: activeSubDropdown[`${index}-${subIndex}`] }]">
+  &gt;
+</span>
+
 
 
               </a>
@@ -133,7 +134,7 @@ export default {
           ],
         },
         {
-          name: "Solve Paper",
+          name: "Solved Paper ",
           submenu: [
             {
               name: "BPSC TRE",
