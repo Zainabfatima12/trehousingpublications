@@ -1,33 +1,107 @@
 <template>
-    <div class="box">
-        <div class="heading-pdf">
-            <h4>Bihar Computer Science Teacher Syllabus PDF</h4>
-        </div>
-        <p class="paragraph-pdf">The direct link to download Bihar Computer Science Teacher Syllabus Pdf has been given
-            below. Candidate can download through the below link Bihar CS Teacher Syllabus PDF section wise.</p><br>
-        <h3 class="table-head"><u class="underline">Download Bihar Teacher PGT Computer Science</u></h3><br>
-        <table class="table-data">
-            <tr class="imp-link">
-                <td colspan="2">Important Links</td>
-            </tr>
-            <tr class="rowData">
-                <td>BPSC Bihar Teacher Syllabus 2023</td>
-                <td>Bihar Teacher in Salary Hand</td>
-            </tr>
-            <tr class="rowData">
-                <td>Bihar Teacher Vacancy 2023 </td>
-                <td>Bihar 7th Phase Selection Process</td>
-            </tr>
-        </table>
+    <div v-if="isLoading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading content, please wait...</p>
     </div>
-</template>
-
-<script>
-export default {
+    
+    <div v-else class="box">
+      <div class="heading-pdf">
+        <h4>{{ pdfData && pdfData.title ? pdfData.title : 'Will be available soon' }}</h4>
+      </div>
+      <p class="paragraph-pdf">
+        {{ pdfData && pdfData.description ? pdfData.description : 'Will be available soon' }}
+      </p><br>
+      <h3 class="table-head">
+        <u class="underline">{{ pdfData && pdfData.tableTitle ? pdfData.tableTitle : 'Will be available soon' }}</u>
+      </h3><br>
+      
+      <table v-if="pdfData && pdfData.links && pdfData.links.length > 0" class="table-data">
+        <tr class="imp-link">
+          <td colspan="2">{{ pdfData.linksTitle || 'Important Links' }}</td>
+        </tr>
+        <tr v-for="(row, index) in pdfData.links" :key="index" class="rowData">
+          <td>{{ row.leftLink }}</td>
+          <td>{{ row.rightLink }}</td>
+        </tr>
+      </table>
+      <div v-else class="no-data-message">
+        <p>Important links will be available soon</p>
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import axios from 'axios';
+  
+  export default {
     name: 'PyqSyPdf',
-}
-</script>
+    data() {
+      return {
+        pdfData: {},
+        isLoading: true
+      };
+    },
+    created() {
+      this.fetchData();
+    },
+    methods: {
+      async fetchData() {
+        try {
+          this.isLoading = true;
+          
+          // Fetch PDF data from API
+          const response = await axios.get('https://cms.trehousingpublication.com/api/v2');
+          this.pdfData = response.data || {};
+          
+        } catch (error) {
+          console.error('Error fetching PDF data:', error);
+          // No error message shown to user, just empty data
+          this.pdfData = {};
+        } finally {
+          this.isLoading = false;
+        }
+      }
+    }
+  };
+  </script>
 <style scoped>
+/* Loading styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* No data message styles */
+.no-data-message {
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  text-align: center;
+  margin: 10px 0;
+  color: #6c757d;
+}
+
+/* Your existing styles can remain here */
+
 .box {
     padding: 3vh 3vw;
     font-family: 'Inter', sans-serif;
