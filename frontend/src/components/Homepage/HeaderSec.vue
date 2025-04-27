@@ -32,9 +32,10 @@
             <li v-for="(subItem, subIndex) in item.submenu" :key="subIndex" class="sub-dropdown">
               <a href="#" @click.prevent="toggleSubDropdown(index, subIndex)">
                 {{ subItem.name }}
-                <span v-if="subItem.submenu" :class="['sub-dropdown-icon', { rotated: activeSubDropdown[`${index}-${subIndex}`] }]">
-  &gt;
-</span>
+                <span v-if="subItem.submenu"
+                  :class="['sub-dropdown-icon', { rotated: activeSubDropdown[`${index}-${subIndex}`] }]">
+                  &gt;
+                </span>
 
 
 
@@ -46,7 +47,11 @@
                 { show: activeSubDropdown[`${index}-${subIndex}`] },
               ]">
                 <li v-for="(subSubItem, subSubIndex) in subItem.submenu" :key="subSubIndex">
-                  <a href="#">{{ subSubItem.title || subSubItem }}</a>
+                  <a href="#"
+                    @click.prevent="handleClick(item.name, subItem.name || subItem.title, subSubItem.title || subSubItem)">
+                    {{ subSubItem.title || subSubItem }}
+                  </a>
+
                 </li>
               </ul>
             </li>
@@ -217,6 +222,23 @@ export default {
       }
 
     },
+
+    handleClick(mainMenu, subMenu, clickedItem) {
+      // Clean up input values just in case
+      const section = (mainMenu || "").toLowerCase();
+
+      
+      if (section === "syllabus") {
+        const course = subMenu;
+        const subject = clickedItem;
+        const query = new URLSearchParams({ course, subject }).toString();
+        window.location.href = `/syllabus?${query}`;
+      } else {
+        // Everything else just shows the message
+        alert("This section will be available soon.");
+      }
+    }
+
   }
 
 };
@@ -297,13 +319,13 @@ nav {
 .dropdown-icon.rotated {
   transform: rotate(180deg);
   margin-top: 10px;
-  text-decoration: none ;
+  text-decoration: none;
   /* remove underline when rotated */
   margin-left: 10px;
 }
 
 .dropdown-icon:hover {
-  text-decoration: none ;
+  text-decoration: none;
 }
 
 
@@ -370,14 +392,16 @@ nav {
   padding-left: 7px;
   font-size: 20px;
   font-weight: bold;
-  display: inline-block; /* Needed for transform to work */
+  display: inline-block;
+  /* Needed for transform to work */
   transition: transform 0.3s ease;
   transform: rotate(0deg);
   cursor: pointer;
 }
 
 .sub-dropdown-icon.rotated {
-  transform: rotate(90deg); /* Remove ! or use !important if truly needed */
+  transform: rotate(90deg);
+  /* Remove ! or use !important if truly needed */
 }
 
 
