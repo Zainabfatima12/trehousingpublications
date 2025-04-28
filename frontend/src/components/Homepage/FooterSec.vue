@@ -4,19 +4,21 @@
       <!-- Logo and Contact Section -->
       <div class="logowithcontect">
         <div class="logo">
-          
-           <h1>Logo</h1>
+          <h1>Logo</h1>
         </div>
         <div class="contact-info">
-          <p>Address: Noida, Ayodhya, Gonda</p>
-          <p>Phone No: 96282*****</p>
-          <p>Email: tre@gmail.com</p>
+          <p>
+            Address: TRE HOUSING PUBLICATION PRIVATE LIMITED ADD: B-144.SECTOR
+            XU 3 GREATER NOIDA GB NAGAR UP-201310
+          </p>
+          <p>Phone No: 012019575162, 9458846730</p>
+          <p>Email: trehousingpublication@gmail.com</p>
         </div>
         <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
           <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-telegram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
 
@@ -28,7 +30,7 @@
       <!-- Links Section -->
       <div class="links">
         <ul>
-          <li><p  class="home">Home</p></li>
+          <li><p class="home">Home</p></li>
           <li><a href="#">About Us</a></li>
           <li><a href="#">Mission & Vision</a></li>
           <li><a href="#">Other Books</a></li>
@@ -47,11 +49,11 @@
         </ul>
       </div>
 
-      <div class="previous">
+      <!-- <div class="previous">
         <ul>
           <li><p class="pre">Previous Year Paper</p></li>
         </ul>
-      </div>
+      </div> -->
 
       <div class="solved">
         <ul>
@@ -75,17 +77,16 @@
     </footer>
 
     <div class="footer-bottom">
-  <ul>
-    <div class="left-links">
-      <li><a href="#" class="term1">Privacy Policy</a></li>
-      <li><a href="#" class="term2">Cookies Policy</a></li>
+      <ul>
+        <div class="left-links">
+          <li><a href="#" class="term1">Privacy Policy</a></li>
+          <li><a href="#" class="term2">Cookies Policy</a></li>
+        </div>
+        <li class="right-link">
+          <a href="#" class="term3">Terms & Conditions</a>
+        </li>
+      </ul>
     </div>
-    <li class="right-link"><a href="#" class="term3">Terms & Conditions</a></li>
-  </ul>
-</div>
-
-
-
   </div>
 </template>
 
@@ -96,9 +97,9 @@ export default {
 </script>
 
 <style scoped>
-
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css");
 
+/* Reset styles */
 * {
   margin: 0;
   padding: 0;
@@ -116,23 +117,15 @@ body {
   padding: 2% 40px;
   display: flex;
   flex-wrap: wrap;
-  /* align-items: center; */
   justify-content: space-between;
 }
 
 /* Logo and Contact Section */
 .logowithcontect {
   width: 22%;
-  /* background-color: rgb(186, 6, 6); */
   padding: 10px 0;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* text-align: center; */
-}
-
-.logo img {
-  width: 100px;
 }
 
 .contact-info p {
@@ -142,23 +135,26 @@ body {
 /* Social Icons */
 .social-icons {
   display: flex;
-  gap: 30px;
+  gap: 15px;
   padding: 10px 0;
 }
 
 .social-icons a {
   color: white;
-  font-size: 20px;
+  font-size: 30px;
   text-decoration: none;
+  display: inline-block;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #f1c40f;
 }
 
 /* Vertical Bar */
 .vertical-bar-container {
   display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
-  height: 100%;
-  /* padding: 0 20px; */
 }
 
 .vertical-bar {
@@ -166,6 +162,7 @@ body {
   height: 35vh;
   background-color: white;
 }
+
 /* Links and Sections */
 .footer .links,
 .footer .syllabus,
@@ -174,12 +171,10 @@ body {
 .footer .mock {
   display: flex;
   flex-direction: column;
-  gap: 10px; 
-  padding: 10px 15px; 
-  text-align: left; 
+  gap: 10px;
+  padding: 10px 15px;
+  text-align: center; /* Centering the text */
   font-size: 20px;
-  background-color: transparent; 
-  /* background-color: rgb(217, 12, 12); */
 }
 
 .footer ul {
@@ -189,61 +184,57 @@ body {
 }
 
 .footer ul li {
-  margin-bottom: 8px; /* Adds spacing between list items */
+  margin-bottom: 8px;
 }
-.footer ul li p{
-  padding: 5px 10px;
-}
+
 .footer ul li a {
   color: white;
   text-decoration: none;
   display: block;
-  padding: 5px 10px; 
-  transition: color 0.3s ease-in-out; 
+  padding: 5px 10px;
+  transition: color 0.3s ease-in-out;
   font-size: 16px;
 }
 
 .footer ul li a:hover {
-  color: black; /* Gold color on hover for better visibility */
+  color: black;
 }
 
-.home,.syl,.pre,.sol,.moc {
+.home,
+.syl,
+.pre,
+.sol,
+.moc {
   text-decoration: underline !important;
-  
 }
 
-.footer-bottom { 
+/* Footer Bottom Section */
+.footer-bottom {
   padding: 20px 40px;
   background: #0057d9;
   color: white;
   border-top: 0.5px solid wheat;
   display: flex;
-  /* justify-content: center; */
- 
-  
 }
 
 .footer-bottom ul {
   list-style: none;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 0;
-  margin-bottom: 10px;
 }
 
 .left-links {
   display: flex;
-  gap: 22vh; 
+  gap: 20px;
 }
 
 .right-link {
-  margin-left: auto; 
+  margin-left: auto;
   padding-right: 30px;
-  
 }
 
 .footer-bottom ul li a {
@@ -253,19 +244,13 @@ body {
 }
 
 .footer-bottom ul li a:hover {
-  color: black; /* Gold hover effect */
+  color: black;
 }
 
-
-
 /* Responsive Styles */
-
-
-/* Responsive Styles */
-@media (max-width: 1024px),(max-width: 1024px) {
+@media (max-width: 1024px) {
   .footer {
-    flex-direction: row;
-    /* align-items: center; */
+    flex-direction: column;
     text-align: center;
     padding: 20px;
   }
@@ -275,21 +260,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* text-align: center; */
     margin-bottom: 20px;
   }
 
-  .logo img {
-    width: 120px;
-    margin-bottom: 10px;
-  }
-
-  .contact-info {
-    text-align: center;
-  }
-
   .social-icons {
-    display: flex;
     justify-content: center;
     gap: 15px;
     margin-top: 10px;
@@ -299,131 +273,50 @@ body {
     display: none;
   }
 
-  /* Arrange links in one row */
-  .footer-links-container {
-    display: flex;
-    flex-wrap: wrap;
-    /* justify-content: center; */
-    gap: 15px;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .footer-links-container div {
-    /* text-align: center; */
-    padding: 10px;
-    background: none;
-  }
-
-  .footer-links-container ul {
-    list-style: none;
-    padding: 0;
-  }
-
-  .footer-links-container ul li a {
-    font-size: 14px;
-  }
-
-  /* Footer Bottom Section */
   .footer-bottom {
     width: 100%;
     padding: 15px;
     text-align: center;
-    border-top: 0.5px solid white;
   }
-
-  .footer-bottom ul {
-  list-style: none;
-  display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  width: 100%;
-  /* max-width: 1200px; */
-  margin: 0 auto;
-  padding: 0;
-  margin-bottom: 10px;
 }
-
-.left-links {
-  display: flex;
-  gap: 22vh; 
-}
-
-.right-link {
-  margin-left: auto; 
-  padding-right: 30px;
-  
-}
-
-.footer-bottom ul li a {
-  color: white;
-  text-decoration: none;
-  transition: color 0.3s ease-in-out;
-}
-
-.footer-bottom ul li a:hover {
-  color: black; /* Gold hover effect */
-}
-
-
-}
-
 
 @media (max-width: 768px) {
   .footer {
-    flex-direction: row;
-    /* align-items: center; */
+    flex-direction: column;
     text-align: center;
     padding: 10px 30px;
   }
+
   .vertical-bar-container {
     display: none;
   }
+
   .footer .links,
   .footer .syllabus,
   .footer .previous,
   .footer .solved,
   .footer .mock {
     align-items: center;
-    /* padding: 0px 20px; */
   }
-} 
+}
 
 @media (max-width: 480px) {
   .footer {
-    /* padding: 5% 10px; */
-    /* text-align: center; */
     align-items: center;
     justify-content: center;
   }
+
   .footer-bottom {
-    /* padding: 10px; */
+    padding: 10px;
   }
+
   .footer-bottom ul {
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
   }
+
   .footer-bottom ul li {
     margin-bottom: 6px;
   }
 }
-
-@media (max-width: 360px) {
-  .footer {
-    padding: 5% 10px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-
-  }
-  .footer-bottom {
-    /* padding: 8px; */
-  }
-  .footer-bottom ul {
-    flex-direction: row;
-  }
-  .footer-bottom ul li {
-    font-size: 14px;
-  }
-}
-
 </style>

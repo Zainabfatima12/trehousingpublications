@@ -22,36 +22,62 @@
             {{ item.name }}
 
             <!-- Show arrow if submenu exists -->
-            <span v-if="item.submenu" class="dropdown-icon" :class="{ rotated: activeDropdown === index }">
-              &or;
+            <span
+              v-if="item.submenu"
+              class="dropdown-icon"
+              :class="{ rotated: activeDropdown === index }"
+            >
+              <i class="bi bi-caret-down-fill"></i>
             </span>
           </a>
 
           <!-- Dropdown Menu -->
-          <ul v-if="item.submenu" :class="['dropdown-menu', { show: activeDropdown === index }]">
-            <li v-for="(subItem, subIndex) in item.submenu" :key="subIndex" class="sub-dropdown">
+          <ul
+            v-if="item.submenu"
+            :class="['dropdown-menu', { show: activeDropdown === index }]"
+          >
+            <li
+              v-for="(subItem, subIndex) in item.submenu"
+              :key="subIndex"
+              class="sub-dropdown"
+            >
               <a href="#" @click.prevent="toggleSubDropdown(index, subIndex)">
                 {{ subItem.name }}
-                <span v-if="subItem.submenu"
-                  :class="['sub-dropdown-icon', { rotated: activeSubDropdown[`${index}-${subIndex}`] }]">
-                  &gt;
+                <span
+                  v-if="subItem.submenu"
+                  :class="[
+                    'sub-dropdown-icon',
+                    { rotated: activeSubDropdown[`${index}-${subIndex}`] },
+                  ]"
+                >
+                  <i class="bi bi-caret-right-fill"></i>
                 </span>
-
-
-
               </a>
 
               <!-- Sub-dropdown Menu -->
-              <ul v-if="subItem.submenu" :class="[
-                'sub-dropdown-menu',
-                { show: activeSubDropdown[`${index}-${subIndex}`] },
-              ]">
-                <li v-for="(subSubItem, subSubIndex) in subItem.submenu" :key="subSubIndex">
-                  <a href="#"
-                    @click.prevent="handleClick(item.name, subItem.name || subItem.title, subSubItem.title || subSubItem)">
+              <ul
+                v-if="subItem.submenu"
+                :class="[
+                  'sub-dropdown-menu',
+                  { show: activeSubDropdown[`${index}-${subIndex}`] },
+                ]"
+              >
+                <li
+                  v-for="(subSubItem, subSubIndex) in subItem.submenu"
+                  :key="subSubIndex"
+                >
+                  <a
+                    href="#"
+                    @click.prevent="
+                      handleClick(
+                        item.name,
+                        subItem.name || subItem.title,
+                        subSubItem.title || subSubItem
+                      )
+                    "
+                  >
                     {{ subSubItem.title || subSubItem }}
                   </a>
-
                 </li>
               </ul>
             </li>
@@ -66,7 +92,7 @@
 export default {
   data() {
     return {
-      isMenuActive: false,  // Controls mobile menu visibility
+      isMenuActive: false, // Controls mobile menu visibility
       activeDropdown: null, // Tracks which top-level dropdown is open
       activeSubDropdown: {}, // Tracks which sub-dropdowns are open
       hasFetchedSyllabus: false, // Prevents refetching "Syllabus"
@@ -106,11 +132,7 @@ export default {
             },
             {
               name: "KVS",
-              submenu: [
-                { title: "PGT" },
-                { title: "TGT" },
-                { title: "PRT" },
-              ],
+              submenu: [{ title: "PGT" }, { title: "TGT" }, { title: "PRT" }],
             },
             {
               name: "NVS",
@@ -122,11 +144,7 @@ export default {
             },
             {
               name: "DSSB",
-              submenu: [
-                { title: "PGT" },
-                { title: "TGT" },
-                { title: "PRT" },
-              ],
+              submenu: [{ title: "PGT" }, { title: "TGT" }, { title: "PRT" }],
             },
             {
               name: "HARYANA(HPSP)",
@@ -172,7 +190,9 @@ export default {
       //  Fetch syllabus data only if it's clicked and not already loaded
       if (clickedItem.name === "Syllabus" && clickedItem.submenu.length === 0) {
         try {
-          const response = await fetch("https://cms.trehousingpublication.com/api/v1/");
+          const response = await fetch(
+            "https://cms.trehousingpublication.com/api/v1/"
+          );
           const apiData = await response.json();
 
           // Format the fetched data for submenu compatibility
@@ -220,14 +240,12 @@ export default {
         this.activeDropdown = null;
         this.activeSubDropdown = {};
       }
-
     },
 
     handleClick(mainMenu, subMenu, clickedItem) {
       // Clean up input values just in case
       const section = (mainMenu || "").toLowerCase();
 
-      
       if (section === "syllabus") {
         const course = subMenu;
         const subject = clickedItem;
@@ -237,13 +255,10 @@ export default {
         // Everything else just shows the message
         alert("This section will be available soon.");
       }
-    }
-
-  }
-
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css");
@@ -276,14 +291,14 @@ nav {
   text-decoration: none;
   color: black;
   font-size: 20px;
-  transition: color 0.3s ease-in-out;
+  transition: color 0.4s ease-in-out;
   display: flex;
   align-items: center;
 }
 
 .nav-links a:hover {
-  text-decoration: underline;
   font-weight: bold !important;
+  text-decoration: none; /* REMOVE underline on hover */
 }
 
 /* Dropdown Menu */
@@ -292,12 +307,11 @@ nav {
   position: absolute;
   top: 100%;
   left: 0;
-  list-style: none;
-  /* padding: 10px 0; */
+  list-style-type: none;
   width: auto;
   z-index: 1001;
   border: none;
-  /* margin-top: 20px; */
+  text-decoration: none;
 }
 
 .dropdown-menu.show {
@@ -310,17 +324,15 @@ nav {
   font-size: 20px;
   font-weight: bold;
   display: inline-block;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease-in-out; /* Smooth rotation */
   transform: rotate(0deg);
-
+  text-decoration: none;
   cursor: pointer;
 }
 
 .dropdown-icon.rotated {
   transform: rotate(180deg);
-  margin-top: 10px;
   text-decoration: none;
-  /* remove underline when rotated */
   margin-left: 10px;
 }
 
@@ -328,34 +340,21 @@ nav {
   text-decoration: none;
 }
 
-
-
-
-
 /* Sub-dropdown menu */
-
-/* .dropdown {
-  padding: 5px;
-} */
-
 .sub-dropdown {
   position: relative;
   font-size: 20px;
   width: 100%;
   right: 25px;
   padding: 10px 20px;
-
 }
 
 .sub-dropdown a {
-  /* display: flex; */
   justify-content: space-between;
   align-items: center;
   font-size: 20px;
   width: 30vh;
-  /* background-color: yellow; */
-
-
+  text-decoration: none; /* No underline */
 }
 
 .sub-dropdown-menu {
@@ -364,7 +363,6 @@ nav {
   top: -10px;
   left: 100%;
   background-color: white;
-  /* background-color: rgb(116, 103, 191); */
   list-style: none;
   padding: 10px 0;
   width: 40vh;
@@ -377,11 +375,13 @@ nav {
   right: 50px;
   border-radius: 10px;
   margin-left: -40px;
-  /* margin-top: 20px; */
+  text-decoration: none;
+  transition: transform 0.4s ease; /* Smooth rotation */
 }
 
 .sub-dropdown-menu a {
   padding: 10px 0;
+  text-decoration: none; /* No underline */
 }
 
 .sub-dropdown-menu.show {
@@ -393,21 +393,15 @@ nav {
   font-size: 20px;
   font-weight: bold;
   display: inline-block;
-  /* Needed for transform to work */
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease; /* Smooth rotation */
   transform: rotate(0deg);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .sub-dropdown-icon.rotated {
   transform: rotate(90deg);
-  /* Remove ! or use !important if truly needed */
 }
-
-
-
-
-
 
 /* Mobile Menu Icon */
 .menu-icon {
@@ -425,9 +419,7 @@ nav {
   background-color: black;
 }
 
-
 @media (max-width: 1024px) {
-
   .dropdown-menu,
   .sub-dropdown-menu {
     width: 100%;
@@ -435,7 +427,6 @@ nav {
 }
 
 /* Responsive Design for Mobile Screens */
-
 @media (max-width: 768px) {
   nav {
     padding: 25px 20px;
@@ -467,7 +458,6 @@ nav {
     margin: 10px 0;
     width: 100%;
     text-align: center;
-    /* padding: 0; */
     margin: 0;
     font-size: 18px;
     justify-content: space-between;
@@ -475,22 +465,16 @@ nav {
 
   .dropdown-icon {
     font-size: 15px;
-    /* text-align: center; */
     margin-left: auto;
-
   }
 
   .dropdown-menu {
     position: static;
     width: 100%;
-
     padding: 0px 50px;
-
   }
 
-
   .dropdown-menu li a {
-
     width: 100%;
     padding: 5px 10px;
   }
@@ -498,20 +482,14 @@ nav {
   .sub-dropdown-menu {
     position: static;
     width: 100%;
-
     padding: 0px 100px;
-    /* background-color: aqua; */
     bottom: 0%;
     height: inherit;
-
-
-
   }
 
   .dropdown-menu li {
     padding: 0;
     margin: 0;
-
   }
 
   .sub-dropdown-menu li {
@@ -523,14 +501,9 @@ nav {
 
   /* Scrollable Dropdown for Small Screens */
   .dropdown-menu {
-    /* max-height: 250px; */
     overflow-y: auto;
-
   }
 }
-
-/* Extra Small Screens (Phones) */
-
 
 /* Responsive Design for 480px Screens */
 @media (max-width: 480px) {
