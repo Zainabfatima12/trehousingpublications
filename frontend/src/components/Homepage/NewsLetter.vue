@@ -2,7 +2,13 @@
   <div class="container text-center my-4">
     <p
       class="fw-bold fs-3 text-decoration-underline"
-      style="font-family: 'Inter', sans-serif; color: #0152cc"
+      style="
+        font-family: 'Inter', sans-serif;
+        color: #0152cc;
+        font-size: 34px;
+        font-weight: bold;
+        text-decoration: underline;
+      "
     >
       News Letter
     </p>

@@ -5,13 +5,21 @@
         <h2 class="explore">Explore All Previous Year Papers</h2>
         <nav>
           <ul class="space-y-2">
-            <li v-for="(item, index) in menuItems" :key="index" class="dropdown menu-item syllabus-dropdown">
+            <li
+              v-for="(item, index) in menuItems"
+              :key="index"
+              class="dropdown menu-item syllabus-dropdown"
+            >
               <a
                 href="#"
                 class="block px-4 py-2 text-black rounded-md hover:bg-gray-700 flex items-center no-underline"
                 @click.prevent="toggleSyllabusDropdown(index)"
               >
-                <span class="dropdown-arrow" :class="{ 'rotate-90': item.isOpen }">&#8250;</span>
+                <span
+                  class="dropdown-arrow"
+                  :class="{ 'rotate-90': item.isOpen }"
+                  >&#8250;</span
+                >
                 <span class="menu-item-text">{{ item.text }}</span>
               </a>
               <ul v-if="item.isOpen" class="dropdown-menu mt-2 space-y-2">
@@ -28,18 +36,27 @@
           </ul>
         </nav>
       </aside>
-      
+
       <div class="container">
         <div class="news-sidebar">
           <h3 class="news-title">Latest Event</h3>
           <ul class="news-list-wrapper">
-            <li v-for="news in newsLinks" :key="news.id" class="news-dropdown latest-event-dropdown">
-              <div class="news-dropdown-btn" @click="toggleNewsDropdown(news.id)">
-                <span :class="{ 'news-rotate': openDropdown === news.id }"> > </span>{{ news.title }}
+            <li
+              v-for="news in newsLinks"
+              :key="news.id"
+              class="news-dropdown latest-event-dropdown"
+            >
+              <div
+                class="news-dropdown-btn"
+                @click="toggleNewsDropdown(news.id)"
+              >
+                <span :class="{ 'news-rotate': openDropdown === news.id }">
+                  > </span
+                >{{ news.title }}
               </div>
               <ul v-if="openDropdown === news.id" class="news-dropdown-content">
                 <li v-for="link in news.links" :key="link.id">
-                  <a :href="link.url" target="_blank">
+                  <a href="#" @click.prevent="handleLinkClick(link)">
                     {{ link.text }}
                   </a>
                 </li>
@@ -49,57 +66,109 @@
         </div>
       </div>
     </div>
-    
-<!-- cgnhghilkjhgfhfgdffghjkl; -->
+
+    <!-- cgnhghilkjhgfhfgdffghjkl; -->
     <div v-if="course && subject" class="content">
-    <!-- 1. Course Title -->
-    <h1 class="course-title">{{ course.title }}</h1>
+      <!-- 1. Course Title -->
+      <h1 class="course-title">{{ course.title }}</h1>
 
-    <!-- 2. Course Description -->
-    <p class="course-description">{{ course.description }}</p>
+      <!-- 2. Course Description -->
+      <p class="course-description">{{ course.description }}</p>
 
-    <!-- 3. Course Banner -->
-     
-    <div class="image-section">
-      <img :src="getFullUrl(course.banner)" alt="Course Banner" class="course-banner" />
+      <!-- 3. Course Banner -->
+
+      <div class="image-section">
+        <img
+          :src="getFullUrl(course.banner)"
+          alt="Course Banner"
+          class="course-banner"
+        />
+      </div>
+
+      <!-- 4. Subject Section -->
+      <div class="download-section">
+        <h2>{{ subject.title }}</h2>
+
+        <p>{{ subject.description }}</p>
+
+        <a
+          :href="getFullUrl(subject.pdf_link)"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <button class="download-btn">Download PDF</button>
+        </a>
+      </div>
     </div>
-
-    <!-- 4. Subject Section -->
-    <div class="download-section">
-      <h2>{{ subject.title }} </h2>
-
-      <p>{{ subject.description }}</p>
-
-      <a :href="getFullUrl(subject.pdf_link)" target="_blank" rel="noopener noreferrer">
-        <button class="download-btn">Download PDF</button>
-      </a>
-
-    </div>
-
-    
-  </div>
-  <div v-else class="loading">Loading...</div>
-
+    <div v-else class="loading">Loading...</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SyllabusAndNews',
+  name: "SyllabusAndNews",
   data() {
     return {
       course: null,
       subject: null,
- 
 
       menuItems: [
-        { text: "All subject Syllabus", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
-        { text: "Bihar Computer Teacher", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
-        { text: "Intelligence Bureau (IB)", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
-        { text: "CSIR SP ASO", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
-        { text: "NAICL Assistant", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
-        { text: "SSC CGL", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] },
-        { text: "Bank SO", isOpen: false, subMenu: [{ text: "Sub Item 1", link: "#" }, { text: "Sub Item 2", link: "#" }] }
+        {
+          text: "All subject Syllabus",
+          isOpen: false,
+          subMenu: [
+            { text: "Sub Item 1", link: "#" },
+            { text: "Sub Item 2", link: "#" },
+          ],
+        },
+        {
+          text: "Bihar Computer Teacher",
+          isOpen: false,
+          subMenu: [
+            { text: "Sub Item 1", link: "#" },
+            { text: "Sub Item 2", link: "#" },
+          ],
+        },
+        {
+          text: "Intelligence Bureau (IB)",
+          isOpen: false,
+          subMenu: [
+            { text: "Sub Item 1", link: "#" },
+            { text: "Sub Item 2", link: "#" },
+          ],
+        },
+        {
+          text: "CSIR SP ASO",
+          isOpen: false,
+          subMenu: [
+            { text: "Sub Item 1", link: "#" },
+            { text: "Sub Item 2", link: "#" },
+          ],
+        },
+        {
+          text: "NAICL Assistant",
+          isOpen: false,
+          subMenu: [
+            { text: "Sub Item 1", link: "#" },
+            { text: "Sub Item 2", link: "#" },
+          ],
+        },
+        {
+          text: "SSC CGL",
+          isOpen: false,
+          subMenu: [
+            { text: "Sub Item 1", link: "#" },
+            { text: "Sub Item 2", link: "#" },
+          ],
+        },
+        {
+          text: "Bank SO",
+          isOpen: false,
+          subMenu: [
+            { text: "Sub Item 1", link: "#" },
+            { text: "Sub Item 2", link: "#" },
+          ],
+        },
       ],
 
       openDropdown: null,
@@ -109,58 +178,111 @@ export default {
           id: 1,
           title: "REET 2025 Notification",
           links: [
-            { id: 1, text: "Exam Information of REET", url: "#" },
-            { id: 2, text: "Some Other Link", url: "#" }
-          ]
+            {
+              id: 1,
+              text: "Exam Information of REET",
+              url: {
+                id: 1,
+                text: "Exam Information of REET",
+                alertMessage: "Will be available soon",
+              },
+            },
+            {
+              id: 2,
+              text: "Some Other Link",
+              alertMessage: "Will be available soon",
+            },
+          ],
         },
         {
           id: 2,
           title: "UGC Answer Key 2025",
           links: [
-            { id: 1, text: "UGC NET Official Answer Key", url: "#" },
-            { id: 2, text: "Important Guidelines", url: "#" }
-          ]
+            {
+              id: 1,
+              text: "UGC NET Official Answer Key",
+              alertMessage: "Will be available soon",
+            },
+            {
+              id: 2,
+              text: "Important Guidelines",
+              alertMessage: "Will be available soon",
+            },
+          ],
         },
         {
           id: 3,
           title: "TS TET Answer Key 2025",
           links: [
-            { id: 1, text: "Exam Information of TS TET", url: "#" },
-            { id: 2, text: "Some Other Link", url: "#" }
-          ]
+            {
+              id: 1,
+              text: "Exam Information of TS TET",
+              alertMessage: "Will be available soon",
+            },
+            {
+              id: 2,
+              text: "Some Other Link",
+              alertMessage: "Will be available soon",
+            },
+          ],
         },
         {
           id: 4,
           title: "Railway Teacher Vacancy 2025",
           links: [
-            { id: 1, text: "Railway Official Teacher", url: "#" },
-            { id: 2, text: "Important Guidelines", url: "#" }
-          ]
+            {
+              id: 1,
+              text: "Railway Official Teacher",
+              alertMessage: "Will be available soon",
+            },
+            {
+              id: 2,
+              text: "Important Guidelines",
+              alertMessage: "Will be available soon",
+            },
+          ],
         },
         {
           id: 5,
           title: "Railway Teacher Syllabus",
           links: [
-            { id: 1, text: "Railway Official Syllabus", url: "#" },
-            { id: 2, text: "Important Guidelines", url: "#" }
-          ]
-        }
-      ]
+            {
+              id: 1,
+              text: "Railway Official Syllabus",
+              alertMessage: "Will be available soon",
+            },
+            {
+              id: 2,
+              text: "Important Guidelines",
+              alertMessage: "Will be available soon",
+            },
+          ],
+        },
+      ],
     };
   },
   methods: {
     getFullUrl(path) {
-      if (!path) return '';
-      return path.startsWith('http') ? path : `https://cms.trehousingpublication.com${path}`;
+      if (!path) return "";
+      return path.startsWith("http")
+        ? path
+        : `https://cms.trehousingpublication.com${path}`;
     },
 
     async fetchSyllabus() {
       try {
-        const res = await fetch("https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1");
+        const res = await fetch(
+          "https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1"
+        );
         const data = await res.json();
 
-        //  Make sure response has expected structure
-        if (data && data.course && data.course.subjects && data.course.subjects.length > 0) {
+        // Make sure response has expected structure
+        if (
+          data &&
+          data.course &&
+          data.course.subjects &&
+          data.course.subjects.length > 0
+        ) {
           this.course = data.course;
           this.subject = data.course.subjects[0];
         } else {
@@ -169,19 +291,26 @@ export default {
       } catch (err) {
         console.error("Failed to fetch syllabus:", err);
       }
-    }
+    },
+
+    handleLinkClick(link) {
+      if (link.alertMessage) {
+        alert(link.alertMessage);
+      } else if (link.url) {
+        window.open(link.url, "_blank");
+      } else {
+        console.warn("No URL or alertMessage provided for link:", link);
+      }
+    },
   },
   mounted() {
     this.fetchSyllabus();
-  }
+  },
 };
 </script>
 
-
-
 <style scoped>
 /* Custom styles for dropdowns and rotation */
-
 
 .heading-icon {
   width: 40px;
@@ -199,12 +328,6 @@ export default {
   margin-top: 20px;
   font-weight: bold;
 }
-
-
-
-
-
-
 
 .dropdown-arrow {
   transition: transform 0.3s ease;
@@ -333,7 +456,6 @@ ul {
 .dropdown a:hover .menu-item-text {
   text-decoration: underline;
 }
-
 
 .dropdown-menu a {
   padding-left: 20px;

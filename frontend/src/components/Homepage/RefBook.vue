@@ -3,13 +3,22 @@
     <h2 class="title">Reference books</h2>
     <div class="books-container">
       <div v-for="book in books" :key="book.id" class="book-card">
-        <img :src="require(`@/assets/Trehousingpublications_UI/${book.image}`)" :alt="book.title" class="book-image" />
-        
+        <img
+          :src="require(`@/assets/Trehousingpublications_UI/${book.image}`)"
+          :alt="book.title"
+          class="book-image"
+        />
+
         <div class="rating">
           <div class="stars">
             <span v-for="star in 5" :key="star" class="star">
               <span v-if="star <= Math.floor(book.rating)">★</span>
-              <span v-else-if="star - 0.5 < book.rating && star > Math.floor(book.rating)">⯪</span>
+              <span
+                v-else-if="
+                  star - 0.5 < book.rating && star > Math.floor(book.rating)
+                "
+                >⯪</span
+              >
               <span v-else>☆</span>
             </span>
           </div>
@@ -86,13 +95,13 @@ export default {
 }
 
 .title {
-  font-size: 22px;
+  font-size: 34px;
   font-weight: bold;
   color: blue;
   text-decoration: underline;
   margin-bottom: 15px;
   margin-bottom: 30px;
-  
+  text-align: center;
 }
 
 .books-container {
@@ -162,8 +171,6 @@ export default {
   color: gray;
 }
 
-
-
 @media (max-width: 1024px) {
   .books-container {
     flex-wrap: wrap; /* Allow books to wrap to the next row */
@@ -189,6 +196,4 @@ export default {
     max-width: 200px; /* Optional: Restrict max size */
   }
 }
-
-
 </style>
