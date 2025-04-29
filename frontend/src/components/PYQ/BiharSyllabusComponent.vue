@@ -39,7 +39,7 @@ export default {
         this.isLoading = true;
         
         // Fetch syllabus topics from API
-        const response = await axios.get('https://cms.trehousingpublication.com/api/v2');
+        const response = await axios.get('https://cms.trehousingpublication.com/api/v2/?course_id=1&subject_id=1');
         
         if (response.data) {
           this.title = response.data.title || 'Bihar Computer Science Teacher Syllabus';

@@ -25,7 +25,8 @@
               <ul v-if="item.isOpen" class="dropdown-menu mt-2 space-y-2">
                 <li v-for="(subItem, subIndex) in item.subMenu" :key="subIndex">
                   <a
-                    :href="subItem.link"
+                    href="#"
+                    @click.prevent="handleMenuItemClick(subItem)"
                     class="block px-4 py-2 text-black rounded-md hover:bg-gray-700 no-underline"
                   >
                     {{ subItem.text }}
@@ -67,7 +68,6 @@
       </div>
     </div>
 
-    <!-- cgnhghilkjhgfhfgdffghjkl; -->
     <div v-if="course && subject" class="content">
       <!-- 1. Course Title -->
       <h1 class="course-title">{{ course.title }}</h1>
@@ -76,7 +76,6 @@
       <p class="course-description">{{ course.description }}</p>
 
       <!-- 3. Course Banner -->
-
       <div class="image-section">
         <img
           :src="getFullUrl(course.banner)"
@@ -101,72 +100,89 @@
       </div>
     </div>
     <div v-else class="loading">Loading...</div>
+    
+    <!-- Custom Popup Message -->
+    <div v-if="showPopup" class="popup-overlay" @click="closePopup">
+      <div class="popup-content" @click.stop>
+        <div class="popup-header">
+          <h3>Notification</h3>
+          <button class="close-btn" @click="closePopup">&times;</button>
+        </div>
+        <div class="popup-body">
+          <p>{{ popupMessage }}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: "SyllabusAndNews",
   data() {
     return {
       course: null,
       subject: null,
-
+      showPopup: false,
+      popupMessage: "",
+      
       menuItems: [
         {
           text: "All subject Syllabus",
           isOpen: false,
           subMenu: [
-            { text: "Sub Item 1", link: "#" },
-            { text: "Sub Item 2", link: "#" },
+            { text: "Sub Item 1", link: "#", courseId: 1, subjectId: 1 },
+            { text: "Sub Item 2", link: "#", courseId: 1, subjectId: 2 },
           ],
         },
         {
           text: "Bihar Computer Teacher",
           isOpen: false,
           subMenu: [
-            { text: "Sub Item 1", link: "#" },
-            { text: "Sub Item 2", link: "#" },
+            { text: "Sub Item 1", link: "#", courseId: 2, subjectId: 1 },
+            { text: "Sub Item 2", link: "#", courseId: 2, subjectId: 2 },
           ],
         },
         {
           text: "Intelligence Bureau (IB)",
           isOpen: false,
           subMenu: [
-            { text: "Sub Item 1", link: "#" },
-            { text: "Sub Item 2", link: "#" },
+            { text: "Sub Item 1", link: "#", courseId: 3, subjectId: 1 },
+            { text: "Sub Item 2", link: "#", courseId: 3, subjectId: 2 },
           ],
         },
         {
           text: "CSIR SP ASO",
           isOpen: false,
           subMenu: [
-            { text: "Sub Item 1", link: "#" },
-            { text: "Sub Item 2", link: "#" },
+            { text: "Sub Item 1", link: "#", courseId: 4, subjectId: 1 },
+            { text: "Sub Item 2", link: "#", courseId: 4, subjectId: 2 },
           ],
         },
         {
           text: "NAICL Assistant",
           isOpen: false,
           subMenu: [
-            { text: "Sub Item 1", link: "#" },
-            { text: "Sub Item 2", link: "#" },
+            { text: "Sub Item 1", link: "#", courseId: 5, subjectId: 1 },
+            { text: "Sub Item 2", link: "#", courseId: 5, subjectId: 2 },
           ],
         },
         {
           text: "SSC CGL",
           isOpen: false,
           subMenu: [
-            { text: "Sub Item 1", link: "#" },
-            { text: "Sub Item 2", link: "#" },
+            { text: "Sub Item 1", link: "#", courseId: 6, subjectId: 1 },
+            { text: "Sub Item 2", link: "#", courseId: 6, subjectId: 2 },
           ],
         },
         {
           text: "Bank SO",
           isOpen: false,
           subMenu: [
-            { text: "Sub Item 1", link: "#" },
-            { text: "Sub Item 2", link: "#" },
+            { text: "Sub Item 1", link: "#", courseId: 7, subjectId: 1 },
+            { text: "Sub Item 2", link: "#", courseId: 7, subjectId: 2 },
           ],
         },
       ],
@@ -181,16 +197,14 @@ export default {
             {
               id: 1,
               text: "Exam Information of REET",
-              url: {
-                id: 1,
-                text: "Exam Information of REET",
-                alertMessage: "Will be available soon",
-              },
+              courseId: 8,
+              subjectId: 1
             },
             {
               id: 2,
               text: "Some Other Link",
-              alertMessage: "Will be available soon",
+              courseId: 8,
+              subjectId: 2
             },
           ],
         },
@@ -201,12 +215,14 @@ export default {
             {
               id: 1,
               text: "UGC NET Official Answer Key",
-              alertMessage: "Will be available soon",
+              courseId: 9,
+              subjectId: 1
             },
             {
               id: 2,
               text: "Important Guidelines",
-              alertMessage: "Will be available soon",
+              courseId: 9,
+              subjectId: 2
             },
           ],
         },
@@ -217,12 +233,14 @@ export default {
             {
               id: 1,
               text: "Exam Information of TS TET",
-              alertMessage: "Will be available soon",
+              courseId: 10,
+              subjectId: 1
             },
             {
               id: 2,
               text: "Some Other Link",
-              alertMessage: "Will be available soon",
+              courseId: 10,
+              subjectId: 2
             },
           ],
         },
@@ -233,12 +251,14 @@ export default {
             {
               id: 1,
               text: "Railway Official Teacher",
-              alertMessage: "Will be available soon",
+              courseId: 11,
+              subjectId: 1
             },
             {
               id: 2,
               text: "Important Guidelines",
-              alertMessage: "Will be available soon",
+              courseId: 11,
+              subjectId: 2
             },
           ],
         },
@@ -249,12 +269,14 @@ export default {
             {
               id: 1,
               text: "Railway Official Syllabus",
-              alertMessage: "Will be available soon",
+              courseId: 12,
+              subjectId: 1
             },
             {
               id: 2,
               text: "Important Guidelines",
-              alertMessage: "Will be available soon",
+              courseId: 12,
+              subjectId: 2
             },
           ],
         },
@@ -269,10 +291,96 @@ export default {
         : `https://cms.trehousingpublication.com${path}`;
     },
 
+    toggleSyllabusDropdown(index) {
+      // Close all other dropdowns first
+      this.menuItems.forEach((item, i) => {
+        if (i !== index) {
+          item.isOpen = false;
+        }
+      });
+      
+      // Toggle the selected dropdown
+      this.menuItems[index].isOpen = !this.menuItems[index].isOpen;
+    },
+
+    toggleNewsDropdown(id) {
+      // If clicking the same dropdown that's already open, close it
+      // Otherwise, close the current one and open the clicked one
+      this.openDropdown = this.openDropdown === id ? null : id;
+    },
+    
+    showPopupMessage(message) {
+      this.popupMessage = message;
+      this.showPopup = true;
+    },
+    
+    closePopup() {
+      this.showPopup = false;
+    },
+
+    async checkDataExists(courseId, subjectId) {
+      try {
+        const response = await axios.get(
+          `https://cms.trehousingpublication.com/api/v1/?course_id=${courseId}&subject_id=${subjectId}`
+        );
+        
+        // Check if the response has valid data
+        if (
+          response.data &&
+          response.data.course &&
+          response.data.course.subjects &&
+          response.data.course.subjects.length > 0
+        ) {
+          return { exists: true, data: response.data };
+        } else {
+          return { exists: false };
+        }
+      } catch (error) {
+        console.error("Failed to check data:", error);
+        return { exists: false, error };
+      }
+    },
+
+    async handleMenuItemClick(subItem) {
+      if (subItem.courseId && subItem.subjectId) {
+        const result = await this.checkDataExists(subItem.courseId, subItem.subjectId);
+        
+        if (result.exists) {
+          // Data exists, redirect to the page
+          window.location.href = `?course_id=${subItem.courseId}&subject_id=${subItem.subjectId}`;
+        } else {
+          // No data, show popup
+          this.showPopupMessage("Will be available soon");
+        }
+      } else {
+        this.showPopupMessage("Will be available soon");
+      }
+    },
+
+    async handleLinkClick(link) {
+      if (link.courseId && link.subjectId) {
+        const result = await this.checkDataExists(link.courseId, link.subjectId);
+        
+        if (result.exists) {
+          // Data exists, redirect to the page
+          window.location.href = `?course_id=${link.courseId}&subject_id=${link.subjectId}`;
+        } else {
+          // No data, show popup
+          this.showPopupMessage("Will be available soon");
+        }
+      } else {
+        this.showPopupMessage("Will be available soon");
+      }
+    },
+
     async fetchSyllabus() {
       try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = urlParams.get('course_id') || 1;
+        const subjectId = urlParams.get('subject_id') || 1;
+        
         const res = await fetch(
-          "https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1"
+          `https://cms.trehousingpublication.com/api/v1/?course_id=${courseId}&subject_id=${subjectId}`
         );
         const data = await res.json();
 
@@ -292,16 +400,6 @@ export default {
         console.error("Failed to fetch syllabus:", err);
       }
     },
-
-    handleLinkClick(link) {
-      if (link.alertMessage) {
-        alert(link.alertMessage);
-      } else if (link.url) {
-        window.open(link.url, "_blank");
-      } else {
-        console.warn("No URL or alertMessage provided for link:", link);
-      }
-    },
   },
   mounted() {
     this.fetchSyllabus();
@@ -310,6 +408,72 @@ export default {
 </script>
 
 <style scoped>
+
+/* Loading styles */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+/* Popup styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f54254;
+  color: white;
+}
+
+.popup-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.popup-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.popup-body p {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Keep your existing styles here */
 /* Custom styles for dropdowns and rotation */
 
 .heading-icon {

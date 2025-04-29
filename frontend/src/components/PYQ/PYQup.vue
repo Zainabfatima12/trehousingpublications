@@ -202,7 +202,7 @@
                 this.error = null;
                 
                 // Base API URL
-                const baseUrl = 'https://cms.trehousingpublication.com/api/v2';
+                const baseUrl = 'https://cms.trehousingpublication.com/api/v2/?course_id=1&subject_id=1';
                 
                 // Fetch all data in parallel for better performance
                 const [
