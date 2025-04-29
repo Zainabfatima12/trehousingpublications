@@ -50,7 +50,7 @@ export default {
                 this.error = null;
                 
                 // Fetch overview data from API
-                const response = await axios.get('https://cms.trehousingpublication.com/api/v2');
+                const response = await axios.get('https://cms.trehousingpublication.com/api/v2/?course_id=1&subject_id=1');
                 this.overviewData = response.data || {};
                 
             } catch (error) {

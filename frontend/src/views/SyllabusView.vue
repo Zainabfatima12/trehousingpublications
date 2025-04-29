@@ -21,7 +21,7 @@ export default {
   name: "SyllabusView",
   components: {
     Header,
-
+ 
     SyllabusPdf,
     RedTable,
     BctsExam,
