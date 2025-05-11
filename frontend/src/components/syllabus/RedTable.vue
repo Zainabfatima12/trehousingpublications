@@ -28,7 +28,6 @@
 </template>
 
 <script>
-// import axios from "axios";
 export default {
   data() {
     return {
@@ -37,11 +36,15 @@ export default {
   },
   methods: {
     async fetchExamPatterns() {
-      try {
-        const course_id = this.$route.query.course_id || 1;
-        const subject_id = this.$route.query.subject_id || 1;
+      const course_id = this.$route.query.course_id;
+      const subject_id = this.$route.query.subject_id;
 
-        const res = await fetch(`https://cms.trehousingpublication.com/api/v1/?course_id=${course_id}&subject_id=${subject_id}`);
+      if (!course_id || !subject_id) return;
+
+      try {
+        const res = await fetch(
+          `https://cms.trehousingpublication.com/api/v1/?course_id=${course_id}&subject_id=${subject_id}`
+        );
         const data = await res.json();
         this.examPatterns = data?.course?.subjects?.[0]?.exam_patterns || [];
       } catch (error) {
@@ -63,6 +66,7 @@ export default {
     },
   },
   watch: {
+    // React when route query changes (e.g., course_id or subject_id)
     '$route.query': {
       handler: 'fetchExamPatterns',
       immediate: true,

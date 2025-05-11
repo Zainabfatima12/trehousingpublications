@@ -1,63 +1,91 @@
 <template>
-    <div class="box" v-if="pdfContent">
-      <div class="heading-pdf">
-        <h4>{{ pdfContent.title }}</h4>
-      </div>
-      <p class="paragraph-pdf">{{ pdfContent.description }}</p>
-  
-      <h3 class="table-head">Download Bihar Teacher PGT Computer Science PDF</h3>
-      <hr class="horiz-line" />
-  
-      <table class="table-data">
-        <tr class="imp-link">
-          <td colspan="2">Important Links</td>
-        </tr>
-        <tr class="rowData">
-          <td colspan="2">
-            <a
-              :href="pdfContent.reference_links"
-              target="_blank"
-              class="pdf-link"
-            >
-              {{ pdfContent.reference_links }}
-            </a>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <!-- <div v-else>
-      <p>Loading syllabus PDF details...</p>
-    </div> -->
-  </template>
-  
-  <script>
-  export default {
-    name: 'SyllabusPdf',
-    data() {
-      return {
-        pdfContent: null,
-      };
-    },
-    mounted() {
-      this.fetchPdfContent();
-    },
-    methods: {
-      async fetchPdfContent() {
-        try {
-          const res = await fetch("https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1");
-          const data = await res.json();
-  
-          const contents = data.course.subjects[0].subject_contents;
-          this.pdfContent = contents.find(content =>
-            content.title.includes("PDF")
-          );
-        } catch (error) {
-          console.error("Failed to load PDF syllabus data:", error);
+  <div class="box" v-if="pdfContent.length">
+    <h3 class="table-head">Download Subject PDFs</h3>
+    <hr class="horiz-line" />
+
+    <table class="table-data">
+      <tr class="imp-link">
+        <td>Subject</td>
+        <td>Download Link</td>
+      </tr>
+      <tr class="rowData" v-for="(pdf, index) in pdfContent" :key="index">
+        <td>{{ pdf.subject }}</td>
+        <td>
+          <a :href="pdf.link" target="_blank" class="pdf-link">
+            {{ pdf.filename }}
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div v-else>
+    <p v-if="error" style="color: red">{{ error }}</p>
+    <p v-else>Loading syllabus PDF details...</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'SyllabusPdf',
+  data() {
+    return {
+      pdfContent: [],
+      error: '',
+    };
+  },
+  async mounted() {
+    await this.fetchPdfContent();
+  },
+  methods: {
+    async fetchPdfContent() {
+      const course_id = this.$route.query.course_id;
+      const subject_id = this.$route.query.subject_id;
+
+      if (!course_id || !subject_id) {
+        this.error = 'Missing course_id or subject_id in URL';
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `https://cms.trehousingpublication.com/api/v1/?course_id=${course_id}&subject_id=${subject_id}&syllabus_list=true`
+        );
+        const data = await res.json();
+
+        if (!data.syllabus_list || !Array.isArray(data.syllabus_list)) {
+          this.error = 'Invalid syllabus list format from server.';
+          return;
         }
+
+        // Base path (adjust as per your server structure)
+        const baseUrl = "https://cms.trehousingpublication.com/uploads/syllabus/";
+
+        this.pdfContent = data.syllabus_list.map((file) => {
+          const [idAndSubject] = file.split('_'); // e.g., "101-Hindi"
+          const subject = idAndSubject?.split('-')?.[1] || "Unknown";
+          return {
+            subject: subject,
+            filename: file,
+            link: baseUrl + file,
+          };
+        });
+
+        if (!this.pdfContent.length) {
+          this.error = 'No syllabus PDF found.';
+        }
+      } catch (err) {
+        console.error("Error fetching syllabus list:", err);
+        this.error = 'Failed to fetch syllabus list.';
       }
     }
-  };
-  </script>
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.fetchPdfContent();
+    next();
+  }
+};
+</script>
 <style scoped>
 .box {
     padding: 3vh 3vw;
