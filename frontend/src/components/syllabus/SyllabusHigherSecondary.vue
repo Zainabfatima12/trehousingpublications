@@ -42,11 +42,13 @@ export default {
   methods: {
     async fetchSyllabus() {
       try {
-        const res = await axios.get("https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1");
+        const res = await axios.get(
+          "https://cms.trehousingpublication.com/api/v1/?course_id=1&subject_id=1"
+        );
         const subjectContents = res.data.course.subjects[0].subject_contents;
 
         // Load the first syllabus content item (or use a specific one by title if needed)
-        this.syllabusData = subjectContents.find(content =>
+        this.syllabusData = subjectContents.find((content) =>
           content.title.includes("Higher Secondary Teacher")
         );
       } catch (error) {
