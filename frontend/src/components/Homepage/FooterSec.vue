@@ -8,7 +8,7 @@
         </div>
         <div class="contact-info">
           <p>
-            Address: TRE HOUSING PUBLICATION PRIVATE LIMITED ADD: B-144.SECTOR
+            Address: TRE HOUSING PUBLICATION PRIVATE LIMITED <br />B-144.SECTOR
             XU 3 GREATER NOIDA GB NAGAR UP-201310
           </p>
           <p>Phone No: 012019575162, 9458846730</p>
