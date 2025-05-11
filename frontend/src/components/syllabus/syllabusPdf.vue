@@ -25,9 +25,9 @@
         </tr>
       </table>
     </div>
-    <div v-else>
+    <!-- <div v-else>
       <p>Loading syllabus PDF details...</p>
-    </div>
+    </div> -->
   </template>
   
   <script>

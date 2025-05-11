@@ -15,13 +15,9 @@
 
       <!-- Navigation Links -->
       <ul :class="['nav-links', { active: isMenuActive }]">
-        <!-- Loop through top-level menu items -->
         <li v-for="(item, index) in menuItems" :key="index" class="dropdown">
-          <!-- Main menu item -->
           <a href="#" @click.prevent="toggleDropdown(index)">
             {{ item.name }}
-
-            <!-- Show arrow if submenu exists -->
             <span
               v-if="item.submenu"
               class="dropdown-icon"
@@ -54,7 +50,7 @@
                 </span>
               </a>
 
-              <!-- Sub-dropdown Menu -->
+              <!-- Sub-submenu -->
               <ul
                 v-if="subItem.submenu"
                 :class="[
@@ -68,15 +64,9 @@
                 >
                   <a
                     href="#"
-                    @click.prevent="
-                      handleClick(
-                        item.name,
-                        subItem.name || subItem.title,
-                        subSubItem.title || subSubItem
-                      )
-                    "
+                    @click.prevent="handleClick(subItem.courseId, subSubItem.id)"
                   >
-                    {{ subSubItem.title || subSubItem }}
+                    {{ subSubItem.name }}
                   </a>
                 </li>
               </ul>
@@ -92,10 +82,9 @@
 export default {
   data() {
     return {
-      isMenuActive: false, // Controls mobile menu visibility
-      activeDropdown: null, // Tracks which top-level dropdown is open
-      activeSubDropdown: {}, // Tracks which sub-dropdowns are open
-      hasFetchedSyllabus: false, // Prevents refetching "Syllabus"
+      isMenuActive: false,
+      activeDropdown: null,
+      activeSubDropdown: {},
       menuItems: [
         {
           name: "Home",
@@ -109,7 +98,7 @@ export default {
         },
         {
           name: "Syllabus",
-          submenu: [], // Will be fetched dynamically
+          submenu: [], // Fetched dynamically
         },
         {
           name: "PYQP & Answer Key",
@@ -117,42 +106,18 @@ export default {
             {
               name: "BPSC",
               submenu: [
-                { title: "PGT (11-12)" },
-                { title: "TGT (9-10)" },
-                { title: "UPPER PRT (6-8)" },
-                { title: "PRT (1-5)" },
+                { name: "PGT (11-12)" },
+                { name: "TGT (9-10)" },
+                { name: "UPPER PRT (6-8)" },
+                { name: "PRT (1-5)" },
               ],
             },
             {
               name: "BIHAR STET",
               submenu: [
-                { title: "STET 1 TGT (9-10)" },
-                { title: "STET 2 PGT (11-12)" },
+                { name: "STET 1 TGT (9-10)" },
+                { name: "STET 2 PGT (11-12)" },
               ],
-            },
-            {
-              name: "KVS",
-              submenu: [{ title: "PGT" }, { title: "TGT" }, { title: "PRT" }],
-            },
-            {
-              name: "NVS",
-              submenu: [
-                { title: "Shivam" },
-                { title: "TGT" },
-                { title: "PRT" },
-              ],
-            },
-            {
-              name: "DSSB",
-              submenu: [{ title: "PGT" }, { title: "TGT" }, { title: "PRT" }],
-            },
-            {
-              name: "HARYANA(HPSP)",
-              submenu: [{ title: "PGT" }],
-            },
-            {
-              name: "UP LT GRADE GIC",
-              submenu: [{ title: "PGT" }],
             },
           ],
         },
@@ -162,11 +127,8 @@ export default {
             {
               name: "BPSC TRE",
               submenu: [
-                { title: "BPSC TRE 1.0 (11-12) Computer Science" },
-                { title: "BPSC TRE 2.0 (11-12) Computer Science" },
-                { title: "BPSC TRE 2.0 (9-10) Computer Science" },
-                { title: "BPSC TRE 3.0 (11-12) Computer Science" },
-                { title: "BPSC TRE 3.0 (6-10) Computer Science" },
+                { name: "BPSC TRE 1.0 (11-12) Computer Science" },
+                { name: "BPSC TRE 2.0 (11-12) Computer Science" },
               ],
             },
           ],
@@ -178,16 +140,13 @@ export default {
     };
   },
   methods: {
-    //  Toggle mobile menu open/close (hamburger icon)
     toggleMenu() {
       this.isMenuActive = !this.isMenuActive;
     },
 
-    //  Toggle top-level dropdown (e.g., Home, Syllabus, PYQP, etc.)
     async toggleDropdown(index) {
       const clickedItem = this.menuItems[index];
 
-      //  Fetch syllabus data only if it's clicked and not already loaded
       if (clickedItem.name === "Syllabus" && clickedItem.submenu.length === 0) {
         try {
           const response = await fetch(
@@ -195,70 +154,44 @@ export default {
           );
           const apiData = await response.json();
 
-          // Format the fetched data for submenu compatibility
           const formattedData = apiData.map((item) => ({
-            name: item.title,
-            submenu: item.subjects, // expects subjects array
+            name: item.title, // Course name
+            courseId: item.id, // Course ID for logic
+            submenu: item.subjects.map((subject) => ({
+              name: subject.title, // Subject name shown
+              id: subject.id, // Subject ID used internally
+            })),
           }));
 
-          //  Assign the formatted submenu to the "Syllabus" menu
           this.menuItems[index].submenu = formattedData;
         } catch (error) {
           console.error("Error fetching syllabus:", error);
         }
       }
 
-      //  If already active, close it
-      if (this.activeDropdown === index) {
-        this.activeDropdown = null;
-        this.activeSubDropdown = {}; // Close all submenus
-      } else {
-        //  Close any open dropdowns first, then open the selected one
-        this.activeDropdown = index;
-        this.activeSubDropdown = {};
-      }
+      this.activeDropdown =
+        this.activeDropdown === index ? null : index;
+      this.activeSubDropdown = {};
     },
 
-    //  Toggle nested sub-dropdown (e.g., inside PYQP or Syllabus)
     toggleSubDropdown(parentIndex, subIndex) {
       const key = `${parentIndex}-${subIndex}`;
-
-      //  Only allow one sub-dropdown to be open at a time
-      if (this.activeSubDropdown[key]) {
-        this.activeSubDropdown = {}; // close if already active
-      } else {
-        this.activeSubDropdown = {
-          [key]: true, // open only the clicked one
-        };
-      }
+      this.activeSubDropdown = this.activeSubDropdown[key]
+        ? {}
+        : { [key]: true };
     },
 
-    //  Close dropdowns when clicking outside
-    closeDropdowns(event) {
-      const dropdown = this.$el.querySelector(".dropdown-container");
-      if (dropdown && !dropdown.contains(event.target)) {
-        this.activeDropdown = null;
-        this.activeSubDropdown = {};
-      }
-    },
-
-    handleClick(mainMenu, subMenu, clickedItem) {
-      // Clean up input values just in case
-      const section = (mainMenu || "").toLowerCase();
-
-      if (section === "syllabus") {
-        const course = subMenu;
-        const subject = clickedItem;
-        const query = new URLSearchParams({ course, subject }).toString();
-        window.location.href = `/syllabus?${query}`;
-      } else {
-        // Everything else just shows the message
-        alert("This section will be available soon.");
-      }
+    handleClick(courseId, subjectId) {
+      const query = new URLSearchParams({
+        course_id: courseId,
+        subject_id: subjectId,
+      }).toString();
+      window.location.href = `/syllabus?${query}`;
     },
   },
 };
 </script>
+
 
 <style scoped>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css");
