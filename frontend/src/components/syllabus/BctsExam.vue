@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="left-column">
+    <!-- <div class="left-column">
       <aside class="sidebar">
         <h2 class="explore">Explore All Previous Year Papers</h2>
         <nav>
@@ -66,7 +66,7 @@
           </ul>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div v-if="course && subject" class="content">
       <!-- 1. Course Title -->
