@@ -4,8 +4,9 @@
       <!-- Logo and Contact Section -->
       <div class="logowithcontect">
         <div class="logo">
-          <h1>Logo</h1>
-        </div>
+         <img :src="require('@/assets/logo.jpeg')" alt="Logo" />
+
+      </div>
         <div class="contact-info">
           <p>
             Address: TRE HOUSING PUBLICATION PRIVATE LIMITED <br />B-144.SECTOR
@@ -15,10 +16,10 @@
           <p>Email: trehousingpublication@gmail.com</p>
         </div>
         <div class="social-icons">
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-whatsapp"></i></a>
-          <a href="#"><i class="fab fa-telegram"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="https://twitter.com/trepublication"><i class="fab fa-twitter"></i></a>
+          <a href="https://wa.me/9458846730"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://t.me/trehousingpublication"><i class="fab fa-telegram"></i></a>
+          <a  href="https://www.youtube.com/@trehousingpublication"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
 
@@ -126,6 +127,20 @@ body {
   padding: 10px 0;
   display: flex;
   flex-direction: column;
+}
+
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+}
+
+.logo img {
+  width: 90px;
+  height: auto;
+  object-fit: cover;
+  /* border-radius: 8px; */
 }
 
 .contact-info p {
