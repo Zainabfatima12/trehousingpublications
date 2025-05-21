@@ -3,7 +3,8 @@
     <nav ref="navMenu">
       <!-- Logo Section -->
       <div class="logo">
-        <h1>LOGO</h1>
+         <img :src="require('@/assets/logo.jpeg')" alt="Logo" />
+
       </div>
 
       <!-- Mobile Menu Icon (hamburger) -->
@@ -58,17 +59,27 @@
                   { show: activeSubDropdown[`${index}-${subIndex}`] },
                 ]"
               >
-                <li
-                  v-for="(subSubItem, subSubIndex) in subItem.submenu"
-                  :key="subSubIndex"
-                >
-                  <a
-                    href="#"
-                    @click.prevent="handleClick(subItem.courseId, subSubItem.id)"
-                  >
-                    {{ subSubItem.name }}
-                  </a>
-                </li>
+               <li
+  v-for="(subSubItem, subSubIndex) in subItem.submenu"
+  :key="subSubIndex"
+>
+  <a
+    v-if="subSubItem.url"
+    :href="subSubItem.url"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {{ subSubItem.name }}
+  </a>
+  <a
+    v-else
+    href="#"
+    @click.prevent="handleClick(subItem.courseId, subSubItem.id)"
+  >
+    {{ subSubItem.name }}
+  </a>
+</li>
+
               </ul>
             </li>
           </ul>
@@ -102,24 +113,7 @@ export default {
         },
         {
           name: "PYQP & Answer Key",
-          submenu: [
-            {
-              name: "BPSC",
-              submenu: [
-                { name: "PGT (11-12)" },
-                { name: "TGT (9-10)" },
-                { name: "UPPER PRT (6-8)" },
-                { name: "PRT (1-5)" },
-              ],
-            },
-            {
-              name: "BIHAR STET",
-              submenu: [
-                { name: "STET 1 TGT (9-10)" },
-                { name: "STET 2 PGT (11-12)" },
-              ],
-            },
-          ],
+          submenu: [ ],
         },
         {
           name: "Solved Paper ",
@@ -168,11 +162,38 @@ export default {
           console.error("Error fetching syllabus:", error);
         }
       }
+// PYQP & Answer Key data
+if (clickedItem.name === "PYQP & Answer Key" && clickedItem.submenu.length === 0) {
+  try {
+    const response = await fetch("https://cms.trehousingpublication.com/api/v2/");
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+    const data = await response.json();
+    const baseUrl = "https://cms.trehousingpublication.com/api/v2/?file=";
+
+    const formattedPYQP = Object.entries(data).map(([category, files]) => ({
+      name: category,
+      submenu: files.map(file => ({
+        name: file,
+        url: baseUrl + encodeURIComponent(file),
+      })),
+    }));
+
+    this.menuItems[index].submenu = formattedPYQP;
+  } catch (error) {
+    console.error("Error fetching PYQP & Answer Key:", error);
+  }
+}
+
+
+
+
+
 
       this.activeDropdown =
         this.activeDropdown === index ? null : index;
       this.activeSubDropdown = {};
-    },
+    },  
 
     toggleSubDropdown(parentIndex, subIndex) {
       const key = `${parentIndex}-${subIndex}`;
@@ -181,13 +202,22 @@ export default {
         : { [key]: true };
     },
 
-    handleClick(courseId, subjectId) {
+
+    
+
+ handleClick(courseId, subjectId) {
+    if (courseId && subjectId) {
       const query = new URLSearchParams({
         course_id: courseId,
         subject_id: subjectId,
       }).toString();
       window.location.href = `/syllabus?${query}`;
-    },
+    }
+      
+  },
+
+  
+
   },
 };
 </script>
@@ -201,10 +231,28 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 10px 30px;
   width: 100%;
   position: relative;
+
+  
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 0 50px;
+}
+
+.logo img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  /* border-radius: 8px; */
+}
+
+
+
 
 /* Navbar Links */
 .nav-links {
@@ -213,6 +261,7 @@ nav {
   list-style: none;
   flex-grow: 1;
   justify-content: center;
+ 
 }
 
 .nav-links li {
@@ -310,6 +359,8 @@ nav {
   margin-left: -40px;
   text-decoration: none;
   transition: transform 0.4s ease; /* Smooth rotation */
+  max-height: 400px;
+ overflow-x: auto;  
 }
 
 .sub-dropdown-menu a {
@@ -362,9 +413,17 @@ nav {
 /* Responsive Design for Mobile Screens */
 @media (max-width: 768px) {
   nav {
-    padding: 25px 20px;
+    padding: 15px 20px;
   }
 
+  .logo img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .logo {
+    padding: 0 0px; 
+  }
   .menu-icon {
     display: flex;
   }
@@ -444,6 +503,15 @@ nav {
     padding: 15px;
   }
 
+   .logo img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .logo {
+    padding: 0 5px;
+  }
+
   .nav-links {
     padding: 8px;
   }
@@ -482,6 +550,16 @@ nav {
 @media (max-width: 365px) {
   nav {
     padding: 10px;
+  }
+
+  
+   .logo img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logo {
+    padding: 0 5px;
   }
 
   .menu-icon {
