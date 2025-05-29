@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div v-if="isLoading" class="loading-container">
     <div class="loading-spinner"></div>
     <p>Loading content, please wait...</p>
@@ -94,4 +94,4 @@ export default {
   margin: 10px 0;
   color: #6c757d;
 }
-</style>
+</style> -->

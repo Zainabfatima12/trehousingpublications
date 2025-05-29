@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div v-if="isLoading" class="loading-container">
     <div class="loading-spinner"></div>
     <p>Loading content, please wait...</p>
@@ -9,7 +9,7 @@
   </div>
   
   <div v-else class="syllabus-container">
-    <!-- Syllabus Overview Section -->
+    
     <div class="syllabus-overview">
       <h2>{{ pageContent.overviewTitle || 'Bihar Computer Teacher Syllabus Overview' }}</h2>
       <p>{{ pageContent.overviewDescription || 'The Bihar Computer Science Teacher Recruitment 2023 is conducted by the Education Department of Bihar. The candidates must refer to the following table for more information on the Bihar Computer Science Teacher Syllabus.' }}</p> <br>
@@ -51,7 +51,7 @@
       </table>
     </div>
     
-    <!-- Additional Information Section -->
+   
     <div class="additional-info">
       <h3>{{ pageContent.additionalTitle || 'Bihar Computer Science Teacher Syllabus for Higher Secondary Teacher' }}</h3><br>
       <h4>{{ pageContent.questionPatternTitle || 'Question Pattern - MCQ' }}</h4>
@@ -82,7 +82,7 @@
       </ul>
     </div>
   </div>
-</template>
+</template> -->
 
 <script>
 import axios from 'axios';

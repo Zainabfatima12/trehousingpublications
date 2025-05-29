@@ -1,7 +1,7 @@
 <template>
   <div class="container">
 
-<!-- Main Content Section -->
+
     <div class="content">
       <h2>BPSC TRE 4.0 Previous Year Question Papers PDf Download</h2>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et tenetur fuga repudiandae, non distinctio ea quos aliquam iusto is officia minima nesciunt blanditiis porro qui corporis assumenda voluptatem! Sint tatum amet totam modi! </p>
@@ -9,11 +9,11 @@
 
 
 
-<!-- Sidebar with Latest News -->
+
 
     <div class="sidebar">
 
-<!-- first notification -->
+
       <h3 class="latest-news-title">CSIR NET 2025</h3>
       <ul class="news-list">
         <li v-for="news in notification1" :key="news.id" class="dropdown">

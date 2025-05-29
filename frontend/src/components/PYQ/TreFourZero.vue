@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="main-content">
         <div class="content-bpsc">
             <h2 class="fourZero">BPSC TRE 4.0 Previous Year Question Papers PDF Download</h2>
@@ -98,7 +98,7 @@
         </div>
     </div>
 
-</template>
+</template> -->
 <script>
 import bpscImg from '@/assets/PYQ-Image/BPSC-PYQ.png';
 

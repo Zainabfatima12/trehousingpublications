@@ -140,7 +140,7 @@ body {
   width: 90px;
   height: auto;
   object-fit: cover;
-  /* border-radius: 8px; */
+  border-radius: 18px;
 }
 
 .contact-info p {
