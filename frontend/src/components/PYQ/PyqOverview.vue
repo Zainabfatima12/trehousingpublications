@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div v-if="isLoading" class="loading-container">
         <div class="loading-spinner"></div>
         <p>Loading content, please wait...</p>
@@ -17,7 +17,7 @@
             <p>{{ overviewData.description }}</p>
         </div>
     </div>
-</template>
+</template> -->
 
 <script>
 import axios from 'axios';

@@ -1,69 +1,109 @@
 <template>
-    <div v-if="isLoading" class="loading-container">
-      <div class="loading-spinner"></div>
-      <p>Loading content, please wait...</p>
+  <div v-if="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+    <p>Loading content, please wait...</p>
+  </div>
+
+  <div v-else class="box">
+    <div class="heading-pdf">
+      <h4>BPSC TRE Question Papers</h4>
     </div>
-    
-    <div v-else class="box">
-      <div class="heading-pdf">
-        <h4>{{ pdfData && pdfData.title ? pdfData.title : 'Will be available soon' }}</h4>
-      </div>
-      <p class="paragraph-pdf">
-        {{ pdfData && pdfData.description ? pdfData.description : 'Will be available soon' }}
-      </p><br>
-      <h3 class="table-head">
-        <u class="underline">{{ pdfData && pdfData.tableTitle ? pdfData.tableTitle : 'Will be available soon' }}</u>
-      </h3><br>
-      
-      <table v-if="pdfData && pdfData.links && pdfData.links.length > 0" class="table-data">
-        <tr class="imp-link">
-          <td colspan="2">{{ pdfData.linksTitle || 'Important Links' }}</td>
-        </tr>
-        <tr v-for="(row, index) in pdfData.links" :key="index" class="rowData">
-          <td>{{ row.leftLink }}</td>
-          <td>{{ row.rightLink }}</td>
-        </tr>
-      </table>
-      <div v-else class="no-data-message">
-        <p>Important links will be available soon</p>
+
+    <div v-if="pdfData['BPSC TRE']">
+      <div v-for="(papers, category) in pdfData['BPSC TRE']" :key="category" class="category-section">
+        <h3 class="table-head"><u class="underline">{{ category }}</u></h3><br />
+
+        <table class="table-data">
+          <tr class="imp-link">
+            <td>PDF File Name</td>
+            <td>Download</td>
+          </tr>
+          <tr v-for="(file, index) in papers" :key="index" class="rowData">
+            <td>{{ file }}</td>
+            <td>
+              <a :href="getPdfUrl(file)" target="_blank" rel="noopener noreferrer">View / Download</a>
+            </td>
+          </tr>
+        </table>
+        <br /><br />
       </div>
     </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    name: 'PyqSyPdf',
-    data() {
-      return {
-        pdfData: {},
-        isLoading: true
-      };
+
+    <div v-else>
+      <p>No data available for this selection.</p>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "PyqSyPdf",
+  data() {
+    return {
+      pdfData: {},
+      isLoading: true,
+      selectedCategory: null,
+      courseSubjectMap: [], // will hold data from /api/v1/
+    };
+  },
+  watch: {
+    "$route.query": {
+      handler: "fetchAllData",
+      immediate: true,
     },
-    created() {
-      this.fetchData();
-    },
-    methods: {
-      async fetchData() {
-        try {
-          this.isLoading = true;
-          
-          // Fetch PDF data from API
-          const response = await axios.get('https://cms.trehousingpublication.com/api/v2/?course_id=1&subject_id=1');
-          this.pdfData = response.data || {};
-          
-        } catch (error) {
-          console.error('Error fetching PDF data:', error);
-          // No error message shown to user, just empty data
-          this.pdfData = {};
-        } finally {
-          this.isLoading = false;
-        }
+  },
+  methods: {
+    async fetchAllData() {
+      const courseId = this.$route.query.course_id;
+      const subjectId = this.$route.query.subject_id;
+
+      if (!courseId || !subjectId) {
+        this.pdfData = {};
+        this.selectedCategory = null;
+        return;
       }
-    }
-  };
-  </script>
+
+      this.isLoading = true;
+
+      try {
+        // Step 1: Fetch course/subject mapping from /api/v1/
+        const mapRes = await axios.get(`https://cms.trehousingpublication.com/api/v1/`);
+        this.courseSubjectMap = mapRes.data || [];
+
+        // Step 2: Find subject title dynamically from courseSubjectMap
+        const selectedCourse = this.courseSubjectMap.find(course => course.id == courseId);
+        if (selectedCourse) {
+          const selectedSubject = selectedCourse.subjects.find(subject => subject.id == subjectId);
+          this.selectedCategory = selectedSubject ? selectedSubject.title : null;
+        } else {
+          this.selectedCategory = null;
+        }
+
+        // Step 3: Fetch PDF data
+        const dataUrl = `https://cms.trehousingpublication.com/api/v2/?course_id=${courseId}&subject_id=${subjectId}`;
+        const dataRes = await axios.get(dataUrl);
+        this.pdfData = dataRes.data || {};
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        this.pdfData = {};
+        this.selectedCategory = null;
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    getPdfUrl(filename) {
+      const courseId = this.$route.query.course_id;
+      const subjectId = this.$route.query.subject_id;
+      return `https://cms.trehousingpublication.com/api/v2/?course_id=${courseId}&subject_id=${subjectId}&file=${encodeURIComponent(filename)}`;
+    },
+  },
+};
+</script>
+
+
 <style scoped>
 /* Loading styles */
 .loading-container {
@@ -115,7 +155,7 @@
 
 }
 .underline{
-    color: lightpink;
+    color: rgb(208, 5, 35);;
 }
 
 .heading-pdf h4 {
@@ -136,7 +176,7 @@
     margin-bottom: -10px;
     font-size: medium;
     font-weight: bold;
-    color: lightpink;
+    color:  rgb(208, 5, 35);;
     text-align: center;
 }
 
@@ -170,7 +210,7 @@
     font-size: medium;
     font-weight: 550;
     padding: 1.3vw;
-    color: lightpink;
+    color: rgb(208, 5, 35);
     text-align: center;
 }
 

@@ -109,14 +109,14 @@ export default {
         },
         {
           name: "Syllabus",
-          submenu: [], // Fetched dynamically
+          submenu: [],
         },
         {
           name: "PYQP & Answer Key",
-          submenu: [ ],
+          submenu: [],
         },
         {
-          name: "Solved Paper ",
+          name: "Solved Paper",
           submenu: [
             {
               name: "BPSC TRE",
@@ -141,87 +141,69 @@ export default {
     async toggleDropdown(index) {
       const clickedItem = this.menuItems[index];
 
-      if (clickedItem.name === "Syllabus" && clickedItem.submenu.length === 0) {
+      if (
+        ["Syllabus", "PYQP & Answer Key"].includes(clickedItem.name) &&
+        clickedItem.submenu.length === 0
+      ) {
         try {
-          const response = await fetch(
-            "https://cms.trehousingpublication.com/api/v1/"
-          );
-          const apiData = await response.json();
-
-          const formattedData = apiData.map((item) => ({
-            name: item.title, // Course name
-            courseId: item.id, // Course ID for logic
-            submenu: item.subjects.map((subject) => ({
-              name: subject.title, // Subject name shown
-              id: subject.id, // Subject ID used internally
-            })),
-          }));
-
+          const formattedData = await this.fetchSyllabusData();
           this.menuItems[index].submenu = formattedData;
         } catch (error) {
-          console.error("Error fetching syllabus:", error);
+          console.error("Error loading data:", error);
         }
       }
-// PYQP & Answer Key data
-if (clickedItem.name === "PYQP & Answer Key" && clickedItem.submenu.length === 0) {
-  try {
-    const response = await fetch("https://cms.trehousingpublication.com/api/v2/");
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-    const data = await response.json();
-    const baseUrl = "https://cms.trehousingpublication.com/api/v2/?file=";
-
-    const formattedPYQP = Object.entries(data).map(([category, files]) => ({
-      name: category,
-      submenu: files.map(file => ({
-        name: file,
-        url: baseUrl + encodeURIComponent(file),
-      })),
-    }));
-
-    this.menuItems[index].submenu = formattedPYQP;
-  } catch (error) {
-    console.error("Error fetching PYQP & Answer Key:", error);
-  }
-}
-
-
-
-
-
-
-      this.activeDropdown =
-        this.activeDropdown === index ? null : index;
+      this.activeDropdown = this.activeDropdown === index ? null : index;
       this.activeSubDropdown = {};
-    },  
+    },
 
     toggleSubDropdown(parentIndex, subIndex) {
       const key = `${parentIndex}-${subIndex}`;
-      this.activeSubDropdown = this.activeSubDropdown[key]
-        ? {}
-        : { [key]: true };
+      this.activeSubDropdown = {
+        ...this.activeSubDropdown,
+        [key]: !this.activeSubDropdown[key],
+      };
     },
 
+    async fetchSyllabusData() {
+      const response = await fetch("https://cms.trehousingpublication.com/api/v1/");
+      const apiData = await response.json();
 
-    
+      return apiData.map((item) => ({
+        name: item.title,
+        courseId: item.id,
+        submenu: item.subjects.map((subject) => ({
+          name: subject.title,
+          id: subject.id,
+        })),
+      }));
+    },
 
- handleClick(courseId, subjectId) {
-    if (courseId && subjectId) {
-      const query = new URLSearchParams({
-        course_id: courseId,
-        subject_id: subjectId,
-      }).toString();
-      window.location.href = `/syllabus?${query}`;
-    }
-      
-  },
+    handleClick(courseId, subjectId) {
+      if (!courseId) return;
 
-  
+      // Detect if the active dropdown is "PYQP & Answer Key"
+      const activeItem = this.menuItems[this.activeDropdown];
+      if (activeItem && activeItem.name === "PYQP & Answer Key") {
+        // Redirect to /PYQ with only course_id
+        const query = new URLSearchParams({
+          course_id: courseId,
+          subject_id: subjectId,
+        }).toString();
+        window.location.href = `/PYQ?${query}`;
+      } else if (subjectId) {
 
+        const query = new URLSearchParams({
+          course_id: courseId,
+          subject_id: subjectId,
+        }).toString();
+        window.location.href = `/syllabus?${query}`;
+      }
+
+    },
   },
 };
 </script>
-
 
 <style scoped>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css");
@@ -248,7 +230,7 @@ nav {
   width: 90px;
   height: 90px;
   object-fit: cover;
-  /* border-radius: 8px; */
+  border-radius: 18px;
 }
 
 

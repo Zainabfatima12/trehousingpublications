@@ -1,7 +1,7 @@
-<template>
+<!-- <template>
   <div class="container">
 
-<!-- Main Content Section -->
+
     <div class="content">
       <h2>BPSC TRE 4.0 Previous Year Question Papers PDf Download</h2>
       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et tenetur fuga repudiandae, non distinctio ea quos aliquam iusto debitis cumque aliquid cum at, fugit inventore! At magni ex sunt perspiciatis impedit. Commodi quisquam ducimus hic qui corporis deserunt ab culpa, neque voluptas voluptatem cupiditate in vero nam officia dolorem modi.</p>
@@ -9,11 +9,11 @@
 
 
 
-<!-- Sidebar with Latest News -->
+
 
     <div class="sidebar">
 
-<!-- first notification -->
+
       <h3 class="latest-news-title">CSIR NET 2025</h3>
       <ul class="news-list">
         <li v-for="news in notification1" :key="news.id" class="dropdown">
@@ -30,7 +30,7 @@
         </li>
       </ul>
 
-<!-- Second NOTIFICATION -->
+
 
       <h3 class="latest-news-title">CTET 2024 EXAM</h3>
       <ul class="news-list">
@@ -57,7 +57,7 @@
   </div>
   
   
-</template>
+</template> -->
 
 <script>
 export default {

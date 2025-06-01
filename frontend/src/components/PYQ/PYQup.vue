@@ -1,136 +1,124 @@
-<template>
-    <div class="container">
-      <!-- Loading state -->
-      <div v-if="isLoading" class="loading-container">
-        <div class="loading-spinner"></div>
-        <p>Loading content, please wait...</p>
-      </div>
-      
-      <!-- Data not available state or error - show a single message -->
-      <div v-else-if="!isDataAvailable || error" class="not-available-container">
-        <h2>Will be available soon</h2>
-      </div>
-      
-      <!-- Content when ALL data is available -->
-      <div v-else class="content-wrapper">
-        <!-- Main Content Section -->
-        <div class="content">
-            <div class="main-content">
-                <div class="content-bpsc">
-                    <h2 class="fourZero">{{ pageData.title }}</h2>
-                    <p class="bpsc-italic">{{ pageData.description }}</p>
-                    <div class="bpscImg">
-                        <img :src="pageData.headerImage" alt="BPSC Previous Year Question Paper">
-                    </div>
-                    <p class="bpsc-normal">{{ pageData.introText }}</p>
-                </div>
-                <div class="content-bpsc">
-                    <h2 class="threeZero">{{ pageData.secondaryTitle }}</h2>
-                    <p class="bpsc-normal">{{ pageData.secondaryDescription }}</p>
-                    <p class="bpsc-normal">{{ pageData.additionalInfo }}</p>
-                </div>
-                <div class="trePYQtable">
-                    <table>
-                        <!-- Table Header -->
-                        <thead>
-                            <tr class="tble-hed">
-                                <td colspan="2">{{ pageData.tableTitle || 'BPSC TRE 3.0 Question Papers 2024 PDFs' }}</td>
-                            </tr>
-                        </thead>
-  
-                        <!-- Table Body -->
-                        <tbody>
-                            <tr v-for="(row, index) in questionPapers" :key="index" class="rowData">
-                                <td class="cell-text">{{ row.category }}</td>
-                                <td>
-                                    <ul>
-                                        <li v-for="(paper, paperIndex) in row.papers" :key="paperIndex">
-                                            {{ paper.title }}
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+<!-- <template>
+  <div class="container">
+    <div v-if="isLoading" class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading content, please wait...</p>
+    </div>
+
+    <div v-else-if="!isDataAvailable || error" class="not-available-container">
+      <h2>Will be available soon</h2>
+    </div>
+
+    <div v-else class="content-wrapper">
+      <div class="content">
+        <div class="main-content">
+          <div class="content-bpsc">
+            <h2 class="fourZero">{{ pageData.title }}</h2>
+            <p class="bpsc-italic">{{ pageData.description }}</p>
+            <div class="bpscImg">
+              <img :src="pageData.headerImage" alt="BPSC Previous Year Question Paper">
             </div>
+            <p class="bpsc-normal">{{ pageData.introText }}</p>
+          </div>
+          <div class="content-bpsc">
+            <h2 class="threeZero">{{ pageData.secondaryTitle }}</h2>
+            <p class="bpsc-normal">{{ pageData.secondaryDescription }}</p>
+            <p class="bpsc-normal">{{ pageData.additionalInfo }}</p>
+          </div>
+          <div class="trePYQtable">
+            <table>
+              <thead>
+                <tr class="tble-hed">
+                  <td colspan="2">{{ pageData.tableTitle || 'BPSC TRE 3.0 Question Papers 2024 PDFs' }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(row, index) in questionPapers" :key="index" class="rowData">
+                  <td class="cell-text">{{ row.category }}</td>
+                  <td>
+                    <ul>
+                      <li v-for="(paper, paperIndex) in row.papers" :key="paperIndex">
+                        {{ paper.title }}
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        
-        <!-- Sidebar with Latest News -->
-        <div class="sidebar">
-            <!-- first notification -->
-            <h3 class="latest-news-title">{{ sidebarData.notification1Title || 'CSIR NET 2025' }}</h3>
-            <ul class="news-list">
-                <li v-for="news in notification1" :key="news.id" class="dropdown">
-                    <div class="dropdown-btn" @click="toggleDropdown(news.id)">
-                        <span :class="{ rotate: openDropdown === news.id }"> > </span>{{ news.title }}
-                    </div>
-                    <ul v-if="openDropdown === news.id" class="dropdown-content">
-                        <li v-for="link in news.links" :key="link.id">
-                            <a :href="link.url" target="_blank">
-                                {{ link.text }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-  
-            <!-- Second NOTIFICATION -->
-            <h3 class="latest-news-title">{{ sidebarData.notification2Title || 'CTET 2024 EXAM' }}</h3>
-            <ul class="news-list">
-                <li v-for="news in notification2" :key="news.id" class="dropdown">
-                    <div class="dropdown-btn" @click="toggleDropdown(news.id)">
-                        <span :class="{ rotate: openDropdown === news.id }"> > </span>{{ news.title }}
-                    </div>
-                    <ul v-if="openDropdown === news.id" class="dropdown-content">
-                        <li v-for="link in news.links" :key="link.id">
-                            <a :href="link.url" target="_blank">
-                                {{ link.text }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            
-            <div class="mock-test">
-                <div v-for="(test, index) in mockTests" :key="index" :class="`test-card ${test.cardClass}`">
-                    <a :href="test.url" target="_blank">
-                        <img :src="test.image" :alt="test.alt" />
-                    </a>
-                    <p>{{ test.description }}</p>
-                    <span class="price">{{ test.price }}</span>
-                </div>
+      </div>
+
+      <div class="sidebar">
+        <h3 class="latest-news-title">{{ sidebarData.notification1Title || 'CSIR NET 2025' }}</h3>
+        <ul class="news-list">
+          <li v-for="news in notification1" :key="news.id" class="dropdown">
+            <div class="dropdown-btn" @click="toggleDropdown(news.id)">
+              <span :class="{ rotate: openDropdown === news.id }"> > </span>{{ news.title }}
             </div>
-            
-            <!-- Referral Section with Link -->
-            <div class="referral">
-                <a :href="sidebarData.referralLink || '#'" target="_blank">
-                    <img :src="sidebarData.referralImage" alt="Refer and Earn" />
+            <ul v-if="openDropdown === news.id" class="dropdown-content">
+              <li v-for="link in news.links" :key="link.id">
+                <a :href="link.url" target="_blank">
+                  {{ link.text }}
                 </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3 class="latest-news-title">{{ sidebarData.notification2Title || 'CTET 2024 EXAM' }}</h3>
+        <ul class="news-list">
+          <li v-for="news in notification2" :key="news.id" class="dropdown">
+            <div class="dropdown-btn" @click="toggleDropdown(news.id)">
+              <span :class="{ rotate: openDropdown === news.id }"> > </span>{{ news.title }}
             </div>
-            
-            <!-- BPSC Syllabus Section with Link -->
-            <div class="syllabus">
-                <a :href="sidebarData.syllabusLink || '#'" target="_blank">
-                    <img :src="sidebarData.syllabusImage" alt="BPSC Syllabus 2024" />
+            <ul v-if="openDropdown === news.id" class="dropdown-content">
+              <li v-for="link in news.links" :key="link.id">
+                <a :href="link.url" target="_blank">
+                  {{ link.text }}
                 </a>
-            </div>
-            
-            <!-- Recent Posts -->
-            <div class="recent-posts">
-                <h2>Recent Post</h2>
-                <ul>
-                    <li v-for="(post, index) in recentPosts" :key="index">
-                        {{ post.title }}
-                        <a v-if="post.link" :href="post.link" target="_blank">{{ post.linkText }}</a>
-                        {{ post.suffix || '' }}
-                    </li>
-                </ul>
-            </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="mock-test">
+          <div v-for="(test, index) in mockTests" :key="index" :class="`test-card ${test.cardClass}`">
+            <a :href="test.url" target="_blank">
+              <img :src="test.image" :alt="test.alt" />
+            </a>
+            <p>{{ test.description }}</p>
+            <span class="price">{{ test.price }}</span>
+          </div>
+        </div>
+
+        <div class="referral">
+          <a :href="sidebarData.referralLink || '#'" target="_blank">
+            <img :src="sidebarData.referralImage" alt="Refer and Earn" />
+          </a>
+        </div>
+
+        <div class="syllabus">
+          <a :href="sidebarData.syllabusLink || '#'" target="_blank">
+            <img :src="sidebarData.syllabusImage" alt="BPSC Syllabus 2024" />
+          </a>
+        </div>
+
+        <div class="recent-posts">
+          <h2>Recent Post</h2>
+          <ul>
+            <li v-for="(post, index) in recentPosts" :key="index">
+              {{ post.title }}
+              <a v-if="post.link" :href="post.link" target="_blank">{{ post.linkText }}</a>
+              {{ post.suffix || '' }}
+            </li>
+          </ul>
         </div>
       </div>
     </div>
-  </template>
+  </div>
+</template> -->
+
   
   <script>
   import axios from 'axios';
@@ -241,6 +229,9 @@
             }
         }
     }
+
+
+    
   };
   </script>
   
