@@ -317,7 +317,7 @@ such third parties and contact them directly to respond to your questions.
   }
 
   .privacy-section-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 
   .privacy-section-content {
