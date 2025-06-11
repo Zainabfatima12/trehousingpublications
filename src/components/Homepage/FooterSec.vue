@@ -78,16 +78,17 @@
     </footer>
 
     <div class="footer-bottom">
-      <ul>
-        <div class="left-links">
-          <li><a href="#" class="term1">Privacy Policy</a></li>
-          <li><a href="#" class="term2">Cookies Policy</a></li>
-        </div>
-       <li class="right-link">
-  <router-link to="/terms-and-conditions" class="term3">Terms & Conditions</router-link>
-</li>
-      </ul>
+  <ul>
+    <div class="left-links">
+      <li><router-link to="/privacy-policy" class="term1">Privacy Policy</router-link></li>
+      <li><a href="#" class="term2">Cookies Policy</a></li>
     </div>
+    <li class="right-link">
+      <router-link to="/terms-and-conditions" class="term3">Terms & Conditions</router-link>
+    </li>
+  </ul>
+</div>
+
   </div>
 </template>
 
